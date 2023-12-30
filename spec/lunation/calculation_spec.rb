@@ -532,4 +532,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_mean_anomaly2).to eq(229.2784) } # example 22.a, A.A. p. 148
   end
+
+  describe "moon_argument_of_latitude" do
+    subject(:moon_argument_of_latitude) { calculation.moon_argument_of_latitude }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.077221081451 } # 1992-04-12 0h TD
+
+    it { expect(moon_argument_of_latitude).to eq(219.889721) }
+  end
 end

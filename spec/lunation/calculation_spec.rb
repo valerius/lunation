@@ -75,4 +75,15 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(earth_eccentricity).to eq(0.016711668) } # example 25.a, A.A. p. 165
   end
+
+  describe "earth_eccentricity_correction" do
+    subject(:earth_eccentricity_correction) { calculation.earth_eccentricity_correction }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.077221081451 } # 1992-04-12 0h TD
+
+    # example 47.a (A.A. p. 342)
+    it { expect(earth_eccentricity_correction).to eq(1.000194) }
+  end
 end

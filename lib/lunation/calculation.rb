@@ -30,5 +30,11 @@ module Lunation
       result = 0.016708634 - 0.000042037 * time - 0.0000001267 * time**2
       result.round(9)
     end
+
+    # (E) Earth eccentricity (47.6 A.A. p. 338)
+    def earth_eccentricity_correction
+      result = 1 - 0.002516 * time - 0.0000074 * time**2
+      result.round(6)
+    end
   end
 end

@@ -502,4 +502,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_mean_longitude).to eq(134.290182) } # A.A. p. 342
   end
+
+  describe "moon_mean_elongation" do
+    subject(:moon_mean_elongation) { calculation.moon_mean_elongation }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.077221081451 } # 1992-04-12 0h TD
+
+    it { expect(moon_mean_elongation).to eq(113.842304) }
+  end
 end

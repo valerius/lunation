@@ -218,5 +218,11 @@ module Lunation
       result = 218.3164477 + (481_267.88123421 * time) - (0.0015786 * (time**2)) + ((time**3) / 538_841.0) - ((time**4) / 65_194_000.0)
       (result % 360).round(6)
     end
+
+    # (D) Moon mean_elongation (47.2, A.A. p. 338)
+    def moon_mean_elongation
+      result = 297.8501921 + 445_267.1114034 * time - 0.0018819 * time**2 + time**3 / 545_868.0 - time**4 / 113_065_000.0
+      (result % 360).round(6)
+    end
   end
 end

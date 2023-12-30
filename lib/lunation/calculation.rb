@@ -254,5 +254,11 @@ module Lunation
       result = 119.75 + 131.849 * time
       (result % 360).round(2)
     end
+
+    # (A2) Jupiter correction (A.A. p. 338)
+    def correction_jupiter
+      result = 53.09 + 4_792_64.29 * time
+      (result % 360).round(2)
+    end
   end
 end

@@ -562,4 +562,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(correction_venus).to eq(109.57) } # example 47.a (A.A. p. 342)
   end
+
+  describe "correction_jupiter" do
+    subject(:correction_jupiter) { calculation.correction_jupiter }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.077221081451 } # 1992-04-12 0h TD
+
+    it { expect(correction_jupiter).to eq(123.78) }
+  end
 end

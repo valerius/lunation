@@ -552,4 +552,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_argument_of_latitude2).to eq(143.4079) } # example 22.a, A.A. p. 148
   end
+
+  describe "correction_venus" do
+    subject(:correction_venus) { calculation.correction_venus }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.077221081451 } # 1992-04-12 0h TD
+
+    it { expect(correction_venus).to eq(109.57) } # example 47.a (A.A. p. 342)
+  end
 end

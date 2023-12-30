@@ -248,5 +248,11 @@ module Lunation
       result = 93.27191 + 483_202.017538 * time - 0.0036825 * time**2 + time**3 / 327_270.0
       (result % 360).round(4)
     end
+
+    # (A1) Venus correction (A.A. p. 338)
+    def correction_venus
+      result = 119.75 + 131.849 * time
+      (result % 360).round(2)
+    end
   end
 end

@@ -260,5 +260,11 @@ module Lunation
       result = 53.09 + 4_792_64.29 * time
       (result % 360).round(2)
     end
+
+    # (A3) latitude correction (A.A. p. 338)
+    def correction_latitude
+      result = 313.45 + 481_266.484 * time
+      (result % 360).round(2)
+    end
   end
 end

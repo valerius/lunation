@@ -572,4 +572,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(correction_jupiter).to eq(123.78) }
   end
+
+  describe "correction_latitude" do
+    subject(:correction_latitude) { calculation.correction_latitude }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.077221081451 } # 1992-04-12 0h TD
+
+    it { expect(correction_latitude).to eq(229.53) } # example 47.a (A.A. p. 342)
+  end
 end

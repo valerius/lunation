@@ -582,4 +582,33 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(correction_latitude).to eq(229.53) } # example 47.a (A.A. p. 342)
   end
+
+  describe "moon_heliocentric_longitude" do
+    subject(:moon_heliocentric_longitude) { calculation.moon_heliocentric_longitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        correction_jupiter: correction_jupiter,
+        correction_venus: correction_venus,
+        earth_eccentricity_correction: earth_eccentricity_correction,
+        moon_argument_of_latitude: moon_argument_of_latitude,
+        moon_mean_anomaly: moon_mean_anomaly,
+        moon_mean_elongation: moon_mean_elongation,
+        moon_mean_longitude: moon_mean_longitude,
+        sun_mean_anomaly: sun_mean_anomaly
+      )
+    end
+
+    # example 47.a A.A. p. 342
+    let(:correction_jupiter) { 123.78 } # (A2)
+    let(:correction_venus) { 109.57 } # (A1)
+    let(:earth_eccentricity_correction) { 1.000194 } # (E)
+    let(:moon_argument_of_latitude) { 219.889721 } # (F)
+    let(:moon_mean_anomaly) { 5.150833 } # (M')
+    let(:moon_mean_elongation) { 113.842304 } # (D)
+    let(:moon_mean_longitude) { 134.290182 } # (L')
+    let(:sun_mean_anomaly) { 97.643514 } # (M)
+
+    it { expect(moon_heliocentric_longitude).to eq(-1_127_527) }
+  end
 end

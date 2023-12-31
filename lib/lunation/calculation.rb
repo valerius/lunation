@@ -1,8 +1,10 @@
 require "date"
+require "yaml"
 
 module Lunation
   class Calculation
     SECONDS_PER_DAY = 86_400
+    PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
 
     attr_reader :datetime
 
@@ -265,6 +267,31 @@ module Lunation
     def correction_latitude
       result = 313.45 + 481_266.484 * time
       (result % 360).round(2)
+    end
+
+    # (Sigma l) Moon longitude (A.A. p. 338)
+    def moon_heliocentric_longitude
+      result = PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE.inject(0.0) do |acc, elem|
+        sine_argument = (
+          elem["moon_mean_elongation"] * moon_mean_elongation +
+          elem["sun_mean_anomaly"] * sun_mean_anomaly +
+          elem["moon_mean_anomaly"] * moon_mean_anomaly +
+          elem["moon_argument_of_latitude"] * moon_argument_of_latitude
+        ) % 360
+
+        if elem["sine_coefficient"].nil?
+          next acc
+        elsif [1, -1].include?(elem["sun_mean_anomaly"])
+          acc + elem["sine_coefficient"] * earth_eccentricity_correction * Math.sin(sine_argument * Math::PI / 180)
+        elsif [-2, 2].include?(elem["sun_mean_anomaly"])
+          acc + elem["sine_coefficient"] * earth_eccentricity_correction**2 * Math.sin(sine_argument * Math::PI / 180)
+        else
+          acc + elem["sine_coefficient"] * Math.sin(sine_argument * Math::PI / 180)
+        end
+      end + 3958 * Math.sin(correction_venus * Math::PI / 180) +
+               1962 * Math.sin((moon_mean_longitude - moon_argument_of_latitude) % 360 * Math::PI / 180) +
+               318 * Math.sin(correction_jupiter * Math::PI / 180)
+      result.round
     end
   end
 end

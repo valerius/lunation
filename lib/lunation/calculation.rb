@@ -6,6 +6,7 @@ module Lunation
     SECONDS_PER_DAY = 86_400
     PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
     PERIODIC_TERMS_MOON_LATITUDE = YAML.load_file("config/periodic_terms_moon_latitude.yml").freeze
+    PERIODIC_TERMS_EARTH_NUTATION = YAML.load_file("config/periodic_terms_earth_nutation.yml").freeze
 
     attr_reader :datetime
 
@@ -362,6 +363,22 @@ module Lunation
     def equitorial_horizontal_parallax
       result = Math.asin(6378.14 / earth_moon_distance) / Math::PI * 180
       result.round(6)
+    end
+
+    # (Delta Psi) nutation in longitude (A.A. p. 144)
+    def earth_nutation_in_longitude
+      result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|
+        argument = (
+          elem["moon_mean_elongation"] * moon_mean_elongation +
+          elem["sun_mean_anomaly"] * sun_mean_anomaly +
+          elem["moon_mean_anomaly"] * moon_mean_anomaly +
+          elem["moon_argument_of_latitude"] * moon_argument_of_latitude +
+          elem["moon_orbital_longitude_mean_ascending_node"] * moon_orbital_longitude_mean_ascending_node
+        )
+        coefficient = elem["sine_coefficient_first_term"] + elem["sine_coefficient_second_term"] * time
+        acc + coefficient * Math.sin(argument * Math::PI / 180)
+      end / 10_000.0
+      result.round(3)
     end
   end
 end

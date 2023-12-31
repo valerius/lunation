@@ -706,4 +706,28 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(equitorial_horizontal_parallax).to eq(0.991990) } # A.A. p. 343
   end
+
+  describe "earth_nutation_in_longitude" do
+    subject(:earth_nutation_in_longitude) { calculation.earth_nutation_in_longitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        time: time,
+        moon_mean_elongation: moon_mean_elongation,
+        sun_mean_anomaly: sun_mean_anomaly,
+        moon_mean_anomaly: moon_mean_anomaly,
+        moon_argument_of_latitude: moon_argument_of_latitude,
+        moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
+      )
+    end
+
+    let(:time) { -0.127296372348 } # T, 1987-04-10
+    let(:moon_mean_elongation) { 136.9623 } # D
+    let(:sun_mean_anomaly) { 94.9792 } # M
+    let(:moon_mean_anomaly) { 229.2784 } # M'
+    let(:moon_argument_of_latitude) { 143.4079 } # F
+    let(:moon_orbital_longitude_mean_ascending_node) { 11.2531 } # Omega
+
+    it { expect(earth_nutation_in_longitude).to eq(-3.788) }
+  end
 end

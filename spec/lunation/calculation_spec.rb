@@ -662,4 +662,20 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_heliocentric_latitude).to eq(-3_229_126) }
   end
+
+  describe "moon_geocentric_longitude" do
+    subject(:moon_geocentric_longitude) { calculation.moon_geocentric_longitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        moon_heliocentric_longitude: moon_heliocentric_longitude,
+        moon_mean_longitude: moon_mean_longitude
+      )
+    end
+
+    let(:moon_heliocentric_longitude) { -1_127_527 } # (Sigma l)
+    let(:moon_mean_longitude) { 134.290182 } # (L')
+
+    it { expect(moon_geocentric_longitude).to eq(133.162655) }
+  end
 end

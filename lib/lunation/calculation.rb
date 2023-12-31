@@ -345,5 +345,11 @@ module Lunation
                -115 * Math.sin((moon_mean_longitude + moon_mean_anomaly) * Math::PI / 180)
       result.round
     end
+
+    # (lambda) ecliptical longitude (A.A. p. 342)
+    def moon_geocentric_longitude
+      result = moon_mean_longitude + moon_heliocentric_longitude / 1_000_000.0
+      (result % 360).round(6)
+    end
   end
 end

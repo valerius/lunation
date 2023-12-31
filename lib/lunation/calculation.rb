@@ -5,6 +5,7 @@ module Lunation
   class Calculation
     SECONDS_PER_DAY = 86_400
     PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
+    PERIODIC_TERMS_MOON_LATITUDE = YAML.load_file("config/periodic_terms_moon_latitude.yml").freeze
 
     attr_reader :datetime
 
@@ -314,6 +315,34 @@ module Lunation
           acc + elem["cosine_coefficient"] * Math.cos(cosine_argument * Math::PI / 180)
         end
       end
+      result.round
+    end
+
+    # (Sigma b) Moon latitude (A.A. p. 338)
+    def moon_heliocentric_latitude
+      result = PERIODIC_TERMS_MOON_LATITUDE.inject(0.0) do |acc, elem|
+        sine_argument = (
+          elem["moon_mean_elongation"] * moon_mean_elongation +
+          elem["sun_mean_anomaly"] * sun_mean_anomaly +
+          elem["moon_mean_anomaly"] * moon_mean_anomaly +
+          elem["moon_argument_of_latitude"] * moon_argument_of_latitude
+        ) % 360
+
+        if elem["sine_coefficient"].nil?
+          next acc
+        elsif [1, -1].include?(elem["sun_mean_anomaly"])
+          acc + elem["sine_coefficient"] * earth_eccentricity_correction * Math.sin(sine_argument * Math::PI / 180)
+        elsif [-2, 2].include?(elem["sun_mean_anomaly"])
+          acc + elem["sine_coefficient"] * earth_eccentricity_correction**2 * Math.sin(sine_argument * Math::PI / 180)
+        else
+          acc + elem["sine_coefficient"] * Math.sin(sine_argument * Math::PI / 180)
+        end
+      end - 2235 * Math.sin(moon_mean_longitude * Math::PI / 180) +
+               382 * Math.sin(correction_latitude * Math::PI / 180) +
+               175 * Math.sin((correction_venus - moon_argument_of_latitude) * Math::PI / 180) +
+               175 * Math.sin((correction_venus + moon_argument_of_latitude) * Math::PI / 180) +
+               127 * Math.sin((moon_mean_longitude - moon_mean_anomaly) * Math::PI / 180) +
+               -115 * Math.sin((moon_mean_longitude + moon_mean_anomaly) * Math::PI / 180)
       result.round
     end
   end

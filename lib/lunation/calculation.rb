@@ -357,5 +357,11 @@ module Lunation
       result = moon_heliocentric_latitude / 1_000_000.0
       result.round(6)
     end
+
+    # (pi) Moon equitorial horizontal parallax (A.A. p. 337)
+    def equitorial_horizontal_parallax
+      result = Math.asin(6378.14 / earth_moon_distance) / Math::PI * 180
+      result.round(6)
+    end
   end
 end

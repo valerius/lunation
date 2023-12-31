@@ -690,4 +690,20 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_ecliptic_latitude).to eq(-3.229126) }
   end
+
+  describe "equitorial_horizontal_parallax" do
+    subject(:equitorial_horizontal_parallax) do
+      calculation.equitorial_horizontal_parallax
+    end
+
+    before do
+      allow(calculation).to receive_messages(
+        earth_moon_distance: earth_moon_distance
+      )
+    end
+
+    let(:earth_moon_distance) { 368_409.7 } # (Sigma r) example 47.a, A.A. p. 342
+
+    it { expect(equitorial_horizontal_parallax).to eq(0.991990) } # A.A. p. 343
+  end
 end

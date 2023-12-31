@@ -351,5 +351,11 @@ module Lunation
       result = moon_mean_longitude + moon_heliocentric_longitude / 1_000_000.0
       (result % 360).round(6)
     end
+
+    # (beta) ecliptical latitude (A.A. p. 342)
+    def moon_ecliptic_latitude
+      result = moon_heliocentric_latitude / 1_000_000.0
+      result.round(6)
+    end
   end
 end

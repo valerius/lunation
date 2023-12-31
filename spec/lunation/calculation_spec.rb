@@ -678,4 +678,16 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_geocentric_longitude).to eq(133.162655) }
   end
+
+  describe "moon_ecliptic_latitude" do
+    subject(:moon_ecliptic_latitude) { calculation.moon_ecliptic_latitude }
+
+    before do
+      allow(calculation).to receive(:moon_heliocentric_latitude).and_return(moon_heliocentric_latitude)
+    end
+
+    let(:moon_heliocentric_latitude) { -3_229_126 } # (Sigma b)
+
+    it { expect(moon_ecliptic_latitude).to eq(-3.229126) }
+  end
 end

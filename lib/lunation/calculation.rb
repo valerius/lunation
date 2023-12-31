@@ -293,5 +293,28 @@ module Lunation
                318 * Math.sin(correction_jupiter * Math::PI / 180)
       result.round
     end
+
+    # (Sigma r) Moon distance (A.A. p. 338)
+    def moon_heliocentric_distance
+      result = PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE.inject(0.0) do |acc, elem|
+        cosine_argument = (
+          elem["moon_mean_elongation"] * moon_mean_elongation +
+          elem["sun_mean_anomaly"] * sun_mean_anomaly +
+          elem["moon_mean_anomaly"] * moon_mean_anomaly +
+          elem["moon_argument_of_latitude"] * moon_argument_of_latitude
+        ) % 360
+
+        if elem["cosine_coefficient"].nil?
+          next acc
+        elsif [1, -1].include?(elem["sun_mean_anomaly"])
+          acc + elem["cosine_coefficient"] * earth_eccentricity_correction * Math.cos(cosine_argument * Math::PI / 180)
+        elsif [-2, 2].include?(elem["sun_mean_anomaly"])
+          acc + elem["cosine_coefficient"] * earth_eccentricity_correction**2 * Math.cos(cosine_argument * Math::PI / 180)
+        else
+          acc + elem["cosine_coefficient"] * Math.cos(cosine_argument * Math::PI / 180)
+        end
+      end
+      result.round
+    end
   end
 end

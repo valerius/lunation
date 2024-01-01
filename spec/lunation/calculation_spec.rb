@@ -730,4 +730,21 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(earth_nutation_in_longitude).to eq(-3.788) }
   end
+
+  describe "moon_ecliptic_longitude" do
+    subject(:moon_ecliptic_longitude) { calculation.moon_ecliptic_longitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        moon_geocentric_longitude: moon_geocentric_longitude,
+        earth_nutation_in_longitude: earth_nutation_in_longitude
+      )
+    end
+
+    # example 47.a A.A. p. 343
+    let(:moon_geocentric_longitude) { 133.162655 } # (lambda)
+    let(:earth_nutation_in_longitude) { 16.595 } # (Delta psi)
+
+    it { expect(moon_ecliptic_longitude).to eq(133.167265) } # A.A. p. 343
+  end
 end

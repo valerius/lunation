@@ -380,5 +380,11 @@ module Lunation
       end / 10_000.0
       result.round(3)
     end
+
+    # (apparent lambda) Moon apparent longitude (A.A. p. 343)
+    def moon_ecliptic_longitude
+      result = moon_geocentric_longitude + earth_nutation_in_longitude / 3_600.0
+      result.round(6)
+    end
   end
 end

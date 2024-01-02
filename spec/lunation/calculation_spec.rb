@@ -747,4 +747,29 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_ecliptic_longitude).to eq(133.167265) } # A.A. p. 343
   end
+
+  describe "nutation_in_obliquity" do
+    subject(:nutation_in_obliquity) { calculation.nutation_in_obliquity }
+
+    before do
+      allow(calculation).to receive_messages(
+        time: time,
+        moon_mean_elongation: moon_mean_elongation,
+        sun_mean_anomaly: sun_mean_anomaly,
+        moon_mean_anomaly: moon_mean_anomaly,
+        moon_argument_of_latitude: moon_argument_of_latitude,
+        moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
+      )
+    end
+
+    # example 22.a A.A. p. 148
+    let(:time) { -0.127296372348 } # 1987-04-10 0h TD
+    let(:moon_mean_elongation) { 136.9623 } # (D) A.A. p. 148
+    let(:sun_mean_anomaly) { 94.9792 } # (M) A.A. p. 148
+    let(:moon_mean_anomaly) { 229.2784 } # (M') A.A. p. 148
+    let(:moon_argument_of_latitude) { 143.4079 } # (F) A.A. p. 148
+    let(:moon_orbital_longitude_mean_ascending_node) { 11.2531 } # (Omega) A.A. p. 148
+
+    it { expect(nutation_in_obliquity).to eq(9.443) }
+  end
 end

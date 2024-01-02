@@ -386,5 +386,21 @@ module Lunation
       result = moon_geocentric_longitude + earth_nutation_in_longitude / 3_600.0
       result.round(6)
     end
+
+    # (Delta epsilon) nutation in obliquity (A.A. p. 144)
+    def nutation_in_obliquity
+      result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|
+        argument = (
+          elem["moon_mean_elongation"] * moon_mean_elongation +
+          elem["sun_mean_anomaly"] * sun_mean_anomaly +
+          elem["moon_mean_anomaly"] * moon_mean_anomaly +
+          elem["moon_argument_of_latitude"] * moon_argument_of_latitude +
+          elem["moon_orbital_longitude_mean_ascending_node"] * moon_orbital_longitude_mean_ascending_node
+        )
+        coefficient = elem["cosine_coefficient_first_term"] + elem["cosine_coefficient_second_term"] * time
+        acc + coefficient * Math.cos(argument * Math::PI / 180)
+      end / 10_000.0
+      result.round(3)
+    end
   end
 end

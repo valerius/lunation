@@ -426,4 +426,25 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(sun_equation_center).to eq(-1.89732) }
   end
+
+  describe "moon_geocentric_elongation" do
+    subject(:moon_geocentric_elongation) { calculation.moon_geocentric_elongation }
+
+    before do
+      allow(calculation).to receive_messages(
+        sun_geocentric_right_ascension: sun_geocentric_right_ascension,
+        sun_geocentric_declination: sun_geocentric_declination,
+        moon_geocentric_right_ascension: moon_geocentric_right_ascension,
+        moon_geocentric_declination: moon_geocentric_declination
+      )
+    end
+
+    # example 48.a A.A. p. 347
+    let(:sun_geocentric_right_ascension) { 20.6579 } # (alpha zero)
+    let(:sun_geocentric_declination) { 8.6964 } # (delta zero)
+    let(:moon_geocentric_right_ascension) { 134.6885 } # (alpha)
+    let(:moon_geocentric_declination) { 13.7684 } # delta
+
+    it { expect(moon_geocentric_elongation).to eq(110.7929) } # psi
+  end
 end

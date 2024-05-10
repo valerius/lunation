@@ -184,5 +184,15 @@ module Lunation
                0.000289 * Math.sin(3 * sun_mean_anomaly * Math::PI / 180)
       result.round(5)
     end
+
+    # (psi) geocentric elongation of the moon (48.2, A.A. p. 345)
+    def moon_geocentric_elongation
+      result = Math.sin(sun_geocentric_declination * Math::PI / 180) *
+               Math.sin(moon_geocentric_declination * Math::PI / 180) +
+               Math.cos(sun_geocentric_declination * Math::PI / 180) *
+               Math.cos(moon_geocentric_declination * Math::PI / 180) *
+               Math.cos((sun_geocentric_right_ascension - moon_geocentric_right_ascension) * Math::PI / 180)
+      (Math.acos(result) / Math::PI * 180).round(4)
+    end
   end
 end

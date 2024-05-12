@@ -815,4 +815,35 @@ RSpec.describe Lunation::Calculation do
     # converted from 23deg26'36".850 (example 22.a A.A. p. 148)
     it { expect(ecliptic_true_obliquity).to eq(23.443569) }
   end
+
+  describe "moon_geocentric_right_ascension" do
+    subject(:moon_geocentric_right_ascension) do
+      calculation.moon_geocentric_right_ascension
+    end
+
+    before do
+      allow(calculation).to receive_messages(
+        moon_ecliptic_longitude: moon_ecliptic_longitude,
+        ecliptic_true_obliquity: ecliptic_true_obliquity,
+        moon_ecliptic_latitude: moon_ecliptic_latitude
+      )
+    end
+
+    context "when example 13.a (A.A. p. 95)" do
+      let(:moon_ecliptic_longitude) { 113.215630 } # λ
+      let(:ecliptic_true_obliquity) { 23.4392911 } # ε
+      let(:moon_ecliptic_latitude) { 6.684170 } # β
+
+      # reference value is 116.328943
+      it { expect(moon_geocentric_right_ascension).to eq(116.328943) }
+    end
+
+    context "when example 47.a (A.A. p. 343)" do
+      let(:moon_ecliptic_longitude) { 133.167265 } # apparent λ
+      let(:ecliptic_true_obliquity) { 23.440636 } # ε
+      let(:moon_ecliptic_latitude) { -3.229126 } # β
+
+      it { expect(moon_geocentric_right_ascension).to eq(134.688470) }
+    end
+  end
 end

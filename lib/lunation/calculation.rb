@@ -430,5 +430,16 @@ module Lunation
     def ecliptic_true_obliquity
       (ecliptic_mean_obliquity + nutation_in_obliquity / 3_600.0).round(6)
     end
+
+    # (α) geocentric (apparent) right ascension of the moon (13.3 A.A. p. 93)
+    def moon_geocentric_right_ascension
+      numerator = Math.sin(moon_ecliptic_longitude * Math::PI / 180) *
+                  Math.cos(ecliptic_true_obliquity * Math::PI / 180) -
+                  Math.tan(moon_ecliptic_latitude * Math::PI / 180) *
+                  Math.sin(ecliptic_true_obliquity * Math::PI / 180)
+      denominator = Math.cos(moon_ecliptic_longitude * Math::PI / 180)
+      result = Math.atan2(numerator, denominator) / Math::PI * 180
+      result.round(6)
+    end
   end
 end

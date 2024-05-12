@@ -1,5 +1,15 @@
+require "date"
+
 module Lunation
   class Calculation
+    SECONDS_PER_DAY = 86_400
+
+    attr_reader :datetime
+
+    def initialize(datetime)
+      @datetime = datetime
+    end
+
     # (k) illuminated fraction of the moon (48.1, A.A. p. 345)
     def moon_illuminated_fraction
       result = (1 + Math.cos(moon_phase_angle * Math::PI / 180)) / 2.0

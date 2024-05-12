@@ -1,5 +1,8 @@
 RSpec.describe Lunation::Calculation do
-  let(:calculation) { described_class.new }
+  let(:calculation) { described_class.new(datetime) }
+  let(:datetime) { DateTime.new(1987, 4, 10, 0, 0, 0, "+00:00") }
+
+  it { expect(calculation).to respond_to(:datetime) }
 
   describe "moon_illuminated_fraction" do
     subject(:moon_illuminated_fraction) { calculation.moon_illuminated_fraction }

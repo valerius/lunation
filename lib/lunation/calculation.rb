@@ -13,5 +13,11 @@ module Lunation
       result = Math.atan2(numerator, denominator) / Math::PI * 180
       result.round(6)
     end
+
+    # (R) earth_sun_distance (25.5, A.A. p. 164)
+    def earth_sun_distance
+      result = 1.000001018 * (1 - earth_eccentricity**2) / (1 + earth_eccentricity * Math.cos(sun_true_anomaly * Math::PI / 180))
+      result.round(7)
+    end
   end
 end

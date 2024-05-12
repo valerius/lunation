@@ -34,4 +34,21 @@ RSpec.describe Lunation::Calculation do
       expect(moon_phase_angle.round(4)).to eq(69.0756) # example 48.a (A.A. p. 347)
     end
   end
+
+  describe "earth_sun_distance" do
+    subject(:earth_sun_distance) { calculation.earth_sun_distance }
+
+    before do
+      allow(calculation).to receive_messages(
+        earth_eccentricity: earth_eccentricity,
+        sun_true_anomaly: sun_true_anomaly
+      )
+    end
+
+    # 1992-10-13 at 0 TD
+    let(:earth_eccentricity) { 0.016711668 } # (e) A.A. p. 165
+    let(:sun_true_anomaly) { 278.99397 - 1.89732 } # (v = M + C) A.A. p. 165
+
+    it { expect(earth_sun_distance.round(5)).to eq(0.99766) } # (R) A.A. p. 165
+  end
 end

@@ -339,4 +339,24 @@ RSpec.describe Lunation::Calculation do
       it { expect(delta_t).to eq(64.7) } # reference value: 64.7
     end
   end
+
+  describe "dynamical_time" do
+    subject(:dynamical_time) { calculation.dynamical_time }
+
+    context "when delta_t is positive" do
+      let(:datetime) { DateTime.new(2_005, 1, 1, 0, 0, 0) }
+
+      it "adds delta_t to the datetime" do
+        expect(dynamical_time).to eql(DateTime.new(2_005, 1, 1, 0, 1, 5))
+      end
+    end
+
+    context "when delta_t is positive" do
+      let(:datetime) { Date.new(1_900, 1, 1) }
+
+      it "subtracts delta_t from the datetime" do
+        expect(dynamical_time).to eql(DateTime.new(1_899, 12, 31, 23, 59, 57))
+      end
+    end
+  end
 end

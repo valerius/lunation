@@ -149,5 +149,10 @@ module Lunation
         -20 + 32 * @decimal_year**2
       end.round(1)
     end
+
+    # (TD) Dynamical time (A.A. p. 77)
+    def dynamical_time
+      @dynamical_time ||= datetime + delta_t.round.to_f / SECONDS_PER_DAY
+    end
   end
 end

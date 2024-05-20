@@ -212,5 +212,11 @@ module Lunation
     def time_julian_millennia
       @time_julian_millennia ||= (time / 10.0).round(12)
     end
+
+    # (L') Moon mean_longitude (47.1, A.A. p. 338)
+    def moon_mean_longitude
+      result = 218.3164477 + (481_267.88123421 * time) - (0.0015786 * (time**2)) + ((time**3) / 538_841.0) - ((time**4) / 65_194_000.0)
+      (result % 360).round(6)
+    end
   end
 end

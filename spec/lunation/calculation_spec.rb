@@ -3,6 +3,7 @@ RSpec.describe Lunation::Calculation do
   let(:datetime) { DateTime.new(1987, 4, 10, 0, 0, 0, "+00:00") }
 
   it { expect(calculation).to respond_to(:datetime) }
+  it { expect(calculation).to respond_to(:julian_ephemeris_day) }
 
   describe "moon_illuminated_fraction" do
     subject(:moon_illuminated_fraction) { calculation.moon_illuminated_fraction }
@@ -358,5 +359,16 @@ RSpec.describe Lunation::Calculation do
         expect(dynamical_time).to eql(DateTime.new(1_899, 12, 31, 23, 59, 57))
       end
     end
+  end
+
+  describe "julian_ephemeris_day" do
+    subject(:julian_ephemeris_day) { calculation.julian_ephemeris_day }
+
+    let(:datetime) { DateTime.new(1992, 12, 16, 0, 0, 0) }
+
+    # The JDE value is taken from example 43.b (A.A. p. 299)
+    #   delta_t is calculated using using a more precise formula than in A.A.
+    #   source: https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
+    it { expect(julian_ephemeris_day).to eq(2_448_972.50068) }
   end
 end

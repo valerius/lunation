@@ -154,5 +154,10 @@ module Lunation
     def dynamical_time
       @dynamical_time ||= datetime + delta_t.round.to_f / SECONDS_PER_DAY
     end
+
+    # (JDE) Julian ephemeris day (A.A. p. 59)
+    def julian_ephemeris_day
+      dynamical_time.ajd.round(5)
+    end
   end
 end

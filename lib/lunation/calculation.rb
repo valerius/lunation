@@ -36,5 +36,10 @@ module Lunation
       result = 1 - 0.002516 * time - 0.0000074 * time**2
       result.round(6)
     end
+
+    # (T) time, measured in Julian centuries from the Epoch J2000.0 (22.1, A.A. p. 143)
+    def time
+      @time ||= ((julian_ephemeris_day - 2_451_545) / 36_525.0).round(12)
+    end
   end
 end

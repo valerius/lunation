@@ -86,4 +86,14 @@ RSpec.describe Lunation::Calculation do
     # example 47.a (A.A. p. 342)
     it { expect(earth_eccentricity_correction).to eq(1.000194) }
   end
+
+  describe "time" do
+    subject(:time) { calculation.time }
+
+    before do
+      allow(calculation).to receive(:julian_ephemeris_day).and_return(2_446_895.5)
+    end
+
+    it { expect(time).to eq(-0.127296372348) }
+  end
 end

@@ -772,4 +772,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(nutation_in_obliquity).to eq(9.443) }
   end
+
+  describe "julian_myriads_since_j2000" do
+    subject(:julian_myriads_since_j2000) { calculation.julian_myriads_since_j2000 }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.127296372348 } # 1987-04-10 0h TD, example 22.a A.A. p. 148
+
+    it { expect(julian_myriads_since_j2000).to eq(-0.00127296372348) } # (U)
+  end
 end

@@ -159,5 +159,10 @@ module Lunation
     def julian_ephemeris_day
       dynamical_time.ajd.round(5)
     end
+
+    # (v) true anomaly of the sun (A.A. p. 164)
+    def sun_true_anomaly
+      (sun_mean_anomaly + sun_equation_center).round(5)
+    end
   end
 end

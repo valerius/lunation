@@ -371,4 +371,21 @@ RSpec.describe Lunation::Calculation do
     #   source: https://eclipse.gsfc.nasa.gov/SEhelp/deltatpoly2004.html
     it { expect(julian_ephemeris_day).to eq(2_448_972.50068) }
   end
+
+  describe "sun_true_anomaly" do
+    subject(:sun_true_anomaly) { calculation.sun_true_anomaly }
+
+    before do
+      allow(calculation).to receive_messages(
+        sun_mean_anomaly: sun_mean_anomaly,
+        sun_equation_center: sun_equation_center
+      )
+    end
+
+    # example 25.a A.A. p. 165
+    let(:sun_mean_anomaly) { 278.99397 } # (M)
+    let(:sun_equation_center) { -1.89732 } # (C)
+
+    it { expect(sun_true_anomaly).to eq(277.09665) }
+  end
 end

@@ -441,5 +441,15 @@ module Lunation
       result = Math.atan2(numerator, denominator) / Math::PI * 180
       result.round(6)
     end
+
+    # (delta) geocentric (apparent) declination of the moon (13.4) A.A. p. 93
+    def moon_geocentric_declination
+      result = Math.sin(moon_ecliptic_latitude * Math::PI / 180) *
+               Math.cos(ecliptic_true_obliquity * Math::PI / 180) +
+               Math.cos(moon_ecliptic_latitude * Math::PI / 180) *
+               Math.sin(ecliptic_true_obliquity * Math::PI / 180) *
+               Math.sin(moon_ecliptic_longitude * Math::PI / 180)
+      (Math.asin(result) / Math::PI * 180 % 360).round(6)
+    end
   end
 end

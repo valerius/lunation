@@ -407,5 +407,23 @@ module Lunation
     def julian_myriads_since_j2000
       time / 100.0
     end
+
+    # (epsilon 0) mean obliquity of the ecliptic (22.3, A.A. p. 147)
+    def ecliptic_mean_obliquity
+      result = 23.0 + (26.0 / 60.0) + (
+        21.448 +
+          -4680.93 * julian_myriads_since_j2000 +
+          -1.55 * julian_myriads_since_j2000**2 +
+          1_999.25 * julian_myriads_since_j2000**3 +
+          -51.38 * julian_myriads_since_j2000**4 +
+          -249.67 * julian_myriads_since_j2000**5 +
+          -39.05 * julian_myriads_since_j2000**6 +
+          7.12 * julian_myriads_since_j2000**7 +
+          27.87 * julian_myriads_since_j2000**8 +
+          5.79 * julian_myriads_since_j2000**9 +
+          2.45 * julian_myriads_since_j2000**10
+      ) / 3600.0
+      result.round(6)
+    end
   end
 end

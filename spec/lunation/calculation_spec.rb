@@ -782,4 +782,20 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(julian_myriads_since_j2000).to eq(-0.00127296372348) } # (U)
   end
+
+  describe "ecliptic_mean_obliquity" do
+    subject(:ecliptic_mean_obliquity) { calculation.ecliptic_mean_obliquity }
+
+    before do
+      allow(calculation).to receive_messages(
+        julian_myriads_since_j2000: julian_myriads_since_j2000
+      )
+    end
+
+    # example 22.a A.A. p. 148
+    let(:julian_myriads_since_j2000) { -0.00127296372348 } # (U)
+
+    # converted from 23deg 26'27''.407
+    it { expect(ecliptic_mean_obliquity).to eq(23.440946) } # (epsilon 0)
+  end
 end

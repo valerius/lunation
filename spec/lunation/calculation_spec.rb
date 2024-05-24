@@ -409,4 +409,21 @@ RSpec.describe Lunation::Calculation do
     # example 22.a (A.A. p. 148)
     it { expect(sun_mean_anomaly2.round(5)).to eq(94.9792) }
   end
+
+  describe "sun_equation_center" do
+    subject(:sun_equation_center) { calculation.sun_equation_center }
+
+    before do
+      allow(calculation).to receive_messages(
+        sun_mean_anomaly: sun_mean_anomaly,
+        time: time
+      )
+    end
+
+    # example 25.a A.A. p. 165
+    let(:time) { -0.072183436 } # (T) 1992-10-13 0h TD
+    let(:sun_mean_anomaly) { 278.99397 } # (M)
+
+    it { expect(sun_equation_center).to eq(-1.89732) }
+  end
 end

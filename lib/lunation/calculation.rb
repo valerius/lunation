@@ -176,5 +176,13 @@ module Lunation
       result = 357.52772 + 35_999.050340 * time - 0.0001603 * time**2 - time**3 / 300_000.0
       (result % 360).round(6)
     end
+
+    # (C) Sun's equation of the center (A.A. p. 164)
+    def sun_equation_center
+      result = (1.914602 - 0.004817 * time - 0.000014 * time**2) * Math.sin(sun_mean_anomaly * Math::PI / 180) +
+               (0.019993 - 0.000101 * time) * Math.sin(2 * sun_mean_anomaly * Math::PI / 180) +
+               0.000289 * Math.sin(3 * sun_mean_anomaly * Math::PI / 180)
+      result.round(5)
+    end
   end
 end

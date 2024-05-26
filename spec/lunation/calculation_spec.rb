@@ -479,4 +479,17 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(earth_moon_distance).to eq(368_409.7) }
   end
+
+  describe "time_julian_millennia" do
+    subject(:time_julian_millennia) { calculation.time_julian_millennia }
+
+    before do
+      allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
+    end
+
+    let(:julian_ephemeris_day) { 2_448_976.5 } # example 32.a A.A. p. 219
+
+    # 1992-12-20 0h TD
+    it { expect(time_julian_millennia).to eq(-0.007032169747) }
+  end
 end

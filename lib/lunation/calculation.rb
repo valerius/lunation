@@ -207,5 +207,10 @@ module Lunation
       result = 385_000.56 + (moon_heliocentric_distance / 1_000.0)
       result.round(1)
     end
+
+    # (t) tim, measured in Julian millennia from the epock J2000.0 (32.1, A.A. p. 218)
+    def time_julian_millennia
+      @time_julian_millennia ||= (time / 10.0).round(12)
+    end
   end
 end

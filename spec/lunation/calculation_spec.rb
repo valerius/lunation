@@ -798,4 +798,21 @@ RSpec.describe Lunation::Calculation do
     # converted from 23deg 26'27''.407
     it { expect(ecliptic_mean_obliquity).to eq(23.440946) } # (epsilon 0)
   end
+
+  describe "ecliptic_true_obliquity" do
+    subject(:ecliptic_true_obliquity) { calculation.ecliptic_true_obliquity }
+
+    before do
+      allow(calculation).to receive_messages(
+        ecliptic_mean_obliquity: ecliptic_mean_obliquity,
+        nutation_in_obliquity: nutation_in_obliquity
+      )
+    end
+
+    let(:ecliptic_mean_obliquity) { 23.440946 } # (ε0)
+    let(:nutation_in_obliquity) { 9.443 } # (Δε)
+
+    # converted from 23deg26'36".850 (example 22.a A.A. p. 148)
+    it { expect(ecliptic_true_obliquity).to eq(23.443569) }
+  end
 end

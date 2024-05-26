@@ -425,5 +425,10 @@ module Lunation
       ) / 3600.0
       result.round(6)
     end
+
+    # (ε) true obliquity of the ecliptic (A.A. p. 147)
+    def ecliptic_true_obliquity
+      (ecliptic_mean_obliquity + nutation_in_obliquity / 3_600.0).round(6)
+    end
   end
 end

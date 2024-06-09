@@ -13,6 +13,11 @@ module Lunation
     PERIODIC_TERMS_EARTH_POSITION_L3 = YAML.load_file("config/period_terms_earth_position_l3.yml").freeze
     PERIODIC_TERMS_EARTH_POSITION_L4 = YAML.load_file("config/period_terms_earth_position_l4.yml").freeze
     PERIODIC_TERMS_EARTH_POSITION_L5 = YAML.load_file("config/period_terms_earth_position_l5.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_R0 = YAML.load_file("config/periodic_terms_earth_position_r0.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_R1 = YAML.load_file("config/periodic_terms_earth_position_r1.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_R2 = YAML.load_file("config/periodic_terms_earth_position_r2.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_R3 = YAML.load_file("config/periodic_terms_earth_position_r3.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_R4 = YAML.load_file("config/periodic_terms_earth_position_r4.yml").freeze
 
     attr_reader :datetime
 
@@ -492,5 +497,35 @@ module Lunation
                term5 * time_julian_millennia**5
       (result / 100_000_000.0).round(8)
     end
+
+    # (R) Radius vector of the earth (distance to sun) A.A. p. 219
+    # def earth_radius_vector
+    #   term0 = PERIODIC_TERMS_EARTH_POSITION_R0.inject(0.0) do |acc, elem|
+    #     acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+    #   end
+
+    #   term1 = PERIODIC_TERMS_EARTH_POSITION_R1.inject(0.0) do |acc, elem|
+    #     acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+    #   end
+
+    #   term2 = PERIODIC_TERMS_EARTH_POSITION_R2.inject(0.0) do |acc, elem|
+    #     acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+    #   end
+
+    #   term3 = PERIODIC_TERMS_EARTH_POSITION_R3.inject(0.0) do |acc, elem|
+    #     acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+    #   end
+
+    #   term4 = PERIODIC_TERMS_EARTH_POSITION_R4.inject(0.0) do |acc, elem|
+    #     acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+    #   end
+
+    #   result = term0 +
+    #            term1 * time_julian_millennia +
+    #            term2 * time_julian_millennia**2 +
+    #            term3 * time_julian_millennia**3 +
+    #            term4 * time_julian_millennia**4
+    #   result / 100_000_000.0
+    # end
   end
 end

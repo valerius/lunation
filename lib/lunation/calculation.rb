@@ -7,6 +7,12 @@ module Lunation
     PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
     PERIODIC_TERMS_MOON_LATITUDE = YAML.load_file("config/periodic_terms_moon_latitude.yml").freeze
     PERIODIC_TERMS_EARTH_NUTATION = YAML.load_file("config/periodic_terms_earth_nutation.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_L0 = YAML.load_file("config/period_terms_earth_position_l0.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_L1 = YAML.load_file("config/period_terms_earth_position_l1.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_L2 = YAML.load_file("config/period_terms_earth_position_l2.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_L3 = YAML.load_file("config/period_terms_earth_position_l3.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_L4 = YAML.load_file("config/period_terms_earth_position_l4.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_L5 = YAML.load_file("config/period_terms_earth_position_l5.yml").freeze
 
     attr_reader :datetime
 
@@ -450,6 +456,41 @@ module Lunation
                Math.sin(ecliptic_true_obliquity * Math::PI / 180) *
                Math.sin(moon_ecliptic_longitude * Math::PI / 180)
       (Math.asin(result) / Math::PI * 180 % 360).round(6)
+    end
+
+    # (L) ecliptic longitude of the earth (32.2) A.A. p. 218
+    def earth_ecliptical_longitude
+      term0 = PERIODIC_TERMS_EARTH_POSITION_L0.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      term1 = PERIODIC_TERMS_EARTH_POSITION_L1.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      term2 = PERIODIC_TERMS_EARTH_POSITION_L2.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      term3 = PERIODIC_TERMS_EARTH_POSITION_L3.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      term4 = PERIODIC_TERMS_EARTH_POSITION_L4.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      term5 = PERIODIC_TERMS_EARTH_POSITION_L5.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      result = term0 +
+               term1 * time_julian_millennia +
+               term2 * time_julian_millennia**2 +
+               term3 * time_julian_millennia**3 +
+               term4 * time_julian_millennia**4 +
+               term5 * time_julian_millennia**5
+      (result / 100_000_000.0).round(8)
     end
   end
 end

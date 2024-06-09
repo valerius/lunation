@@ -864,4 +864,17 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_geocentric_declination).to eq(13.768368) }
   end
+
+  describe "earth_ecliptical_longitude" do
+    subject(:earth_ecliptical_longitude) { calculation.earth_ecliptical_longitude }
+
+    before do
+      allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
+    end
+
+    let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
+
+    # example 25.b A.A. p. 169
+    it { expect(earth_ecliptical_longitude).to eq(-43.63484796) }
+  end
 end

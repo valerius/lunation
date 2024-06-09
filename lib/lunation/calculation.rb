@@ -18,6 +18,8 @@ module Lunation
     PERIODIC_TERMS_EARTH_POSITION_R2 = YAML.load_file("config/periodic_terms_earth_position_r2.yml").freeze
     PERIODIC_TERMS_EARTH_POSITION_R3 = YAML.load_file("config/periodic_terms_earth_position_r3.yml").freeze
     PERIODIC_TERMS_EARTH_POSITION_R4 = YAML.load_file("config/periodic_terms_earth_position_r4.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_B0 = YAML.load_file("config/periodic_terms_earth_position_b0.yml").freeze
+    PERIODIC_TERMS_EARTH_POSITION_B1 = YAML.load_file("config/periodic_terms_earth_position_b1.yml").freeze
 
     attr_reader :datetime
 
@@ -527,5 +529,18 @@ module Lunation
     #            term4 * time_julian_millennia**4
     #   result / 100_000_000.0
     # end
+
+    # (B) ecliptic latitude of the earth A.A. p. 219
+    def earth_ecliptical_latitude
+      term0 = PERIODIC_TERMS_EARTH_POSITION_B0.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      term1 = PERIODIC_TERMS_EARTH_POSITION_B1.inject(0.0) do |acc, elem|
+        acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
+      end
+
+      (term0 + term1 * time_julian_millennia) / 100_000_000.0
+    end
   end
 end

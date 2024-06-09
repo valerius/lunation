@@ -890,4 +890,17 @@ RSpec.describe Lunation::Calculation do
   #   # example 25.b A.A. p. 169
   #   it { expect(earth_radius_vector.round(8)).to eq(0.99760775) }
   # end
+
+  describe "earth_ecliptical_latitude" do
+    subject(:earth_ecliptical_latitude) { calculation.earth_ecliptical_latitude }
+
+    before do
+      allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
+    end
+
+    let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
+
+    # example 25.b A.A. p. 169
+    it { expect(earth_ecliptical_latitude.round(8)).to eq(-0.00000312) }
+  end
 end

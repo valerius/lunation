@@ -447,4 +447,21 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_geocentric_elongation).to eq(110.7929) } # psi
   end
+
+  describe "sun_geocentric_declination" do
+    subject(:sun_geocentric_declination) { calculation.sun_geocentric_declination }
+
+    before do
+      allow(calculation).to receive_messages(
+        corrected_ecliptic_true_obliquity: corrected_ecliptic_true_obliquity,
+        sun_ecliptical_longitude: sun_ecliptical_longitude
+      )
+    end
+
+    # example 25.b A.A. p. 169
+    let(:corrected_ecliptic_true_obliquity) { 23.43999 } # true epsilon
+    let(:sun_ecliptical_longitude) { 199.90895 } # lambda
+
+    it { expect(sun_geocentric_declination).to eq(-7.78507) }
+  end
 end

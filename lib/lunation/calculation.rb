@@ -194,5 +194,12 @@ module Lunation
                Math.cos((sun_geocentric_right_ascension - moon_geocentric_right_ascension) * Math::PI / 180)
       (Math.acos(result) / Math::PI * 180).round(4)
     end
+
+    # (delta0) geocentric declination (of the sun) (13.4) A.A. p. 93
+    def sun_geocentric_declination
+      result = Math.sin(corrected_ecliptic_true_obliquity * Math::PI / 180) *
+               Math.sin(sun_ecliptical_longitude * Math::PI / 180)
+      (Math.asin(result) / Math::PI * 180).round(5)
+    end
   end
 end

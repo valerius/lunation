@@ -201,5 +201,11 @@ module Lunation
                Math.sin(sun_ecliptical_longitude * Math::PI / 180)
       (Math.asin(result) / Math::PI * 180).round(5)
     end
+
+    # (Delta) Earth-moon distance (in kilometers) (A.A. p. 342)
+    def earth_moon_distance
+      result = 385_000.56 + (moon_heliocentric_distance / 1_000.0)
+      result.round(1)
+    end
   end
 end

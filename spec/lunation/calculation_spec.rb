@@ -464,4 +464,19 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(sun_geocentric_declination).to eq(-7.78507) }
   end
+
+  describe "earth_moon_distance" do
+    subject(:earth_moon_distance) { calculation.earth_moon_distance }
+
+    before do
+      allow(calculation).to receive_messages(
+        moon_heliocentric_distance: moon_heliocentric_distance
+      )
+    end
+
+    # example 47.a A.A. p. 343
+    let(:moon_heliocentric_distance) { -16_590_875 } # Sigma r
+
+    it { expect(earth_moon_distance).to eq(368_409.7) }
+  end
 end

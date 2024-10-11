@@ -455,6 +455,15 @@ module Lunation
       result.round(6)
     end
 
+    # (α0) geocentric (apparent) right ascension of the sun (25.6 A.A. p. 165)
+    def sun_geocentric_right_ascension
+      numerator = Math.cos(corrected_ecliptic_true_obliquity * Math::PI / 180) *
+                  Math.sin(sun_ecliptical_longitude * Math::PI / 180)
+      denominator = Math.cos(sun_ecliptical_longitude * Math::PI / 180)
+      result = Math.atan2(numerator, denominator) / Math::PI * 180
+      (result % 360).round(5)
+    end
+
     # (delta) geocentric (apparent) declination of the moon (13.4) A.A. p. 93
     def moon_geocentric_declination
       result = Math.sin(moon_ecliptic_latitude * Math::PI / 180) *

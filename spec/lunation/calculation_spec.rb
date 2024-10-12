@@ -847,6 +847,21 @@ RSpec.describe Lunation::Calculation do
     it { expect(nutation_in_obliquity).to eq(9.443) }
   end
 
+  # (Omega) A.A. p. 148
+  describe "moon_orbital_longitude_mean_ascending_node" do
+    subject(:moon_orbital_longitude_mean_ascending_node) do
+      calculation.moon_orbital_longitude_mean_ascending_node
+    end
+
+    before { allow(calculation).to receive_messages(time: time) }
+
+    # example 22.a A.A. p. 148
+    let(:time) { -0.127296372348 } # 1987-04-10 0h TD
+
+    # (Delta epsilon) A.A. p. 148
+    it { expect(moon_orbital_longitude_mean_ascending_node).to eq(11.2531) }
+  end
+
   describe "julian_myriads_since_j2000" do
     subject(:julian_myriads_since_j2000) { calculation.julian_myriads_since_j2000 }
 
@@ -1012,6 +1027,6 @@ RSpec.describe Lunation::Calculation do
     let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
 
     # example 25.b A.A. p. 169
-    it { expect(earth_ecliptical_latitude.round(8)).to eq(-0.00000312) }
+    it { expect(earth_ecliptical_latitude).to eq(-0.00000312) }
   end
 end

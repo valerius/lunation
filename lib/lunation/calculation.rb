@@ -445,6 +445,13 @@ module Lunation
       result.round(3)
     end
 
+    # (Omega) Longitude of the ascending node of the Moon's mean orbit on the ecliptic,
+    #   measured from the mean equinox of the date (A.A. p. 144)
+    def moon_orbital_longitude_mean_ascending_node
+      result = 125.04452 - 1934.136261 * time + 0.0020708 * time**2 + time**3 / 450_000.0
+      (result % 360).round(4)
+    end
+
     # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
     def julian_myriads_since_j2000
       time / 100.0
@@ -585,7 +592,8 @@ module Lunation
         acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
       end
 
-      (term0 + term1 * time_julian_millennia) / 100_000_000.0
+      result = (term0 + term1 * time_julian_millennia) / 100_000_000.0
+      result.round(8)
     end
   end
 end

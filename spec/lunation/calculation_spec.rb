@@ -748,6 +748,22 @@ RSpec.describe Lunation::Calculation do
     it { expect(moon_ecliptic_longitude).to eq(133.167265) } # A.A. p. 343
   end
 
+  describe "sun_ecliptical_longitude" do
+    subject(:sun_ecliptical_longitude) { calculation.sun_ecliptical_longitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        sun_true_longitude: sun_true_longitude,
+        moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
+      )
+    end
+
+    let(:sun_true_longitude) { 199.90988 } # Symbol of the sun
+    let(:moon_orbital_longitude_mean_ascending_node) { 264.65 } # Omega
+
+    it { expect(sun_ecliptical_longitude).to eq(199.90895) } # example 25.a A.A. p. 165
+  end
+
   describe "nutation_in_obliquity" do
     subject(:nutation_in_obliquity) { calculation.nutation_in_obliquity }
 

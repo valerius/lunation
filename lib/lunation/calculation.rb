@@ -400,6 +400,14 @@ module Lunation
       result.round(6)
     end
 
+    # (apparent lambda0) Sun apparent longitude (A.A. p. 169)
+    def sun_ecliptical_longitude
+      result = sun_true_longitude +
+               - 0.00569 +
+               - 0.00478 * Math.sin(moon_orbital_longitude_mean_ascending_node * Math::PI / 180)
+      result.round(5)
+    end
+
     # (Delta epsilon) nutation in obliquity (A.A. p. 144)
     def nutation_in_obliquity
       result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|

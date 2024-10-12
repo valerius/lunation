@@ -419,6 +419,11 @@ module Lunation
       (sun_geocentric_mean_longitude + sun_equation_center).round(5)
     end
 
+    # (apparent beta0) Sun apparent latitude (A.A. p. 169)
+    def sun_ecliptical_latitude
+      -earth_ecliptical_latitude
+    end
+
     # Abberation of the earth (25.10, A.A. p. 167)
     def earth_abberation
       -(20.4898 / earth_sun_distance).round(3)

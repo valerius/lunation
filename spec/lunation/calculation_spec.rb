@@ -792,6 +792,21 @@ RSpec.describe Lunation::Calculation do
     it { expect(sun_true_longitude).to eq(199.90988) }
   end
 
+  describe "sun_ecliptical_latitude" do
+    subject(:sun_ecliptical_latitude) { calculation.sun_ecliptical_latitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        earth_ecliptical_latitude: earth_ecliptical_latitude
+      )
+    end
+
+    # example 25.b A.A. p. 169
+    let(:earth_ecliptical_latitude) { -0.00000312 } # rads
+
+    it { expect(sun_ecliptical_latitude).to eq(0.00000312) } # rads
+  end
+
   describe "earth_abberation" do
     subject(:earth_abberation) { calculation.earth_abberation }
 

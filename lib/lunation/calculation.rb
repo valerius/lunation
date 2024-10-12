@@ -408,6 +408,12 @@ module Lunation
       result.round(5)
     end
 
+    # (L0) Geocentric mean longitude of the sun (25.2, A.A. p. 163)
+    def sun_geocentric_mean_longitude
+      result = 280.46646 + 36_000.76983 * time + 0.0003032 * time**2
+      (result % 360).round(5)
+    end
+
     # (Delta epsilon) nutation in obliquity (A.A. p. 144)
     def nutation_in_obliquity
       result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|

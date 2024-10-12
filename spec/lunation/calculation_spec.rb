@@ -764,6 +764,17 @@ RSpec.describe Lunation::Calculation do
     it { expect(sun_ecliptical_longitude).to eq(199.90895) } # example 25.a A.A. p. 165
   end
 
+  describe "sun_geocentric_mean_longitude" do
+    subject(:sun_geocentric_mean_longitude) { calculation.sun_geocentric_mean_longitude }
+
+    before { allow(calculation).to receive_messages(time: time) }
+
+    let(:time) { -0.072183436 } # T, 1992-10-13 0h TD
+
+    # example 25.a A.A. p. 165
+    it { expect(sun_geocentric_mean_longitude).to eq(201.80720) }
+  end
+
   describe "nutation_in_obliquity" do
     subject(:nutation_in_obliquity) { calculation.nutation_in_obliquity }
 

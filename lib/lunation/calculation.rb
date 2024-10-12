@@ -419,6 +419,11 @@ module Lunation
       (sun_geocentric_mean_longitude + sun_equation_center).round(5)
     end
 
+    # Abberation of the earth (25.10, A.A. p. 167)
+    def earth_abberation
+      -(20.4898 / earth_sun_distance).round(3)
+    end
+
     # (Delta epsilon) nutation in obliquity (A.A. p. 144)
     def nutation_in_obliquity
       result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|

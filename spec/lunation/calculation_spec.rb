@@ -792,6 +792,21 @@ RSpec.describe Lunation::Calculation do
     it { expect(sun_true_longitude).to eq(199.90988) }
   end
 
+  describe "earth_abberation" do
+    subject(:earth_abberation) { calculation.earth_abberation }
+
+    before do
+      allow(calculation).to receive_messages(
+        earth_sun_distance: earth_sun_distance
+      )
+    end
+
+    # example 25.b A.A. p. 169
+    let(:earth_sun_distance) { 0.99760775 } # R (AU)
+
+    it { expect(earth_abberation).to eq(-20.539) } # seconds
+  end
+
   describe "nutation_in_obliquity" do
     subject(:nutation_in_obliquity) { calculation.nutation_in_obliquity }
 

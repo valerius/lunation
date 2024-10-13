@@ -414,6 +414,11 @@ module Lunation
       (result % 360).round(5)
     end
 
+    # (Symbol of the sun) true longitude of the sun (A.A. p. 164)
+    def sun_true_longitude
+      (sun_geocentric_mean_longitude + sun_equation_center).round(5)
+    end
+
     # (Delta epsilon) nutation in obliquity (A.A. p. 144)
     def nutation_in_obliquity
       result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|

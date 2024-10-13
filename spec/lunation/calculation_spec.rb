@@ -775,6 +775,23 @@ RSpec.describe Lunation::Calculation do
     it { expect(sun_geocentric_mean_longitude).to eq(201.80720) }
   end
 
+  describe "sun_true_longitude" do
+    subject(:sun_true_longitude) { calculation.sun_true_longitude }
+
+    before do
+      allow(calculation).to receive_messages(
+        sun_geocentric_mean_longitude: sun_geocentric_mean_longitude,
+        sun_equation_center: sun_equation_center
+      )
+    end
+
+    let(:sun_geocentric_mean_longitude) { 201.80720 } # L0
+    let(:sun_equation_center) { -1.89732 } # C
+
+    # example 25.a A.A. p. 165
+    it { expect(sun_true_longitude).to eq(199.90988) }
+  end
+
   describe "nutation_in_obliquity" do
     subject(:nutation_in_obliquity) { calculation.nutation_in_obliquity }
 

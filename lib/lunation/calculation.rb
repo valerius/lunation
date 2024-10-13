@@ -24,5 +24,11 @@ module Lunation
     def earth_sun_distance_in_km
       (earth_sun_distance * 149_597_870).floor
     end
+
+    # (e) eccentricity of the earth's orbit (25.4, A.A. p. 163)
+    def earth_eccentricity
+      result = 0.016708634 - 0.000042037 * time - 0.0000001267 * time**2
+      result.round(9)
+    end
   end
 end

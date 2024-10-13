@@ -65,4 +65,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(earth_sun_distance_in_km).to eq(149_971_520) }
   end
+
+  describe "earth_eccentricity" do
+    subject(:earth_eccentricity) { calculation.earth_eccentricity }
+
+    before { allow(calculation).to receive_messages(time: time) }
+
+    let(:time) { -0.072183436 } # 1992-10-13 at 0 TD
+
+    it { expect(earth_eccentricity).to eq(0.016711668) } # example 25.a, A.A. p. 165
+  end
 end

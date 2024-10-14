@@ -444,6 +444,13 @@ module Lunation
       (ecliptic_mean_obliquity + nutation_in_obliquity / 3_600.0).round(6)
     end
 
+    # (corrected ε) corrected true obliquity of the cliptic (A.A. p. 165)
+    def corrected_ecliptic_true_obliquity
+      result = ecliptic_mean_obliquity +
+               0.00256 * Math.cos(moon_orbital_longitude_mean_ascending_node * Math::PI / 180)
+      result.round(5)
+    end
+
     # (α) geocentric (apparent) right ascension of the moon (13.3 A.A. p. 93)
     def moon_geocentric_right_ascension
       numerator = Math.sin(moon_ecliptic_longitude * Math::PI / 180) *

@@ -816,6 +816,25 @@ RSpec.describe Lunation::Calculation do
     it { expect(ecliptic_true_obliquity).to eq(23.443569) }
   end
 
+  describe "corrected_ecliptic_true_obliquity" do
+    subject(:corrected_ecliptic_true_obliquity) do
+      calculation.corrected_ecliptic_true_obliquity
+    end
+
+    before do
+      allow(calculation).to receive_messages(
+        ecliptic_mean_obliquity: ecliptic_mean_obliquity,
+        moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
+      )
+    end
+
+    let(:ecliptic_mean_obliquity) { 23.44023 } # (ε0)
+    let(:moon_orbital_longitude_mean_ascending_node) { 264.65 } # (omega)
+
+    # example 25.a, A.A. p. 165
+    it { expect(corrected_ecliptic_true_obliquity).to eq(23.43999) }
+  end
+
   describe "moon_geocentric_right_ascension" do
     subject(:moon_geocentric_right_ascension) do
       calculation.moon_geocentric_right_ascension

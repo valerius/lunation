@@ -242,5 +242,11 @@ module Lunation
       result = 93.2720950 + 483_202.0175233 * time - 0.0036539 * time**2 - time**3 / 3_526_000 + time**4 / 863_310_000.0
       (result % 360).round(6)
     end
+
+    # (F) Moon argument_of_latitude (A.A. p. 144)
+    def moon_argument_of_latitude2
+      result = 93.27191 + 483_202.017538 * time - 0.0036825 * time**2 + time**3 / 327_270.0
+      (result % 360).round(4)
+    end
   end
 end

@@ -230,5 +230,11 @@ module Lunation
       result = 134.9633964 + 477_198.8675055 * time + 0.0087414 * time**2 + time**3 / 69_699 - time**4 / 14_712_000
       (result % 360).round(6)
     end
+
+    # (M') Moon mean_anomaly (A.A. p. 149)
+    def moon_mean_anomaly2
+      result = 134.96298 + 477_198.867398 * time + 0.0086972 * time**2 + time**3 / 56_250.0
+      (result % 360).round(4)
+    end
   end
 end

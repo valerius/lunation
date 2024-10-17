@@ -522,4 +522,14 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(moon_mean_anomaly).to eq(5.150833) }
   end
+
+  describe "moon_mean_anomaly2" do
+    subject(:moon_mean_anomaly2) { calculation.moon_mean_anomaly2 }
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.127296372348 } # 1987-04-10 0h TD
+
+    it { expect(moon_mean_anomaly2).to eq(229.2784) } # example 22.a, A.A. p. 148
+  end
 end

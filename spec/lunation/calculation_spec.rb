@@ -51,4 +51,18 @@ RSpec.describe Lunation::Calculation do
 
     it { expect(earth_sun_distance.round(5)).to eq(0.99766) } # (R) A.A. p. 165
   end
+
+  describe "earth_sun_distance_in_km" do
+    subject(:earth_sun_distance_in_km) { calculation.earth_sun_distance_in_km }
+
+    before do
+      allow(calculation).to receive_messages(
+        earth_sun_distance: earth_sun_distance
+      )
+    end
+
+    let(:earth_sun_distance) { 1.0024977 } # example 48.a, A.A. p. 347
+
+    it { expect(earth_sun_distance_in_km).to eq(149_971_520) }
+  end
 end

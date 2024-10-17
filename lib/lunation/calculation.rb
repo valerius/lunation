@@ -19,5 +19,10 @@ module Lunation
       result = 1.000001018 * (1 - earth_eccentricity**2) / (1 + earth_eccentricity * Math.cos(sun_true_anomaly * Math::PI / 180))
       result.round(7)
     end
+
+    # (R) earth_sun_distance in km (25.5, A.A. p. 164)
+    def earth_sun_distance_in_km
+      (earth_sun_distance * 149_597_870).floor
+    end
   end
 end

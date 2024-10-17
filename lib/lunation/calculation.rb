@@ -170,5 +170,11 @@ module Lunation
       result = 357.52911 + 35_999.05029 * time - 0.0001537 * time**2
       (result % 360).round(6)
     end
+
+    # (M) Sun mean_anomaly (A.A. p. 144)
+    def sun_mean_anomaly2
+      result = 357.52772 + 35_999.050340 * time - 0.0001603 * time**2 - time**3 / 300_000.0
+      (result % 360).round(6)
+    end
   end
 end

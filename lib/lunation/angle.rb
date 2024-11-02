@@ -62,6 +62,10 @@ module Lunation
       self.class.new(decimal_degrees: decimal_degrees + other.decimal_degrees)
     end
 
+    def -(other)
+      self.class.new(decimal_degrees: decimal_degrees - other.decimal_degrees)
+    end
+
     class << self
       def from_radians(radians, normalize: true)
         new(

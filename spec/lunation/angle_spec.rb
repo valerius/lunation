@@ -171,4 +171,12 @@ RSpec.describe Lunation::Angle do
       expect((angle1 + angle2).decimal_degrees.round(5)).to eq(313.08151)
     end
   end
+
+  describe "subtraction" do
+    it "subtracts the angles" do
+      angle1 = described_class.from_decimal_degrees(313.07689)
+      angle2 = described_class.from_decimal_degrees(0.00003)
+      expect((angle1 - angle2).decimal_degrees.round(5)).to eq(313.07686) # A.A. p. 226
+    end
+  end
 end

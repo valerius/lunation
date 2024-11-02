@@ -58,6 +58,10 @@ module Lunation
       @minutes ||= decimal_minutes.to_i
     end
 
+    def +(other)
+      self.class.new(decimal_degrees: decimal_degrees + other.decimal_degrees)
+    end
+
     class << self
       def from_radians(radians, normalize: true)
         new(

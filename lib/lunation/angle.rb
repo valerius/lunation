@@ -59,11 +59,17 @@ module Lunation
     end
 
     def +(other)
-      self.class.new(decimal_degrees: decimal_degrees + other.decimal_degrees)
+      self.class.from_decimal_degrees(
+        decimal_degrees + other.decimal_degrees,
+        normalize: false
+      )
     end
 
     def -(other)
-      self.class.new(decimal_degrees: decimal_degrees - other.decimal_degrees)
+      self.class.from_decimal_degrees(
+        decimal_degrees - other.decimal_degrees,
+        normalize: false
+      )
     end
 
     class << self

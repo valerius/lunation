@@ -5,90 +5,73 @@ RSpec.describe Lunation::Calculation do
   it { expect(calculation).to respond_to(:datetime) }
   it { expect(calculation).to respond_to(:julian_ephemeris_day) }
 
-  describe "moon_illuminated_fraction" do
-    subject(:moon_illuminated_fraction) { calculation.moon_illuminated_fraction }
-
-    before do
-      allow(calculation).to receive(:moon_phase_angle).and_return(moon_phase_angle)
-    end
-
-    let(:moon_phase_angle) { 69.0756 } # example 48.a (A.A. p. 347)
-
-    it "returns the correct value" do
-      expect(moon_illuminated_fraction).to eq(0.6786)
-    end
-  end
-
-  describe "moon_phase_angle" do
-    subject(:moon_phase_angle) { calculation.moon_phase_angle }
-
-    before do
-      allow(calculation).to receive_messages(
-        earth_sun_distance_in_km: earth_sun_distance_in_km,
-        earth_moon_distance: earth_moon_distance,
-        moon_geocentric_elongation: moon_geocentric_elongation
+  describe "calculate_moon_illuminated_fraction" do
+    subject(:calculate_moon_illuminated_fraction) do
+      calculation.calculate_moon_illuminated_fraction(
+        moon_phase_angle: 69.0756 # example 48.a (A.A. p. 347)
       )
     end
 
-    let(:earth_sun_distance_in_km) { 149_971_520 } # R
-    let(:earth_moon_distance) { 368_410 } # Delta
-    let(:moon_geocentric_elongation) { 110.7929 } # Psi
-
-    it "returns the correct value" do
-      expect(moon_phase_angle.round(4)).to eq(69.0756) # example 48.a (A.A. p. 347)
-    end
+    it { expect(calculate_moon_illuminated_fraction).to eq(0.6786) }
   end
 
-  describe "earth_sun_distance" do
-    subject(:earth_sun_distance) { calculation.earth_sun_distance }
+  describe "calculate_moon_phase_angle" do
+    subject(:calculate_moon_phase_angle) do
+      calculation.calculate_moon_phase_angle(
+        earth_sun_distance_in_km: 149_971_520, # R
+        earth_moon_distance: 368_410, # Delta
+        moon_geocentric_elongation: 110.7929 # Psi
+      )
+    end
 
-    before do
-      allow(calculation).to receive_messages(
-        earth_eccentricity: earth_eccentricity,
-        sun_true_anomaly: sun_true_anomaly
+    it {
+      expect(calculate_moon_phase_angle.round(4)).to eq(69.0756)
+    } # example 48.a (A.A. p. 347)
+  end
+
+  describe "calculate_earth_sun_distance" do
+    subject(:calculate_earth_sun_distance) do
+      calculation.calculate_earth_sun_distance(
+        earth_eccentricity: 0.016711668, # (e) A.A. p. 165
+        sun_true_anomaly: 278.99397 - 1.89732 # (v = M + C) A.A. p. 165
       )
     end
 
     # 1992-10-13 at 0 TD
-    let(:earth_eccentricity) { 0.016711668 } # (e) A.A. p. 165
-    let(:sun_true_anomaly) { 278.99397 - 1.89732 } # (v = M + C) A.A. p. 165
-
-    it { expect(earth_sun_distance.round(5)).to eq(0.99766) } # (R) A.A. p. 165
+    it { expect(calculate_earth_sun_distance.round(5)).to eq(0.99766) } # (R) A.A. p. 165
   end
 
-  describe "earth_sun_distance_in_km" do
-    subject(:earth_sun_distance_in_km) { calculation.earth_sun_distance_in_km }
-
-    before do
-      allow(calculation).to receive_messages(
-        earth_sun_distance: earth_sun_distance
-      )
+  describe "calculate_earth_sun_distance_in_km" do
+    subject(:calculate_earth_sun_distance_in_km) do
+      calculation.calculate_earth_sun_distance_in_km(earth_sun_distance: 1.0024977)
     end
 
-    let(:earth_sun_distance) { 1.0024977 } # example 48.a, A.A. p. 347
-
-    it { expect(earth_sun_distance_in_km).to eq(149_971_520) }
+    # example 48.a, A.A. p. 347
+    it { expect(calculate_earth_sun_distance_in_km).to eq(149_971_520) }
   end
 
-  describe "earth_eccentricity" do
-    subject(:earth_eccentricity) { calculation.earth_eccentricity }
+  describe "calculate_earth_eccentricity" do
+    subject(:calculate_earth_eccentricity) { calculation.calculate_earth_eccentricity }
 
     before { allow(calculation).to receive_messages(time: time) }
 
     let(:time) { -0.072183436 } # 1992-10-13 at 0 TD
 
-    it { expect(earth_eccentricity).to eq(0.016711668) } # example 25.a, A.A. p. 165
+    # example 25.a, A.A. p. 165
+    it { expect(calculate_earth_eccentricity).to eq(0.016711668) }
   end
 
-  describe "earth_eccentricity_correction" do
-    subject(:earth_eccentricity_correction) { calculation.earth_eccentricity_correction }
+  describe "calculate_earth_eccentricity_correction" do
+    subject(:calculate_earth_eccentricity_correction) do
+      calculation.calculate_earth_eccentricity_correction
+    end
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
     # example 47.a (A.A. p. 342)
-    it { expect(earth_eccentricity_correction).to eq(1.000194) }
+    it { expect(calculate_earth_eccentricity_correction).to eq(1.000194) }
   end
 
   describe "time" do
@@ -372,112 +355,89 @@ RSpec.describe Lunation::Calculation do
     it { expect(julian_ephemeris_day).to eq(2_448_972.50068) }
   end
 
-  describe "sun_true_anomaly" do
-    subject(:sun_true_anomaly) { calculation.sun_true_anomaly }
-
-    before do
-      allow(calculation).to receive_messages(
-        sun_mean_anomaly: sun_mean_anomaly,
-        sun_equation_center: sun_equation_center
+  describe "calculate_sun_true_anomaly" do
+    subject(:calculate_sun_true_anomaly) do
+      calculation.calculate_sun_true_anomaly(
+        sun_mean_anomaly: 278.99397, # (M)
+        sun_equation_center: -1.89732 # (C)
       )
     end
 
-    # example 25.a A.A. p. 165
-    let(:sun_mean_anomaly) { 278.99397 } # (M)
-    let(:sun_equation_center) { -1.89732 } # (C)
-
-    it { expect(sun_true_anomaly).to eq(277.09665) }
+    it { expect(calculate_sun_true_anomaly).to eq(277.09665) } # example 25.a A.A. p. 165
   end
 
-  describe "sun_mean_anomaly" do
-    subject(:sun_mean_anomaly) { calculation.sun_mean_anomaly }
+  describe "calculate_sun_mean_anomaly" do
+    subject(:calculate_sun_mean_anomaly) { calculation.calculate_sun_mean_anomaly }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.072183436 } # 1992-10-13 0h TD
 
-    it { expect(sun_mean_anomaly.round(5)).to eq(278.99397) } # example 25.a (A.A. p. 165)
+    # example 25.a (A.A. p. 165)
+    it { expect(calculate_sun_mean_anomaly.round(5)).to eq(278.99397) }
   end
 
-  describe "sun_mean_anomaly2" do
-    subject(:sun_mean_anomaly2) { calculation.sun_mean_anomaly2 }
+  describe "calculate_sun_mean_anomaly2" do
+    subject(:calculate_sun_mean_anomaly2) { calculation.calculate_sun_mean_anomaly2 }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
     # example 22.a (A.A. p. 148)
-    it { expect(sun_mean_anomaly2.round(5)).to eq(94.9792) }
+    it { expect(calculate_sun_mean_anomaly2.round(5)).to eq(94.9792) }
   end
 
-  describe "sun_equation_center" do
-    subject(:sun_equation_center) { calculation.sun_equation_center }
-
-    before do
-      allow(calculation).to receive_messages(
-        sun_mean_anomaly: sun_mean_anomaly,
-        time: time
+  describe "calculate_sun_equation_center" do
+    subject(:calculate_sun_equation_center) do
+      calculation.calculate_sun_equation_center(
+        sun_mean_anomaly: 278.99397 # (M)
       )
     end
 
-    # example 25.a A.A. p. 165
-    let(:time) { -0.072183436 } # (T) 1992-10-13 0h TD
-    let(:sun_mean_anomaly) { 278.99397 } # (M)
+    before { allow(calculation).to receive_messages(time: time) }
 
-    it { expect(sun_equation_center).to eq(-1.89732) }
+    let(:time) { -0.072183436 } # (T) 1992-10-13 0h TD
+
+    # example 25.a A.A. p. 165
+    it { expect(calculate_sun_equation_center).to eq(-1.89732) }
   end
 
-  describe "moon_geocentric_elongation" do
-    subject(:moon_geocentric_elongation) { calculation.moon_geocentric_elongation }
-
-    before do
-      allow(calculation).to receive_messages(
-        sun_geocentric_right_ascension: sun_geocentric_right_ascension,
-        sun_geocentric_declination: sun_geocentric_declination,
-        moon_geocentric_right_ascension: moon_geocentric_right_ascension,
-        moon_geocentric_declination: moon_geocentric_declination
+  describe "calculate_moon_geocentric_elongation" do
+    subject(:calculate_moon_geocentric_elongation) do
+      calculation.calculate_moon_geocentric_elongation(
+        sun_geocentric_right_ascension: 20.6579, # (alpha zero)
+        sun_geocentric_declination: 8.6964, # (delta zero)
+        moon_geocentric_right_ascension: 134.6885, # (alpha)
+        moon_geocentric_declination: 13.7684 # delta
       )
     end
 
     # example 48.a A.A. p. 347
-    let(:sun_geocentric_right_ascension) { 20.6579 } # (alpha zero)
-    let(:sun_geocentric_declination) { 8.6964 } # (delta zero)
-    let(:moon_geocentric_right_ascension) { 134.6885 } # (alpha)
-    let(:moon_geocentric_declination) { 13.7684 } # delta
-
-    it { expect(moon_geocentric_elongation).to eq(110.7929) } # psi
+    it { expect(calculate_moon_geocentric_elongation).to eq(110.7929) } # psi
   end
 
-  describe "sun_geocentric_declination" do
-    subject(:sun_geocentric_declination) { calculation.sun_geocentric_declination }
-
-    before do
-      allow(calculation).to receive_messages(
-        corrected_ecliptic_true_obliquity: corrected_ecliptic_true_obliquity,
-        sun_ecliptical_longitude: sun_ecliptical_longitude
+  describe "calculate_sun_geocentric_declination" do
+    subject(:calculate_sun_geocentric_declination) do
+      calculation.calculate_sun_geocentric_declination(
+        corrected_ecliptic_true_obliquity: 23.43999, # true epsilon
+        sun_ecliptical_longitude: 199.90895 # lambda
       )
     end
 
     # example 25.b A.A. p. 169
-    let(:corrected_ecliptic_true_obliquity) { 23.43999 } # true epsilon
-    let(:sun_ecliptical_longitude) { 199.90895 } # lambda
-
-    it { expect(sun_geocentric_declination).to eq(-7.78507) }
+    it { expect(calculate_sun_geocentric_declination).to eq(-7.78507) }
   end
 
-  describe "earth_moon_distance" do
-    subject(:earth_moon_distance) { calculation.earth_moon_distance }
-
-    before do
-      allow(calculation).to receive_messages(
-        moon_heliocentric_distance: moon_heliocentric_distance
+  describe "calculate_earth_moon_distance" do
+    subject(:calculate_earth_moon_distance) do
+      calculation.calculate_earth_moon_distance(
+        moon_heliocentric_distance: -16_590_875 # Sigma r
       )
     end
 
     # example 47.a A.A. p. 343
-    let(:moon_heliocentric_distance) { -16_590_875 } # Sigma r
-
-    it { expect(earth_moon_distance).to eq(368_409.7) }
+    it { expect(calculate_earth_moon_distance).to eq(368_409.7) }
   end
 
   describe "time_julian_millennia" do
@@ -493,101 +453,109 @@ RSpec.describe Lunation::Calculation do
     it { expect(time_julian_millennia).to eq(-0.007032169747) }
   end
 
-  describe "moon_mean_longitude" do
-    subject(:moon_mean_longitude) { calculation.moon_mean_longitude }
+  describe "calculate_moon_mean_longitude" do
+    subject(:calculate_moon_mean_longitude) { calculation.calculate_moon_mean_longitude }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(moon_mean_longitude).to eq(134.290182) } # A.A. p. 342
+    it { expect(calculate_moon_mean_longitude).to eq(134.290182) } # A.A. p. 342
   end
 
-  describe "moon_mean_elongation" do
-    subject(:moon_mean_elongation) { calculation.moon_mean_elongation }
+  describe "calculate_moon_mean_elongation" do
+    subject(:calculate_moon_mean_elongation) do
+      calculation.calculate_moon_mean_elongation
+    end
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(moon_mean_elongation).to eq(113.842304) }
+    it { expect(calculate_moon_mean_elongation).to eq(113.842304) }
   end
 
-  describe "moon_mean_anomaly" do
-    subject(:moon_mean_anomaly) { calculation.moon_mean_anomaly }
+  describe "calculate_moon_mean_anomaly" do
+    subject(:calculate_moon_mean_anomaly) { calculation.calculate_moon_mean_anomaly }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(moon_mean_anomaly).to eq(5.150833) }
+    it { expect(calculate_moon_mean_anomaly).to eq(5.150833) }
   end
 
-  describe "moon_mean_anomaly2" do
-    subject(:moon_mean_anomaly2) { calculation.moon_mean_anomaly2 }
+  describe "calculate_moon_mean_anomaly2" do
+    subject(:calculate_moon_mean_anomaly2) { calculation.calculate_moon_mean_anomaly2 }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
-    it { expect(moon_mean_anomaly2).to eq(229.2784) } # example 22.a, A.A. p. 148
+    # example 22.a, A.A. p. 148
+    it { expect(calculate_moon_mean_anomaly2).to eq(229.2784) }
   end
 
-  describe "moon_argument_of_latitude" do
-    subject(:moon_argument_of_latitude) { calculation.moon_argument_of_latitude }
+  describe "calculate_moon_argument_of_latitude" do
+    subject(:calculate_moon_argument_of_latitude) do
+      calculation.calculate_moon_argument_of_latitude
+    end
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(moon_argument_of_latitude).to eq(219.889721) }
+    it { expect(calculate_moon_argument_of_latitude).to eq(219.889721) }
   end
 
-  describe "moon_argument_of_latitude2" do
-    subject(:moon_argument_of_latitude2) { calculation.moon_argument_of_latitude2 }
+  describe "calculate_moon_argument_of_latitude2" do
+    subject(:calculate_moon_argument_of_latitude2) do
+      calculation.calculate_moon_argument_of_latitude2
+    end
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
-    it { expect(moon_argument_of_latitude2).to eq(143.4079) } # example 22.a, A.A. p. 148
+    it {
+      expect(calculate_moon_argument_of_latitude2).to eq(143.4079)
+    } # example 22.a, A.A. p. 148
   end
 
-  describe "correction_venus" do
-    subject(:correction_venus) { calculation.correction_venus }
+  describe "calculate_correction_venus" do
+    subject(:calculate_correction_venus) { calculation.calculate_correction_venus }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(correction_venus).to eq(109.57) } # example 47.a (A.A. p. 342)
+    it { expect(calculate_correction_venus).to eq(109.57) } # example 47.a (A.A. p. 342)
   end
 
-  describe "correction_jupiter" do
-    subject(:correction_jupiter) { calculation.correction_jupiter }
+  describe "calculate_correction_jupiter" do
+    subject(:calculate_correction_jupiter) { calculation.calculate_correction_jupiter }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(correction_jupiter).to eq(123.78) }
+    it { expect(calculate_correction_jupiter).to eq(123.78) }
   end
 
-  describe "correction_latitude" do
-    subject(:correction_latitude) { calculation.correction_latitude }
+  describe "calculate_correction_latitude" do
+    subject(:calculate_correction_latitude) { calculation.calculate_correction_latitude }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(correction_latitude).to eq(229.53) } # example 47.a (A.A. p. 342)
+    # example 47.a (A.A. p. 342)
+    it { expect(calculate_correction_latitude).to eq(229.53) }
   end
 
-  describe "moon_heliocentric_longitude" do
-    subject(:moon_heliocentric_longitude) { calculation.moon_heliocentric_longitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_heliocentric_longitude" do
+    subject(:calculate_moon_heliocentric_longitude) do
+      calculation.calculate_moon_heliocentric_longitude(
         correction_jupiter: correction_jupiter,
         correction_venus: correction_venus,
         earth_eccentricity_correction: earth_eccentricity_correction,
@@ -609,14 +577,12 @@ RSpec.describe Lunation::Calculation do
     let(:moon_mean_longitude) { 134.290182 } # (L')
     let(:sun_mean_anomaly) { 97.643514 } # (M)
 
-    it { expect(moon_heliocentric_longitude).to eq(-1_127_527) }
+    it { expect(calculate_moon_heliocentric_longitude).to eq(-1_127_527) }
   end
 
-  describe "moon_heliocentric_distance" do
-    subject(:moon_heliocentric_distance) { calculation.moon_heliocentric_distance }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_heliocentric_distance" do
+    subject(:calculate_moon_heliocentric_distance) do
+      calculation.calculate_moon_heliocentric_distance(
         earth_eccentricity_correction: earth_eccentricity_correction,
         moon_argument_of_latitude: moon_argument_of_latitude,
         moon_mean_anomaly: moon_mean_anomaly,
@@ -632,14 +598,12 @@ RSpec.describe Lunation::Calculation do
     let(:moon_mean_elongation) { 113.842304 } # (D)
     let(:sun_mean_anomaly) { 97.643514 } # (M)
 
-    it { expect(moon_heliocentric_distance).to eq(-16_590_875) }
+    it { expect(calculate_moon_heliocentric_distance).to eq(-16_590_875) }
   end
 
-  describe "moon_heliocentric_latitude" do
-    subject(:moon_heliocentric_latitude) { calculation.moon_heliocentric_latitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_heliocentric_latitude" do
+    subject(:calculate_moon_heliocentric_latitude) do
+      calculation.calculate_moon_heliocentric_latitude(
         correction_latitude: correction_latitude,
         correction_venus: correction_venus,
         earth_eccentricity_correction: earth_eccentricity_correction,
@@ -660,14 +624,12 @@ RSpec.describe Lunation::Calculation do
     let(:moon_mean_longitude) { 134.290182 } # (L')
     let(:sun_mean_anomaly) { 97.643514 } # (M)
 
-    it { expect(moon_heliocentric_latitude).to eq(-3_229_126) }
+    it { expect(calculate_moon_heliocentric_latitude).to eq(-3_229_126) }
   end
 
-  describe "moon_geocentric_longitude" do
-    subject(:moon_geocentric_longitude) { calculation.moon_geocentric_longitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_geocentric_longitude" do
+    subject(:calculate_moon_geocentric_longitude) do
+      calculation.calculate_moon_geocentric_longitude(
         moon_heliocentric_longitude: moon_heliocentric_longitude,
         moon_mean_longitude: moon_mean_longitude
       )
@@ -676,49 +638,44 @@ RSpec.describe Lunation::Calculation do
     let(:moon_heliocentric_longitude) { -1_127_527 } # (Sigma l)
     let(:moon_mean_longitude) { 134.290182 } # (L')
 
-    it { expect(moon_geocentric_longitude).to eq(133.162655) }
+    it { expect(calculate_moon_geocentric_longitude).to eq(133.162655) }
   end
 
-  describe "moon_ecliptic_latitude" do
-    subject(:moon_ecliptic_latitude) { calculation.moon_ecliptic_latitude }
-
-    before do
-      allow(calculation).to receive(:moon_heliocentric_latitude).and_return(moon_heliocentric_latitude)
+  describe "calculate_moon_ecliptic_latitude" do
+    subject(:calculate_moon_ecliptic_latitude) do
+      calculation.calculate_moon_ecliptic_latitude(
+        moon_heliocentric_latitude: moon_heliocentric_latitude
+      )
     end
 
     let(:moon_heliocentric_latitude) { -3_229_126 } # (Sigma b)
 
-    it { expect(moon_ecliptic_latitude).to eq(-3.229126) }
+    it { expect(calculate_moon_ecliptic_latitude).to eq(-3.229126) }
   end
 
-  describe "equitorial_horizontal_parallax" do
-    subject(:equitorial_horizontal_parallax) do
-      calculation.equitorial_horizontal_parallax
-    end
-
-    before do
-      allow(calculation).to receive_messages(
-        earth_moon_distance: earth_moon_distance
-      )
+  describe "calculate_equitorial_horizontal_parallax" do
+    subject(:calculate_equitorial_horizontal_parallax) do
+      calculation.calculate_equitorial_horizontal_parallax(earth_moon_distance: earth_moon_distance)
     end
 
     let(:earth_moon_distance) { 368_409.7 } # (Sigma r) example 47.a, A.A. p. 342
 
-    it { expect(equitorial_horizontal_parallax).to eq(0.991990) } # A.A. p. 343
+    it { expect(calculate_equitorial_horizontal_parallax).to eq(0.991990) } # A.A. p. 343
   end
 
-  describe "earth_nutation_in_longitude" do
-    subject(:earth_nutation_in_longitude) { calculation.earth_nutation_in_longitude }
-
-    before do
-      allow(calculation).to receive_messages(
-        time: time,
+  describe "calculate_earth_nutation_in_longitude" do
+    subject(:calculate_earth_nutation_in_longitude) do
+      calculation.calculate_earth_nutation_in_longitude(
         moon_mean_elongation: moon_mean_elongation,
         sun_mean_anomaly: sun_mean_anomaly,
         moon_mean_anomaly: moon_mean_anomaly,
         moon_argument_of_latitude: moon_argument_of_latitude,
         moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
       )
+    end
+
+    before do
+      allow(calculation).to receive_messages(time: time)
     end
 
     let(:time) { -0.127296372348 } # T, 1987-04-10
@@ -728,14 +685,12 @@ RSpec.describe Lunation::Calculation do
     let(:moon_argument_of_latitude) { 143.4079 } # F
     let(:moon_orbital_longitude_mean_ascending_node) { 11.2531 } # Omega
 
-    it { expect(earth_nutation_in_longitude).to eq(-3.788) }
+    it { expect(calculate_earth_nutation_in_longitude).to eq(-3.788) }
   end
 
-  describe "moon_ecliptic_longitude" do
-    subject(:moon_ecliptic_longitude) { calculation.moon_ecliptic_longitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_ecliptic_longitude" do
+    subject(:calculate_moon_ecliptic_longitude) do
+      calculation.calculate_moon_ecliptic_longitude(
         moon_geocentric_longitude: moon_geocentric_longitude,
         earth_nutation_in_longitude: earth_nutation_in_longitude
       )
@@ -745,14 +700,12 @@ RSpec.describe Lunation::Calculation do
     let(:moon_geocentric_longitude) { 133.162655 } # (lambda)
     let(:earth_nutation_in_longitude) { 16.595 } # (Delta psi)
 
-    it { expect(moon_ecliptic_longitude).to eq(133.167265) } # A.A. p. 343
+    it { expect(calculate_moon_ecliptic_longitude).to eq(133.167265) } # A.A. p. 343
   end
 
-  describe "sun_ecliptical_longitude" do
-    subject(:sun_ecliptical_longitude) { calculation.sun_ecliptical_longitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_sun_ecliptical_longitude" do
+    subject(:calculate_sun_ecliptical_longitude) do
+      calculation.calculate_sun_ecliptical_longitude(
         sun_true_longitude: sun_true_longitude,
         moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
       )
@@ -761,25 +714,26 @@ RSpec.describe Lunation::Calculation do
     let(:sun_true_longitude) { 199.90988 } # Symbol of the sun
     let(:moon_orbital_longitude_mean_ascending_node) { 264.65 } # Omega
 
-    it { expect(sun_ecliptical_longitude).to eq(199.90895) } # example 25.a A.A. p. 165
+    # example 25.a A.A. p. 165
+    it { expect(calculate_sun_ecliptical_longitude).to eq(199.90895) }
   end
 
-  describe "sun_geocentric_mean_longitude" do
-    subject(:sun_geocentric_mean_longitude) { calculation.sun_geocentric_mean_longitude }
+  describe "calculate_sun_geocentric_mean_longitude" do
+    subject(:calculate_sun_geocentric_mean_longitude) do
+      calculation.calculate_sun_geocentric_mean_longitude
+    end
 
     before { allow(calculation).to receive_messages(time: time) }
 
     let(:time) { -0.072183436 } # T, 1992-10-13 0h TD
 
     # example 25.a A.A. p. 165
-    it { expect(sun_geocentric_mean_longitude).to eq(201.80720) }
+    it { expect(calculate_sun_geocentric_mean_longitude).to eq(201.80720) }
   end
 
-  describe "sun_true_longitude" do
-    subject(:sun_true_longitude) { calculation.sun_true_longitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_sun_true_longitude" do
+    subject(:calculate_sun_true_longitude) do
+      calculation.calculate_sun_true_longitude(
         sun_geocentric_mean_longitude: sun_geocentric_mean_longitude,
         sun_equation_center: sun_equation_center
       )
@@ -789,14 +743,12 @@ RSpec.describe Lunation::Calculation do
     let(:sun_equation_center) { -1.89732 } # C
 
     # example 25.a A.A. p. 165
-    it { expect(sun_true_longitude).to eq(199.90988) }
+    it { expect(calculate_sun_true_longitude).to eq(199.90988) }
   end
 
-  describe "sun_ecliptical_latitude" do
-    subject(:sun_ecliptical_latitude) { calculation.sun_ecliptical_latitude }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_sun_ecliptical_latitude" do
+    subject(:calculate_sun_ecliptical_latitude) do
+      calculation.calculate_sun_ecliptical_latitude(
         earth_ecliptical_latitude: earth_ecliptical_latitude
       )
     end
@@ -804,14 +756,12 @@ RSpec.describe Lunation::Calculation do
     # example 25.b A.A. p. 169
     let(:earth_ecliptical_latitude) { -0.00000312 } # rads
 
-    it { expect(sun_ecliptical_latitude).to eq(0.00000312) } # rads
+    it { expect(calculate_sun_ecliptical_latitude).to eq(0.00000312) } # rads
   end
 
-  describe "earth_abberation" do
-    subject(:earth_abberation) { calculation.earth_abberation }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_earth_abberation" do
+    subject(:calculate_earth_abberation) do
+      calculation.calculate_earth_abberation(
         earth_sun_distance: earth_sun_distance
       )
     end
@@ -819,21 +769,22 @@ RSpec.describe Lunation::Calculation do
     # example 25.b A.A. p. 169
     let(:earth_sun_distance) { 0.99760775 } # R (AU)
 
-    it { expect(earth_abberation).to eq(-20.539) } # seconds
+    it { expect(calculate_earth_abberation).to eq(-20.539) } # seconds
   end
 
-  describe "nutation_in_obliquity" do
-    subject(:nutation_in_obliquity) { calculation.nutation_in_obliquity }
-
-    before do
-      allow(calculation).to receive_messages(
-        time: time,
+  describe "calculate_nutation_in_obliquity" do
+    subject(:calculate_nutation_in_obliquity) do
+      calculation.calculate_nutation_in_obliquity(
         moon_mean_elongation: moon_mean_elongation,
         sun_mean_anomaly: sun_mean_anomaly,
         moon_mean_anomaly: moon_mean_anomaly,
         moon_argument_of_latitude: moon_argument_of_latitude,
         moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
       )
+    end
+
+    before do
+      allow(calculation).to receive_messages(time: time)
     end
 
     # example 22.a A.A. p. 148
@@ -844,13 +795,13 @@ RSpec.describe Lunation::Calculation do
     let(:moon_argument_of_latitude) { 143.4079 } # (F) A.A. p. 148
     let(:moon_orbital_longitude_mean_ascending_node) { 11.2531 } # (Omega) A.A. p. 148
 
-    it { expect(nutation_in_obliquity).to eq(9.443) }
+    it { expect(calculate_nutation_in_obliquity).to eq(9.443) }
   end
 
   # (Omega) A.A. p. 148
-  describe "moon_orbital_longitude_mean_ascending_node" do
-    subject(:moon_orbital_longitude_mean_ascending_node) do
-      calculation.moon_orbital_longitude_mean_ascending_node
+  describe "calculate_moon_orbital_longitude_mean_ascending_node" do
+    subject(:calculate_moon_orbital_longitude_mean_ascending_node) do
+      calculation.calculate_moon_orbital_longitude_mean_ascending_node
     end
 
     before { allow(calculation).to receive_messages(time: time) }
@@ -859,7 +810,7 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
     # (Delta epsilon) A.A. p. 148
-    it { expect(moon_orbital_longitude_mean_ascending_node).to eq(11.2531) }
+    it { expect(calculate_moon_orbital_longitude_mean_ascending_node).to eq(11.2531) }
   end
 
   describe "julian_myriads_since_j2000" do
@@ -872,8 +823,10 @@ RSpec.describe Lunation::Calculation do
     it { expect(julian_myriads_since_j2000).to eq(-0.00127296372348) } # (U)
   end
 
-  describe "ecliptic_mean_obliquity" do
-    subject(:ecliptic_mean_obliquity) { calculation.ecliptic_mean_obliquity }
+  describe "calculate_ecliptic_mean_obliquity" do
+    subject(:calculate_ecliptic_mean_obliquity) do
+      calculation.calculate_ecliptic_mean_obliquity
+    end
 
     before do
       allow(calculation).to receive_messages(
@@ -885,14 +838,12 @@ RSpec.describe Lunation::Calculation do
     let(:julian_myriads_since_j2000) { -0.00127296372348 } # (U)
 
     # converted from 23deg 26'27''.407
-    it { expect(ecliptic_mean_obliquity).to eq(23.440946) } # (epsilon 0)
+    it { expect(calculate_ecliptic_mean_obliquity).to eq(23.440946) } # (epsilon 0)
   end
 
-  describe "ecliptic_true_obliquity" do
-    subject(:ecliptic_true_obliquity) { calculation.ecliptic_true_obliquity }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_ecliptic_true_obliquity" do
+    subject(:calculate_ecliptic_true_obliquity) do
+      calculation.calculate_ecliptic_true_obliquity(
         ecliptic_mean_obliquity: ecliptic_mean_obliquity,
         nutation_in_obliquity: nutation_in_obliquity
       )
@@ -902,16 +853,12 @@ RSpec.describe Lunation::Calculation do
     let(:nutation_in_obliquity) { 9.443 } # (Δε)
 
     # converted from 23deg26'36".850 (example 22.a A.A. p. 148)
-    it { expect(ecliptic_true_obliquity).to eq(23.443569) }
+    it { expect(calculate_ecliptic_true_obliquity).to eq(23.443569) }
   end
 
-  describe "corrected_ecliptic_true_obliquity" do
-    subject(:corrected_ecliptic_true_obliquity) do
-      calculation.corrected_ecliptic_true_obliquity
-    end
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_corrected_ecliptic_true_obliquity" do
+    subject(:calculate_corrected_ecliptic_true_obliquity) do
+      calculation.calculate_corrected_ecliptic_true_obliquity(
         ecliptic_mean_obliquity: ecliptic_mean_obliquity,
         moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
       )
@@ -921,16 +868,12 @@ RSpec.describe Lunation::Calculation do
     let(:moon_orbital_longitude_mean_ascending_node) { 264.65 } # (omega)
 
     # example 25.a, A.A. p. 165
-    it { expect(corrected_ecliptic_true_obliquity).to eq(23.43999) }
+    it { expect(calculate_corrected_ecliptic_true_obliquity).to eq(23.43999) }
   end
 
-  describe "moon_geocentric_right_ascension" do
-    subject(:moon_geocentric_right_ascension) do
-      calculation.moon_geocentric_right_ascension
-    end
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_geocentric_right_ascension" do
+    subject(:calculate_moon_geocentric_right_ascension) do
+      calculation.calculate_moon_geocentric_right_ascension(
         moon_ecliptic_longitude: moon_ecliptic_longitude,
         ecliptic_true_obliquity: ecliptic_true_obliquity,
         moon_ecliptic_latitude: moon_ecliptic_latitude
@@ -943,7 +886,7 @@ RSpec.describe Lunation::Calculation do
       let(:moon_ecliptic_latitude) { 6.684170 } # β
 
       # reference value is 116.328943
-      it { expect(moon_geocentric_right_ascension).to eq(116.328943) }
+      it { expect(calculate_moon_geocentric_right_ascension).to eq(116.328943) }
     end
 
     context "when example 47.a (A.A. p. 343)" do
@@ -951,17 +894,13 @@ RSpec.describe Lunation::Calculation do
       let(:ecliptic_true_obliquity) { 23.440636 } # ε
       let(:moon_ecliptic_latitude) { -3.229126 } # β
 
-      it { expect(moon_geocentric_right_ascension).to eq(134.688470) }
+      it { expect(calculate_moon_geocentric_right_ascension).to eq(134.688470) }
     end
   end
 
-  describe "sun_geocentric_right_ascension" do
-    subject(:sun_geocentric_right_ascension) do
-      calculation.sun_geocentric_right_ascension
-    end
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_sun_geocentric_right_ascension" do
+    subject(:calculate_sun_geocentric_right_ascension) do
+      calculation.calculate_sun_geocentric_right_ascension(
         corrected_ecliptic_true_obliquity: corrected_ecliptic_true_obliquity,
         sun_ecliptical_longitude: sun_ecliptical_longitude
       )
@@ -970,14 +909,12 @@ RSpec.describe Lunation::Calculation do
     let(:corrected_ecliptic_true_obliquity) { 23.43999 } # ε
     let(:sun_ecliptical_longitude) { 199.90895 } # λ
 
-    it { expect(sun_geocentric_right_ascension).to eq(198.38083) }
+    it { expect(calculate_sun_geocentric_right_ascension).to eq(198.38083) }
   end
 
-  describe "moon_geocentric_declination" do
-    subject(:moon_geocentric_declination) { calculation.moon_geocentric_declination }
-
-    before do
-      allow(calculation).to receive_messages(
+  describe "calculate_moon_geocentric_declination" do
+    subject(:calculate_moon_geocentric_declination) do
+      calculation.calculate_moon_geocentric_declination(
         moon_ecliptic_longitude: moon_ecliptic_longitude,
         ecliptic_true_obliquity: ecliptic_true_obliquity,
         moon_ecliptic_latitude: moon_ecliptic_latitude
@@ -988,11 +925,13 @@ RSpec.describe Lunation::Calculation do
     let(:ecliptic_true_obliquity) { 23.440636 } # ε
     let(:moon_ecliptic_latitude) { -3.229126 } # β
 
-    it { expect(moon_geocentric_declination).to eq(13.768368) }
+    it { expect(calculate_moon_geocentric_declination).to eq(13.768368) }
   end
 
-  describe "earth_ecliptical_longitude" do
-    subject(:earth_ecliptical_longitude) { calculation.earth_ecliptical_longitude }
+  describe "calculate_earth_ecliptical_longitude" do
+    subject(:calculate_earth_ecliptical_longitude) do
+      calculation.calculate_earth_ecliptical_longitude
+    end
 
     before do
       allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
@@ -1001,7 +940,7 @@ RSpec.describe Lunation::Calculation do
     let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
 
     # example 25.b A.A. p. 169
-    it { expect(earth_ecliptical_longitude).to eq(-43.63484796) }
+    it { expect(calculate_earth_ecliptical_longitude).to eq(-43.63484796) }
   end
 
   # describe "earth_radius_vector" do
@@ -1017,8 +956,10 @@ RSpec.describe Lunation::Calculation do
   #   it { expect(earth_radius_vector.round(8)).to eq(0.99760775) }
   # end
 
-  describe "earth_ecliptical_latitude" do
-    subject(:earth_ecliptical_latitude) { calculation.earth_ecliptical_latitude }
+  describe "calculate_earth_ecliptical_latitude" do
+    subject(:calculate_earth_ecliptical_latitude) do
+      calculation.calculate_earth_ecliptical_latitude
+    end
 
     before do
       allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
@@ -1027,6 +968,6 @@ RSpec.describe Lunation::Calculation do
     let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
 
     # example 25.b A.A. p. 169
-    it { expect(earth_ecliptical_latitude).to eq(-0.00000312) }
+    it { expect(calculate_earth_ecliptical_latitude).to eq(-0.00000312) }
   end
 end

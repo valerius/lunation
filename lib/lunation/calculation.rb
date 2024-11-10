@@ -1,8 +1,11 @@
 require "date"
 require "yaml"
+require_relative "calculation/nutation_and_obliquity"
 
 module Lunation
   class Calculation
+    include NutationAndObliquity
+
     SECONDS_PER_DAY = 86_400
     PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
     PERIODIC_TERMS_MOON_LATITUDE = YAML.load_file("config/periodic_terms_moon_latitude.yml").freeze
@@ -196,11 +199,6 @@ module Lunation
       Angle.from_decimal_degrees(357.52911 + 35_999.05029 * time - 0.0001537 * time**2)
     end
 
-    # (M) Sun mean_anomaly (A.A. p. 144)
-    def calculate_sun_mean_anomaly2
-      Angle.from_decimal_degrees(357.52772 + 35_999.050340 * time - 0.0001603 * time**2 - time**3 / 300_000.0)
-    end
-
     # (C) Sun's equation of the center (A.A. p. 164)
     def calculate_sun_equation_center(sun_mean_anomaly: calculate_sun_mean_anomaly)
       result = (1.914602 - 0.004817 * time - 0.000014 * time**2) * Math.sin(sun_mean_anomaly.radians) +
@@ -265,21 +263,9 @@ module Lunation
       Angle.from_decimal_degrees(result)
     end
 
-    # (M') Moon mean_anomaly (A.A. p. 149)
-    def calculate_moon_mean_anomaly2
-      result = 134.96298 + 477_198.867398 * time + 0.0086972 * time**2 + time**3 / 56_250.0
-      Angle.from_decimal_degrees(result)
-    end
-
     # (F) Moon argument_of_latitude (47.5, A.A. p. 338)
     def calculate_moon_argument_of_latitude
       result = 93.2720950 + 483_202.0175233 * time - 0.0036539 * time**2 - time**3 / 3_526_000 + time**4 / 863_310_000.0
-      Angle.from_decimal_degrees(result)
-    end
-
-    # (F) Moon argument_of_latitude (A.A. p. 144)
-    def calculate_moon_argument_of_latitude2
-      result = 93.27191 + 483_202.017538 * time - 0.0036825 * time**2 + time**3 / 327_270.0
       Angle.from_decimal_degrees(result)
     end
 
@@ -426,28 +412,6 @@ module Lunation
       Angle.from_radians(Math.asin(6378.14 / earth_moon_distance))
     end
 
-    # (Delta Psi) nutation in longitude (A.A. p. 144)
-    def calculate_earth_nutation_in_longitude(
-      moon_mean_elongation: calculate_moon_mean_elongation,
-      sun_mean_anomaly: calculate_sun_mean_anomaly,
-      moon_mean_anomaly: calculate_moon_mean_anomaly,
-      moon_argument_of_latitude: calculate_moon_argument_of_latitude,
-      moon_orbital_longitude_mean_ascending_node: calculate_moon_orbital_longitude_mean_ascending_node
-    )
-      result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|
-        argument = Angle.from_decimal_degrees(
-          elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
-          elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-          elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-          elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees +
-          elem["moon_orbital_longitude_mean_ascending_node"] * moon_orbital_longitude_mean_ascending_node.decimal_degrees
-        )
-        coefficient = elem["sine_coefficient_first_term"] + elem["sine_coefficient_second_term"] * time
-        acc + coefficient * Math.sin(argument.radians)
-      end / 10_000.0
-      Angle.from_decimal_arcseconds(result)
-    end
-
     # (apparent lambda) Moon apparent longitude (A.A. p. 343)
     def calculate_moon_ecliptic_longitude(
       moon_geocentric_longitude: calculate_moon_geocentric_longitude,
@@ -493,34 +457,6 @@ module Lunation
       Angle.from_decimal_arcseconds(-(20.4898 / earth_sun_distance), normalize: false)
     end
 
-    # (Delta epsilon) nutation in obliquity (A.A. p. 144)
-    def calculate_nutation_in_obliquity(
-      moon_mean_elongation: calculate_moon_mean_elongation,
-      sun_mean_anomaly: calculate_sun_mean_anomaly,
-      moon_mean_anomaly: calculate_moon_mean_anomaly,
-      moon_argument_of_latitude: calculate_moon_argument_of_latitude,
-      moon_orbital_longitude_mean_ascending_node: calculate_moon_orbital_longitude_mean_ascending_node
-    )
-      result = PERIODIC_TERMS_EARTH_NUTATION.inject(0.0) do |acc, elem|
-        argument = Angle.from_decimal_degrees(
-          elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
-          elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-          elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-          elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees +
-          elem["moon_orbital_longitude_mean_ascending_node"] * moon_orbital_longitude_mean_ascending_node.decimal_degrees
-        )
-        coefficient = elem["cosine_coefficient_first_term"] + elem["cosine_coefficient_second_term"] * time
-        acc + coefficient * Math.cos(argument.radians)
-      end / 10_000.0
-      Angle.from_decimal_arcseconds(result)
-    end
-
-    # (Omega) Longitude of the ascending node of the Moon's mean orbit on the ecliptic,
-    #   measured from the mean equinox of the date (A.A. p. 144)
-    def calculate_moon_orbital_longitude_mean_ascending_node
-      Angle.from_decimal_degrees(125.04452 - 1934.136261 * time + 0.0020708 * time**2 + time**3 / 450_000.0)
-    end
-
     # (Omega) Longitude of the ascending node of the Moon's mean orbit on the ecliptic (low precision)
     #   A.A. p. 164
     def calculate_moon_orbital_longitude_mean_ascending_node2
@@ -530,34 +466,6 @@ module Lunation
     # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
     def julian_myriads_since_j2000
       time / 100.0
-    end
-
-    # (epsilon 0) mean obliquity of the ecliptic (22.3, A.A. p. 147)
-    def calculate_ecliptic_mean_obliquity
-      decimal_arcseconds = 21.448 +
-                           -4680.93 * julian_myriads_since_j2000 +
-                           -1.55 * julian_myriads_since_j2000**2 +
-                           1_999.25 * julian_myriads_since_j2000**3 +
-                           -51.38 * julian_myriads_since_j2000**4 +
-                           -249.67 * julian_myriads_since_j2000**5 +
-                           -39.05 * julian_myriads_since_j2000**6 +
-                           7.12 * julian_myriads_since_j2000**7 +
-                           27.87 * julian_myriads_since_j2000**8 +
-                           5.79 * julian_myriads_since_j2000**9 +
-                           2.45 * julian_myriads_since_j2000**10
-      Angle.from_degrees(
-        degrees: 23.0,
-        arcminutes: 26.0,
-        decimal_arcseconds: decimal_arcseconds
-      )
-    end
-
-    # (ε) true obliquity of the ecliptic (A.A. p. 147)
-    def calculate_ecliptic_true_obliquity(
-      ecliptic_mean_obliquity: calculate_ecliptic_mean_obliquity,
-      nutation_in_obliquity: calculate_nutation_in_obliquity
-    )
-      ecliptic_mean_obliquity + nutation_in_obliquity
     end
 
     # (corrected ε) corrected true obliquity of the cliptic (A.A. p. 165)
@@ -684,7 +592,8 @@ module Lunation
         acc + elem[0] * Math.cos(elem[1] + elem[2] * time_julian_millennia)
       end
 
-      Angle.from_radians((term0 + term1 * time_julian_millennia) / 100_000_000.0, normalize: false)
+      Angle.from_radians((term0 + term1 * time_julian_millennia) / 100_000_000.0,
+                         normalize: false)
     end
   end
 end

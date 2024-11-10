@@ -7,10 +7,11 @@ RSpec.describe Lunation::Calculation do
 
   describe "calculate_moon_illuminated_fraction" do
     subject(:calculate_moon_illuminated_fraction) do
-      calculation.calculate_moon_illuminated_fraction(
-        moon_phase_angle: 69.0756 # example 48.a (A.A. p. 347)
-      )
+      calculation.calculate_moon_illuminated_fraction(moon_phase_angle: moon_phase_angle)
     end
+
+    # example 48.a (A.A. p. 347)
+    let(:moon_phase_angle) { Lunation::Angle.from_decimal_degrees(69.0756) }
 
     it { expect(calculate_moon_illuminated_fraction).to eq(0.6786) }
   end
@@ -20,21 +21,24 @@ RSpec.describe Lunation::Calculation do
       calculation.calculate_moon_phase_angle(
         earth_sun_distance_in_km: 149_971_520, # R
         earth_moon_distance: 368_410, # Delta
-        moon_geocentric_elongation: 110.7929 # Psi
+        moon_geocentric_elongation: Lunation::Angle.from_decimal_degrees(110.7929) # Psi
       )
     end
 
-    it {
-      expect(calculate_moon_phase_angle.round(4)).to eq(69.0756)
-    } # example 48.a (A.A. p. 347)
+    # example 48.a (A.A. p. 347)
+    it { expect(calculate_moon_phase_angle.decimal_degrees.round(4)).to eq(69.0756) }
   end
 
   describe "calculate_earth_sun_distance" do
     subject(:calculate_earth_sun_distance) do
       calculation.calculate_earth_sun_distance(
         earth_eccentricity: 0.016711668, # (e) A.A. p. 165
-        sun_true_anomaly: 278.99397 - 1.89732 # (v = M + C) A.A. p. 165
+        sun_true_anomaly: sun_true_anomaly
       )
+    end
+
+    let(:sun_true_anomaly) do
+      Lunation::Angle.from_decimal_degrees(278.99397 - 1.89732) # (v = M + C) A.A. p. 165
     end
 
     # 1992-10-13 at 0 TD
@@ -374,7 +378,7 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.072183436 } # 1992-10-13 0h TD
 
     # example 25.a (A.A. p. 165)
-    it { expect(calculate_sun_mean_anomaly.round(5)).to eq(278.99397) }
+    it { expect(calculate_sun_mean_anomaly.decimal_degrees.round(5)).to eq(278.99397) }
   end
 
   describe "calculate_sun_mean_anomaly2" do
@@ -385,13 +389,13 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
     # example 22.a (A.A. p. 148)
-    it { expect(calculate_sun_mean_anomaly2.round(5)).to eq(94.9792) }
+    it { expect(calculate_sun_mean_anomaly2.decimal_degrees.round(5)).to eq(94.9792) }
   end
 
   describe "calculate_sun_equation_center" do
     subject(:calculate_sun_equation_center) do
       calculation.calculate_sun_equation_center(
-        sun_mean_anomaly: 278.99397 # (M)
+        sun_mean_anomaly: Lunation::Angle.from_decimal_degrees(278.99397) # (M)
       )
     end
 
@@ -400,33 +404,56 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.072183436 } # (T) 1992-10-13 0h TD
 
     # example 25.a A.A. p. 165
-    it { expect(calculate_sun_equation_center).to eq(-1.89732) }
+    it { expect(calculate_sun_equation_center.decimal_degrees.round(5)).to eq(-1.89732) }
   end
 
   describe "calculate_moon_geocentric_elongation" do
     subject(:calculate_moon_geocentric_elongation) do
       calculation.calculate_moon_geocentric_elongation(
-        sun_geocentric_right_ascension: 20.6579, # (alpha zero)
-        sun_geocentric_declination: 8.6964, # (delta zero)
-        moon_geocentric_right_ascension: 134.6885, # (alpha)
-        moon_geocentric_declination: 13.7684 # delta
+        sun_geocentric_right_ascension: sun_geocentric_right_ascension,
+        sun_geocentric_declination: sun_geocentric_declination,
+        moon_geocentric_right_ascension: moon_geocentric_right_ascension,
+        moon_geocentric_declination: moon_geocentric_declination
       )
     end
 
-    # example 48.a A.A. p. 347
-    it { expect(calculate_moon_geocentric_elongation).to eq(110.7929) } # psi
+    let(:sun_geocentric_right_ascension) do
+      Lunation::Angle.from_decimal_degrees(20.6579) # (alpha zero)
+    end
+    let(:sun_geocentric_declination) do
+      Lunation::Angle.from_decimal_degrees(8.6964) # (delta zero)
+    end
+    let(:moon_geocentric_right_ascension) do
+      Lunation::Angle.from_decimal_degrees(134.6885) # (alpha)
+    end
+    let(:moon_geocentric_declination) do
+      Lunation::Angle.from_decimal_degrees(13.7684) # delta
+    end
+
+    # example 48.a A.A. p. 347 (psi)
+    it { expect(calculate_moon_geocentric_elongation.decimal_degrees.round(4)).to eq(110.7929) } # rubocop:disable Layout/LineLength
   end
 
   describe "calculate_sun_geocentric_declination" do
     subject(:calculate_sun_geocentric_declination) do
       calculation.calculate_sun_geocentric_declination(
-        corrected_ecliptic_true_obliquity: 23.43999, # true epsilon
-        sun_ecliptical_longitude: 199.90895 # lambda
+        corrected_ecliptic_true_obliquity: corrected_ecliptic_true_obliquity,
+        sun_ecliptical_longitude: sun_ecliptical_longitude
       )
     end
 
+    # true epsilon
+    let(:corrected_ecliptic_true_obliquity) do
+      Lunation::Angle.from_decimal_degrees(23.43999)
+    end
+    # lambda
+    let(:sun_ecliptical_longitude) do
+      Lunation::Angle.from_decimal_degrees(199.90895)
+    end
     # example 25.b A.A. p. 169
-    it { expect(calculate_sun_geocentric_declination).to eq(-7.78507) }
+    it {
+      expect(calculate_sun_geocentric_declination.decimal_degrees.round(5)).to eq(-7.78507)
+    }
   end
 
   describe "calculate_earth_moon_distance" do
@@ -460,7 +487,9 @@ RSpec.describe Lunation::Calculation do
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(calculate_moon_mean_longitude).to eq(134.290182) } # A.A. p. 342
+    it {
+      expect(calculate_moon_mean_longitude.decimal_degrees.round(6)).to eq(134.290182)
+    } # A.A. p. 342
   end
 
   describe "calculate_moon_mean_elongation" do
@@ -472,7 +501,9 @@ RSpec.describe Lunation::Calculation do
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(calculate_moon_mean_elongation).to eq(113.842304) }
+    it {
+      expect(calculate_moon_mean_elongation.decimal_degrees.round(6)).to eq(113.842304)
+    }
   end
 
   describe "calculate_moon_mean_anomaly" do
@@ -482,7 +513,7 @@ RSpec.describe Lunation::Calculation do
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(calculate_moon_mean_anomaly).to eq(5.150833) }
+    it { expect(calculate_moon_mean_anomaly.decimal_degrees.round(6)).to eq(5.150833) }
   end
 
   describe "calculate_moon_mean_anomaly2" do
@@ -493,7 +524,7 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
     # example 22.a, A.A. p. 148
-    it { expect(calculate_moon_mean_anomaly2).to eq(229.2784) }
+    it { expect(calculate_moon_mean_anomaly2.decimal_degrees.round(4)).to eq(229.2784) }
   end
 
   describe "calculate_moon_argument_of_latitude" do
@@ -505,7 +536,9 @@ RSpec.describe Lunation::Calculation do
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(calculate_moon_argument_of_latitude).to eq(219.889721) }
+    it {
+      expect(calculate_moon_argument_of_latitude.decimal_degrees.round(6)).to eq(219.889721)
+    }
   end
 
   describe "calculate_moon_argument_of_latitude2" do
@@ -518,7 +551,7 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
     it {
-      expect(calculate_moon_argument_of_latitude2).to eq(143.4079)
+      expect(calculate_moon_argument_of_latitude2.decimal_degrees.round(4)).to eq(143.4079)
     } # example 22.a, A.A. p. 148
   end
 
@@ -529,7 +562,9 @@ RSpec.describe Lunation::Calculation do
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(calculate_correction_venus).to eq(109.57) } # example 47.a (A.A. p. 342)
+    it {
+      expect(calculate_correction_venus.decimal_degrees.round(2)).to eq(109.57)
+    } # example 47.a (A.A. p. 342)
   end
 
   describe "calculate_correction_jupiter" do
@@ -539,7 +574,7 @@ RSpec.describe Lunation::Calculation do
 
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
-    it { expect(calculate_correction_jupiter).to eq(123.78) }
+    it { expect(calculate_correction_jupiter.decimal_degrees.round(2)).to eq(123.78) }
   end
 
   describe "calculate_correction_latitude" do
@@ -550,7 +585,7 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.077221081451 } # 1992-04-12 0h TD
 
     # example 47.a (A.A. p. 342)
-    it { expect(calculate_correction_latitude).to eq(229.53) }
+    it { expect(calculate_correction_latitude.decimal_degrees.round(2)).to eq(229.53) }
   end
 
   describe "calculate_moon_heliocentric_longitude" do
@@ -568,14 +603,20 @@ RSpec.describe Lunation::Calculation do
     end
 
     # example 47.a A.A. p. 342
-    let(:correction_jupiter) { 123.78 } # (A2)
-    let(:correction_venus) { 109.57 } # (A1)
-    let(:earth_eccentricity_correction) { 1.000194 } # (E)
-    let(:moon_argument_of_latitude) { 219.889721 } # (F)
-    let(:moon_mean_anomaly) { 5.150833 } # (M')
-    let(:moon_mean_elongation) { 113.842304 } # (D)
-    let(:moon_mean_longitude) { 134.290182 } # (L')
-    let(:sun_mean_anomaly) { 97.643514 } # (M)
+    let(:correction_jupiter) { Lunation::Angle.from_decimal_degrees(123.78) } # (A2)
+    let(:correction_venus) { Lunation::Angle.from_decimal_degrees(109.57) } # (A1)
+    # (E)
+    let(:earth_eccentricity_correction) do
+      Lunation::Angle.from_decimal_degrees(1.000194)
+    end
+    # (F)
+    let(:moon_argument_of_latitude) do
+      Lunation::Angle.from_decimal_degrees(219.889721)
+    end
+    let(:moon_mean_anomaly) { Lunation::Angle.from_decimal_degrees(5.150833) } # (M')
+    let(:moon_mean_elongation) { Lunation::Angle.from_decimal_degrees(113.842304) } # (D)
+    let(:moon_mean_longitude) { Lunation::Angle.from_decimal_degrees(134.290182) } # (L')
+    let(:sun_mean_anomaly) { Lunation::Angle.from_decimal_degrees(97.643514) } # (M)
 
     it { expect(calculate_moon_heliocentric_longitude).to eq(-1_127_527) }
   end
@@ -592,11 +633,17 @@ RSpec.describe Lunation::Calculation do
     end
 
     # example 47.a A.A. p. 342
-    let(:earth_eccentricity_correction) { 1.000194 } # (E)
-    let(:moon_argument_of_latitude) { 219.889721 } # (F)
-    let(:moon_mean_anomaly) { 5.15083 } # (M')
-    let(:moon_mean_elongation) { 113.842304 } # (D)
-    let(:sun_mean_anomaly) { 97.643514 } # (M)
+    # (E)
+    let(:earth_eccentricity_correction) do
+      Lunation::Angle.from_decimal_degrees(1.000194)
+    end
+    # (F)
+    let(:moon_argument_of_latitude) do
+      Lunation::Angle.from_decimal_degrees(219.889721)
+    end
+    let(:moon_mean_anomaly) { Lunation::Angle.from_decimal_degrees(5.15083) } # (M')
+    let(:moon_mean_elongation) { Lunation::Angle.from_decimal_degrees(113.842304) } # (D)
+    let(:sun_mean_anomaly) { Lunation::Angle.from_decimal_degrees(97.643514) } # (M)
 
     it { expect(calculate_moon_heliocentric_distance).to eq(-16_590_875) }
   end
@@ -615,14 +662,20 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:correction_latitude) { 229.53 } # (A3)
-    let(:correction_venus) { 109.57 } # (A1)
-    let(:earth_eccentricity_correction) { 1.000194 } # (E)
-    let(:moon_argument_of_latitude) { 219.889721 } # (F)
-    let(:moon_mean_anomaly) { 5.150833 } # (M')
-    let(:moon_mean_elongation) { 113.842304 } # (D)
-    let(:moon_mean_longitude) { 134.290182 } # (L')
-    let(:sun_mean_anomaly) { 97.643514 } # (M)
+    let(:correction_latitude) { Lunation::Angle.from_decimal_degrees(229.53) } # (A3)
+    let(:correction_venus) { Lunation::Angle.from_decimal_degrees(109.57) } # (A1)
+    # (E)
+    let(:earth_eccentricity_correction) do
+      Lunation::Angle.from_decimal_degrees(1.000194)
+    end
+    # (F)
+    let(:moon_argument_of_latitude) do
+      Lunation::Angle.from_decimal_degrees(219.889721)
+    end
+    let(:moon_mean_anomaly) { Lunation::Angle.from_decimal_degrees(5.150833) } # (M')
+    let(:moon_mean_elongation) { Lunation::Angle.from_decimal_degrees(113.842304) } # (D)
+    let(:moon_mean_longitude) { Lunation::Angle.from_decimal_degrees(134.290182) } # (L')
+    let(:sun_mean_anomaly) { Lunation::Angle.from_decimal_degrees(97.643514) } # (M)
 
     it { expect(calculate_moon_heliocentric_latitude).to eq(-3_229_126) }
   end
@@ -636,9 +689,9 @@ RSpec.describe Lunation::Calculation do
     end
 
     let(:moon_heliocentric_longitude) { -1_127_527 } # (Sigma l)
-    let(:moon_mean_longitude) { 134.290182 } # (L')
+    let(:moon_mean_longitude) { Lunation::Angle.from_decimal_degrees(134.290182) } # (L')
 
-    it { expect(calculate_moon_geocentric_longitude).to eq(133.162655) }
+    it { expect(calculate_moon_geocentric_longitude.decimal_degrees).to eq(133.162655) }
   end
 
   describe "calculate_moon_ecliptic_latitude" do
@@ -650,7 +703,7 @@ RSpec.describe Lunation::Calculation do
 
     let(:moon_heliocentric_latitude) { -3_229_126 } # (Sigma b)
 
-    it { expect(calculate_moon_ecliptic_latitude).to eq(-3.229126) }
+    it { expect(calculate_moon_ecliptic_latitude.decimal_degrees).to eq(-3.229126) }
   end
 
   describe "calculate_equitorial_horizontal_parallax" do
@@ -660,7 +713,9 @@ RSpec.describe Lunation::Calculation do
 
     let(:earth_moon_distance) { 368_409.7 } # (Sigma r) example 47.a, A.A. p. 342
 
-    it { expect(calculate_equitorial_horizontal_parallax).to eq(0.991990) } # A.A. p. 343
+    it {
+      expect(calculate_equitorial_horizontal_parallax.decimal_degrees.round(5)).to eq(0.991990)
+    } # A.A. p. 343
   end
 
   describe "calculate_earth_nutation_in_longitude" do
@@ -679,13 +734,17 @@ RSpec.describe Lunation::Calculation do
     end
 
     let(:time) { -0.127296372348 } # T, 1987-04-10
-    let(:moon_mean_elongation) { 136.9623 } # D
-    let(:sun_mean_anomaly) { 94.9792 } # M
-    let(:moon_mean_anomaly) { 229.2784 } # M'
-    let(:moon_argument_of_latitude) { 143.4079 } # F
-    let(:moon_orbital_longitude_mean_ascending_node) { 11.2531 } # Omega
-
-    it { expect(calculate_earth_nutation_in_longitude).to eq(-3.788) }
+    let(:moon_mean_elongation) { Lunation::Angle.from_decimal_degrees(136.9623) } # D
+    let(:sun_mean_anomaly) { Lunation::Angle.from_decimal_degrees(94.9792) } # M
+    let(:moon_mean_anomaly) { Lunation::Angle.from_decimal_degrees(229.2784) } # M'
+    let(:moon_argument_of_latitude) { Lunation::Angle.from_decimal_degrees(143.4079) } # F
+    # Omega
+    let(:moon_orbital_longitude_mean_ascending_node) do
+      Lunation::Angle.from_decimal_degrees(11.2531)
+    end
+    it {
+      expect(calculate_earth_nutation_in_longitude.decimal_arcseconds.round(3)).to eq(-3.788)
+    }
   end
 
   describe "calculate_moon_ecliptic_longitude" do
@@ -697,10 +756,17 @@ RSpec.describe Lunation::Calculation do
     end
 
     # example 47.a A.A. p. 343
-    let(:moon_geocentric_longitude) { 133.162655 } # (lambda)
-    let(:earth_nutation_in_longitude) { 16.595 } # (Delta psi)
-
-    it { expect(calculate_moon_ecliptic_longitude).to eq(133.167265) } # A.A. p. 343
+    # (lambda)
+    let(:moon_geocentric_longitude) do
+      Lunation::Angle.from_decimal_degrees(133.162655)
+    end
+    # (Delta psi)
+    let(:earth_nutation_in_longitude) do
+      Lunation::Angle.from_decimal_arcseconds(16.595)
+    end
+    it {
+      expect(calculate_moon_ecliptic_longitude.decimal_degrees.round(6)).to eq(133.167265)
+    } # A.A. p. 343
   end
 
   describe "calculate_sun_ecliptical_longitude" do
@@ -711,11 +777,18 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:sun_true_longitude) { 199.90988 } # Symbol of the sun
-    let(:moon_orbital_longitude_mean_ascending_node) { 264.65 } # Omega
-
+    # Symbol of the sun
+    let(:sun_true_longitude) do
+      Lunation::Angle.from_decimal_degrees(199.90988)
+    end
+    # Omega
+    let(:moon_orbital_longitude_mean_ascending_node) do
+      Lunation::Angle.from_decimal_degrees(264.65)
+    end
     # example 25.a A.A. p. 165
-    it { expect(calculate_sun_ecliptical_longitude).to eq(199.90895) }
+    it {
+      expect(calculate_sun_ecliptical_longitude.decimal_degrees.round(5)).to eq(199.90895)
+    }
   end
 
   describe "calculate_sun_geocentric_mean_longitude" do
@@ -728,7 +801,9 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.072183436 } # T, 1992-10-13 0h TD
 
     # example 25.a A.A. p. 165
-    it { expect(calculate_sun_geocentric_mean_longitude).to eq(201.80720) }
+    it {
+      expect(calculate_sun_geocentric_mean_longitude.decimal_degrees.round(5)).to eq(201.80720)
+    }
   end
 
   describe "calculate_sun_true_longitude" do
@@ -739,11 +814,16 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:sun_geocentric_mean_longitude) { 201.80720 } # L0
-    let(:sun_equation_center) { -1.89732 } # C
-
+    # L0
+    let(:sun_geocentric_mean_longitude) do
+      Lunation::Angle.from_decimal_degrees(201.80720)
+    end
+    # C
+    let(:sun_equation_center) do
+      Lunation::Angle.from_decimal_degrees(-1.89732, normalize: false)
+    end
     # example 25.a A.A. p. 165
-    it { expect(calculate_sun_true_longitude).to eq(199.90988) }
+    it { expect(calculate_sun_true_longitude.decimal_degrees.round(5)).to eq(199.90988) }
   end
 
   describe "calculate_sun_ecliptical_latitude" do
@@ -754,9 +834,13 @@ RSpec.describe Lunation::Calculation do
     end
 
     # example 25.b A.A. p. 169
-    let(:earth_ecliptical_latitude) { -0.00000312 } # rads
-
-    it { expect(calculate_sun_ecliptical_latitude).to eq(0.00000312) } # rads
+    # rads
+    let(:earth_ecliptical_latitude) do
+      Lunation::Angle.from_radians(-0.00000312, normalize: false)
+    end
+    it {
+      expect(calculate_sun_ecliptical_latitude.radians.round(8)).to eq(0.00000312)
+    } # rads
   end
 
   describe "calculate_earth_abberation" do
@@ -769,7 +853,9 @@ RSpec.describe Lunation::Calculation do
     # example 25.b A.A. p. 169
     let(:earth_sun_distance) { 0.99760775 } # R (AU)
 
-    it { expect(calculate_earth_abberation).to eq(-20.539) } # seconds
+    it {
+      expect(calculate_earth_abberation.decimal_arcseconds.round(3)).to eq(-20.539)
+    } # seconds
   end
 
   describe "calculate_nutation_in_obliquity" do
@@ -789,13 +875,29 @@ RSpec.describe Lunation::Calculation do
 
     # example 22.a A.A. p. 148
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
-    let(:moon_mean_elongation) { 136.9623 } # (D) A.A. p. 148
-    let(:sun_mean_anomaly) { 94.9792 } # (M) A.A. p. 148
-    let(:moon_mean_anomaly) { 229.2784 } # (M') A.A. p. 148
-    let(:moon_argument_of_latitude) { 143.4079 } # (F) A.A. p. 148
-    let(:moon_orbital_longitude_mean_ascending_node) { 11.2531 } # (Omega) A.A. p. 148
-
-    it { expect(calculate_nutation_in_obliquity).to eq(9.443) }
+    # (D) A.A. p. 148
+    let(:moon_mean_elongation) do
+      Lunation::Angle.from_decimal_degrees(136.9623)
+    end
+    # (M) A.A. p. 148
+    let(:sun_mean_anomaly) do
+      Lunation::Angle.from_decimal_degrees(94.9792)
+    end
+    # (M') A.A. p. 148
+    let(:moon_mean_anomaly) do
+      Lunation::Angle.from_decimal_degrees(229.2784)
+    end
+    # (F) A.A. p. 148
+    let(:moon_argument_of_latitude) do
+      Lunation::Angle.from_decimal_degrees(143.4079)
+    end
+    # (Omega) A.A. p. 148
+    let(:moon_orbital_longitude_mean_ascending_node) do
+      Lunation::Angle.from_decimal_degrees(11.2531)
+    end
+    it {
+      expect(calculate_nutation_in_obliquity.decimal_arcseconds.round(3)).to eq(9.443)
+    }
   end
 
   # (Omega) A.A. p. 148
@@ -810,7 +912,9 @@ RSpec.describe Lunation::Calculation do
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD
 
     # (Delta epsilon) A.A. p. 148
-    it { expect(calculate_moon_orbital_longitude_mean_ascending_node).to eq(11.2531) }
+    it {
+      expect(calculate_moon_orbital_longitude_mean_ascending_node.decimal_degrees.round(4)).to eq(11.2531)
+    }
   end
 
   describe "julian_myriads_since_j2000" do
@@ -837,8 +941,11 @@ RSpec.describe Lunation::Calculation do
     # example 22.a A.A. p. 148
     let(:julian_myriads_since_j2000) { -0.00127296372348 } # (U)
 
-    # converted from 23deg 26'27''.407
-    it { expect(calculate_ecliptic_mean_obliquity).to eq(23.440946) } # (epsilon 0)
+    it { expect(calculate_ecliptic_mean_obliquity.degrees).to eq(23) }
+    it { expect(calculate_ecliptic_mean_obliquity.arcminutes).to eq(26) }
+    it {
+      expect(calculate_ecliptic_mean_obliquity.decimal_arcseconds.round(3)).to eq(27.407)
+    }
   end
 
   describe "calculate_ecliptic_true_obliquity" do
@@ -849,11 +956,18 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:ecliptic_mean_obliquity) { 23.440946 } # (ε0)
-    let(:nutation_in_obliquity) { 9.443 } # (Δε)
+    # (ε0)
+    let(:ecliptic_mean_obliquity) do
+      Lunation::Angle.from_decimal_degrees(23.440946)
+    end
+    let(:nutation_in_obliquity) { Lunation::Angle.from_decimal_arcseconds(9.443) } # (Δε)
 
     # converted from 23deg26'36".850 (example 22.a A.A. p. 148)
-    it { expect(calculate_ecliptic_true_obliquity).to eq(23.443569) }
+    it { expect(calculate_ecliptic_true_obliquity.degrees).to eq(23) }
+    it { expect(calculate_ecliptic_true_obliquity.arcminutes).to eq(26) }
+    it {
+      expect(calculate_ecliptic_true_obliquity.decimal_arcseconds.round(3)).to eq(36.849)
+    }
   end
 
   describe "calculate_corrected_ecliptic_true_obliquity" do
@@ -864,11 +978,22 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:ecliptic_mean_obliquity) { 23.44023 } # (ε0)
-    let(:moon_orbital_longitude_mean_ascending_node) { 264.65 } # (omega)
-
+    # (ε0)
+    let(:ecliptic_mean_obliquity) do
+      Lunation::Angle.from_degrees(
+        degrees: 23,
+        arcminutes: 26,
+        decimal_arcseconds: 24.83
+      )
+    end
+    # (omega)
+    let(:moon_orbital_longitude_mean_ascending_node) do
+      Lunation::Angle.from_decimal_degrees(264.65)
+    end
     # example 25.a, A.A. p. 165
-    it { expect(calculate_corrected_ecliptic_true_obliquity).to eq(23.43999) }
+    it {
+      expect(calculate_corrected_ecliptic_true_obliquity.decimal_degrees.round(5)).to eq(23.43999)
+    }
   end
 
   describe "calculate_moon_geocentric_right_ascension" do
@@ -881,20 +1006,35 @@ RSpec.describe Lunation::Calculation do
     end
 
     context "when example 13.a (A.A. p. 95)" do
-      let(:moon_ecliptic_longitude) { 113.215630 } # λ
-      let(:ecliptic_true_obliquity) { 23.4392911 } # ε
-      let(:moon_ecliptic_latitude) { 6.684170 } # β
+      # λ
+      let(:moon_ecliptic_longitude) do
+        Lunation::Angle.from_decimal_degrees(113.215630)
+      end
+      # ε
+      let(:ecliptic_true_obliquity) do
+        Lunation::Angle.from_decimal_degrees(23.4392911)
+      end
+      let(:moon_ecliptic_latitude) { Lunation::Angle.from_decimal_degrees(6.684170) } # β
 
-      # reference value is 116.328943
-      it { expect(calculate_moon_geocentric_right_ascension).to eq(116.328943) }
+      it {
+        expect(calculate_moon_geocentric_right_ascension.decimal_degrees.round(6)).to eq(116.328942)
+      }
     end
 
     context "when example 47.a (A.A. p. 343)" do
-      let(:moon_ecliptic_longitude) { 133.167265 } # apparent λ
-      let(:ecliptic_true_obliquity) { 23.440636 } # ε
-      let(:moon_ecliptic_latitude) { -3.229126 } # β
+      # apparent λ
+      let(:moon_ecliptic_longitude) do
+        Lunation::Angle.from_decimal_degrees(133.167265)
+      end
+      # ε
+      let(:ecliptic_true_obliquity) do
+        Lunation::Angle.from_decimal_degrees(23.440636)
+      end
+      let(:moon_ecliptic_latitude) { Lunation::Angle.from_decimal_degrees(-3.229126) } # β
 
-      it { expect(calculate_moon_geocentric_right_ascension).to eq(134.688470) }
+      it {
+        expect(calculate_moon_geocentric_right_ascension.decimal_degrees.round(6)).to eq(134.688470)
+      }
     end
   end
 
@@ -906,10 +1046,16 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:corrected_ecliptic_true_obliquity) { 23.43999 } # ε
-    let(:sun_ecliptical_longitude) { 199.90895 } # λ
+    # ε
+    let(:corrected_ecliptic_true_obliquity) do
+      Lunation::Angle.from_decimal_degrees(23.43999)
+    end
+    let(:sun_ecliptical_longitude) { Lunation::Angle.from_decimal_degrees(199.90895) } # λ
 
-    it { expect(calculate_sun_geocentric_right_ascension).to eq(198.38083) }
+    # example 25.a, A.A. p. 165
+    it {
+      expect(calculate_sun_geocentric_right_ascension.decimal_degrees.round(5)).to eq(198.38083)
+    }
   end
 
   describe "calculate_moon_geocentric_declination" do
@@ -921,11 +1067,16 @@ RSpec.describe Lunation::Calculation do
       )
     end
 
-    let(:moon_ecliptic_longitude) { 133.167265 } # apparent λ
-    let(:ecliptic_true_obliquity) { 23.440636 } # ε
-    let(:moon_ecliptic_latitude) { -3.229126 } # β
+    # apparent λ
+    let(:moon_ecliptic_longitude) do
+      Lunation::Angle.from_decimal_degrees(133.167265)
+    end
+    let(:ecliptic_true_obliquity) { Lunation::Angle.from_decimal_degrees(23.440636) } # ε
+    let(:moon_ecliptic_latitude) { Lunation::Angle.from_decimal_degrees(-3.229126) } # β
 
-    it { expect(calculate_moon_geocentric_declination).to eq(13.768368) }
+    it {
+      expect(calculate_moon_geocentric_declination.decimal_degrees.round(6)).to eq(13.768368)
+    }
   end
 
   describe "calculate_earth_ecliptical_longitude" do
@@ -940,7 +1091,9 @@ RSpec.describe Lunation::Calculation do
     let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
 
     # example 25.b A.A. p. 169
-    it { expect(calculate_earth_ecliptical_longitude).to eq(-43.63484796) }
+    it {
+      expect(calculate_earth_ecliptical_longitude.decimal_degrees.round(6)).to eq(19.907372)
+    }
   end
 
   # describe "earth_radius_vector" do
@@ -968,6 +1121,6 @@ RSpec.describe Lunation::Calculation do
     let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
 
     # example 25.b A.A. p. 169
-    it { expect(calculate_earth_ecliptical_latitude).to eq(-0.00000312) }
+    it { expect(calculate_earth_ecliptical_latitude.radians.round(8)).to eq(-0.00000312) }
   end
 end

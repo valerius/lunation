@@ -606,9 +606,7 @@ RSpec.describe Lunation::Calculation do
     let(:correction_jupiter) { Lunation::Angle.from_decimal_degrees(123.78) } # (A2)
     let(:correction_venus) { Lunation::Angle.from_decimal_degrees(109.57) } # (A1)
     # (E)
-    let(:earth_eccentricity_correction) do
-      Lunation::Angle.from_decimal_degrees(1.000194)
-    end
+    let(:earth_eccentricity_correction) { 1.000194 }
     # (F)
     let(:moon_argument_of_latitude) do
       Lunation::Angle.from_decimal_degrees(219.889721)
@@ -635,7 +633,7 @@ RSpec.describe Lunation::Calculation do
     # example 47.a A.A. p. 342
     # (E)
     let(:earth_eccentricity_correction) do
-      Lunation::Angle.from_decimal_degrees(1.000194)
+      1.000194
     end
     # (F)
     let(:moon_argument_of_latitude) do
@@ -665,9 +663,7 @@ RSpec.describe Lunation::Calculation do
     let(:correction_latitude) { Lunation::Angle.from_decimal_degrees(229.53) } # (A3)
     let(:correction_venus) { Lunation::Angle.from_decimal_degrees(109.57) } # (A1)
     # (E)
-    let(:earth_eccentricity_correction) do
-      Lunation::Angle.from_decimal_degrees(1.000194)
-    end
+    let(:earth_eccentricity_correction) { 1.000194 }
     # (F)
     let(:moon_argument_of_latitude) do
       Lunation::Angle.from_decimal_degrees(219.889721)

@@ -15,6 +15,10 @@ RSpec.describe "Nutation and obliquity" do
     expect(calculation.time).to eq(-0.127296372348)
   end
 
+  specify "it calculates the moon's mean elongation from the sun correctly" do
+    expect(calculation.calculate_moon_mean_elongation_from_the_sun.decimal_degrees.round(4)).to eq(136.9623)
+  end
+
   specify "it calculates the Sun's mean anomaly (M) correctly" do
     expect(calculation.calculate_sun_mean_anomaly2.decimal_degrees.round(4)).to eq(94.9792)
   end

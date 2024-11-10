@@ -1,6 +1,11 @@
 module Lunation
   class Calculation
     module NutationAndObliquity
+      # (D) Mean elongation of the moon from the sun (A.A. p. 144)
+      def calculate_moon_mean_elongation_from_the_sun
+        Angle.from_decimal_degrees(297.85036 + 445_267.111480 * time - 0.0019142 * time**2 + time**3 / 189_474.0)
+      end
+
       # (M) Sun mean_anomaly (A.A. p. 144)
       def calculate_sun_mean_anomaly2
         Angle.from_decimal_degrees(357.52772 + 35_999.050340 * time - 0.0001603 * time**2 - time**3 / 300_000.0)
@@ -26,7 +31,7 @@ module Lunation
 
       # (Delta Psi) nutation in longitude (A.A. p. 144)
       def calculate_earth_nutation_in_longitude(
-        moon_mean_elongation: calculate_moon_mean_elongation,
+        moon_mean_elongation: calculate_moon_mean_elongation_from_the_sun,
         sun_mean_anomaly: calculate_sun_mean_anomaly2,
         moon_mean_anomaly: calculate_moon_mean_anomaly2,
         moon_argument_of_latitude: calculate_moon_argument_of_latitude2,
@@ -48,7 +53,7 @@ module Lunation
 
       # (Delta epsilon) nutation in obliquity (A.A. p. 144)
       def calculate_nutation_in_obliquity(
-        moon_mean_elongation: calculate_moon_mean_elongation,
+        moon_mean_elongation: calculate_moon_mean_elongation_from_the_sun,
         sun_mean_anomaly: calculate_sun_mean_anomaly2,
         moon_mean_anomaly: calculate_moon_mean_anomaly2,
         moon_argument_of_latitude: calculate_moon_argument_of_latitude2,

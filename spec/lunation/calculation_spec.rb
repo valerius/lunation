@@ -1139,4 +1139,18 @@ RSpec.describe Lunation::Calculation do
     # example 25.b A.A. p. 169
     it { expect(calculate_earth_ecliptical_latitude.radians.round(8)).to eq(-0.00000312) }
   end
+
+  describe "calculate_moon_mean_elongation_from_the_sun" do
+    subject(:calculate_moon_mean_elongation_from_the_sun) do
+      calculation.calculate_moon_mean_elongation_from_the_sun
+    end
+
+    before { allow(calculation).to receive(:time).and_return(time) }
+
+    let(:time) { -0.127296372348 } # 1987-04-10 0h TD
+
+    it {
+      expect(calculate_moon_mean_elongation_from_the_sun.decimal_degrees.round(4)).to eq(136.9623)
+    }
+  end
 end

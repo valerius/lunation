@@ -773,7 +773,7 @@ RSpec.describe Lunation::Calculation do
     subject(:calculate_sun_ecliptical_longitude) do
       calculation.calculate_sun_ecliptical_longitude(
         sun_true_longitude: sun_true_longitude,
-        moon_orbital_longitude_mean_ascending_node: moon_orbital_longitude_mean_ascending_node
+        moon_orbital_longitude_mean_ascending_node2: moon_orbital_longitude_mean_ascending_node2
       )
     end
 
@@ -782,7 +782,7 @@ RSpec.describe Lunation::Calculation do
       Lunation::Angle.from_decimal_degrees(199.90988)
     end
     # Omega
-    let(:moon_orbital_longitude_mean_ascending_node) do
+    let(:moon_orbital_longitude_mean_ascending_node2) do
       Lunation::Angle.from_decimal_degrees(264.65)
     end
     # example 25.a A.A. p. 165
@@ -914,6 +914,22 @@ RSpec.describe Lunation::Calculation do
     # (Delta epsilon) A.A. p. 148
     it {
       expect(calculate_moon_orbital_longitude_mean_ascending_node.decimal_degrees.round(4)).to eq(11.2531)
+    }
+  end
+
+  describe "calculate_moon_orbital_longitude_mean_ascending_node2" do
+    subject(:calculate_moon_orbital_longitude_mean_ascending_node2) do
+      calculation.calculate_moon_orbital_longitude_mean_ascending_node2
+    end
+
+    before { allow(calculation).to receive_messages(time: time) }
+
+    # example 25.a A.A. p. 165
+    let(:time) { -0.072183436 } # 1992-10-13 0h TD
+
+    # (Omega) A.A. p. 165
+    it {
+      expect(calculate_moon_orbital_longitude_mean_ascending_node2.decimal_degrees.round(2)).to eq(264.65)
     }
   end
 

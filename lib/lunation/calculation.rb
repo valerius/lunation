@@ -460,11 +460,11 @@ module Lunation
     # (apparent lambda0) Sun apparent longitude (A.A. p. 169)
     def calculate_sun_ecliptical_longitude(
       sun_true_longitude: calculate_sun_true_longitude,
-      moon_orbital_longitude_mean_ascending_node: calculate_moon_orbital_longitude_mean_ascending_node
+      moon_orbital_longitude_mean_ascending_node2: calculate_moon_orbital_longitude_mean_ascending_node2
     )
       result = sun_true_longitude.decimal_degrees +
                - 0.00569 +
-               - 0.00478 * Math.sin(moon_orbital_longitude_mean_ascending_node.radians)
+               - 0.00478 * Math.sin(moon_orbital_longitude_mean_ascending_node2.radians)
       Angle.from_decimal_degrees(result)
     end
 
@@ -519,6 +519,12 @@ module Lunation
     #   measured from the mean equinox of the date (A.A. p. 144)
     def calculate_moon_orbital_longitude_mean_ascending_node
       Angle.from_decimal_degrees(125.04452 - 1934.136261 * time + 0.0020708 * time**2 + time**3 / 450_000.0)
+    end
+
+    # (Omega) Longitude of the ascending node of the Moon's mean orbit on the ecliptic (low precision)
+    #   A.A. p. 164
+    def calculate_moon_orbital_longitude_mean_ascending_node2
+      Angle.from_decimal_degrees(125.04 - 1934.136 * time)
     end
 
     # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)

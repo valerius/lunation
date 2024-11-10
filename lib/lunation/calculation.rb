@@ -1,10 +1,12 @@
 require "date"
 require "yaml"
 require_relative "calculation/nutation_and_obliquity"
+require_relative "calculation/position_of_the_sun"
 
 module Lunation
   class Calculation
     include NutationAndObliquity
+    include PositionOfTheSun
 
     SECONDS_PER_DAY = 86_400
     PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
@@ -48,24 +50,9 @@ module Lunation
       Angle.from_radians(Math.atan2(numerator, denominator))
     end
 
-    # (R) earth_sun_distance (25.5, A.A. p. 164)
-    def calculate_earth_sun_distance(
-      earth_eccentricity: calculate_earth_eccentricity,
-      sun_true_anomaly: calculate_sun_true_anomaly
-    )
-      result = 1.000001018 * (1 - earth_eccentricity**2) / (1 + earth_eccentricity * Math.cos(sun_true_anomaly.radians))
-      result.round(7)
-    end
-
     # (R) earth_sun_distance in km (25.5, A.A. p. 164)
     def calculate_earth_sun_distance_in_km(earth_sun_distance: calculate_earth_sun_distance)
       (earth_sun_distance * 149_597_870).floor
-    end
-
-    # (e) eccentricity of the earth's orbit (25.4, A.A. p. 163)
-    def calculate_earth_eccentricity
-      result = 0.016708634 - 0.000042037 * time - 0.0000001267 * time**2
-      result.round(9)
     end
 
     # (E) Earth eccentricity (47.6 A.A. p. 338)
@@ -186,27 +173,6 @@ module Lunation
       dynamical_time.ajd.round(5)
     end
 
-    # (v) true anomaly of the sun (A.A. p. 164)
-    def calculate_sun_true_anomaly(
-      sun_mean_anomaly: calculate_sun_mean_anomaly,
-      sun_equation_center: calculate_sun_equation_center
-    )
-      sun_mean_anomaly + sun_equation_center
-    end
-
-    # (M) Sun mean_anomaly (25.3, A.A. p. 163)
-    def calculate_sun_mean_anomaly
-      Angle.from_decimal_degrees(357.52911 + 35_999.05029 * time - 0.0001537 * time**2)
-    end
-
-    # (C) Sun's equation of the center (A.A. p. 164)
-    def calculate_sun_equation_center(sun_mean_anomaly: calculate_sun_mean_anomaly)
-      result = (1.914602 - 0.004817 * time - 0.000014 * time**2) * Math.sin(sun_mean_anomaly.radians) +
-               (0.019993 - 0.000101 * time) * Math.sin(2 * sun_mean_anomaly.radians) +
-               0.000289 * Math.sin(3 * sun_mean_anomaly.radians)
-      Angle.from_decimal_degrees(result, normalize: false)
-    end
-
     # (psi) geocentric elongation of the moon (48.2, A.A. p. 345)
     def calculate_moon_geocentric_elongation(
       sun_geocentric_declination: calculate_sun_geocentric_declination,
@@ -220,16 +186,6 @@ module Lunation
                Math.cos(moon_geocentric_declination.radians) *
                Math.cos((sun_geocentric_right_ascension - moon_geocentric_right_ascension).radians)
       Angle.from_radians(Math.acos(result))
-    end
-
-    # (delta0) geocentric declination (of the sun) (13.4) A.A. p. 93
-    def calculate_sun_geocentric_declination(
-      corrected_ecliptic_true_obliquity: calculate_corrected_ecliptic_true_obliquity,
-      sun_ecliptical_longitude: calculate_sun_ecliptical_longitude
-    )
-      result = Math.sin(corrected_ecliptic_true_obliquity.radians) *
-               Math.sin(sun_ecliptical_longitude.radians)
-      Angle.from_radians(Math.asin(result), normalize: false)
     end
 
     # (Delta) Earth-moon distance (in kilometers) (A.A. p. 342)
@@ -421,30 +377,6 @@ module Lunation
       # Angle.from_decimal_degrees(result)
     end
 
-    # (apparent lambda0) Sun apparent longitude (A.A. p. 169)
-    def calculate_sun_ecliptical_longitude(
-      sun_true_longitude: calculate_sun_true_longitude,
-      moon_orbital_longitude_mean_ascending_node2: calculate_moon_orbital_longitude_mean_ascending_node2
-    )
-      result = sun_true_longitude.decimal_degrees +
-               - 0.00569 +
-               - 0.00478 * Math.sin(moon_orbital_longitude_mean_ascending_node2.radians)
-      Angle.from_decimal_degrees(result)
-    end
-
-    # (L0) Geocentric mean longitude of the sun (25.2, A.A. p. 163)
-    def calculate_sun_geocentric_mean_longitude
-      Angle.from_decimal_degrees(280.46646 + 36_000.76983 * time + 0.0003032 * time**2)
-    end
-
-    # (Symbol of the sun) true longitude of the sun (A.A. p. 164)
-    def calculate_sun_true_longitude(
-      sun_geocentric_mean_longitude: calculate_sun_geocentric_mean_longitude,
-      sun_equation_center: calculate_sun_equation_center
-    )
-      sun_geocentric_mean_longitude + sun_equation_center
-    end
-
     # (apparent beta0) Sun apparent latitude (A.A. p. 169)
     def calculate_sun_ecliptical_latitude(
       earth_ecliptical_latitude: calculate_earth_ecliptical_latitude
@@ -457,25 +389,9 @@ module Lunation
       Angle.from_decimal_arcseconds(-(20.4898 / earth_sun_distance), normalize: false)
     end
 
-    # (Omega) Longitude of the ascending node of the Moon's mean orbit on the ecliptic (low precision)
-    #   A.A. p. 164
-    def calculate_moon_orbital_longitude_mean_ascending_node2
-      Angle.from_decimal_degrees(125.04 - 1934.136 * time)
-    end
-
     # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
     def julian_myriads_since_j2000
       time / 100.0
-    end
-
-    # (corrected ε) corrected true obliquity of the cliptic (A.A. p. 165)
-    def calculate_corrected_ecliptic_true_obliquity(
-      ecliptic_mean_obliquity: calculate_ecliptic_mean_obliquity,
-      moon_orbital_longitude_mean_ascending_node: calculate_moon_orbital_longitude_mean_ascending_node
-    )
-      result = ecliptic_mean_obliquity.decimal_degrees +
-               0.00256 * Math.cos(moon_orbital_longitude_mean_ascending_node.radians)
-      Angle.from_decimal_degrees(result)
     end
 
     # (α) geocentric (apparent) right ascension of the moon (13.3 A.A. p. 93)
@@ -489,17 +405,6 @@ module Lunation
                   Math.tan(moon_ecliptic_latitude.radians) *
                   Math.sin(ecliptic_true_obliquity.radians)
       denominator = Math.cos(moon_ecliptic_longitude.radians)
-      Angle.from_radians(Math.atan2(numerator, denominator))
-    end
-
-    # (α0) geocentric (apparent) right ascension of the sun (25.6 A.A. p. 165)
-    def calculate_sun_geocentric_right_ascension(
-      corrected_ecliptic_true_obliquity: calculate_corrected_ecliptic_true_obliquity,
-      sun_ecliptical_longitude: calculate_sun_ecliptical_longitude
-    )
-      numerator = Math.cos(corrected_ecliptic_true_obliquity.radians) *
-                  Math.sin(sun_ecliptical_longitude.radians)
-      denominator = Math.cos(sun_ecliptical_longitude.radians)
       Angle.from_radians(Math.atan2(numerator, denominator))
     end
 

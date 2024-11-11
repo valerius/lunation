@@ -822,38 +822,6 @@ RSpec.describe Lunation::Calculation do
     it { expect(calculate_sun_true_longitude.decimal_degrees.round(5)).to eq(199.90988) }
   end
 
-  describe "calculate_sun_ecliptical_latitude" do
-    subject(:calculate_sun_ecliptical_latitude) do
-      calculation.calculate_sun_ecliptical_latitude(
-        earth_ecliptical_latitude: earth_ecliptical_latitude
-      )
-    end
-
-    # example 25.b A.A. p. 169
-    # rads
-    let(:earth_ecliptical_latitude) do
-      Lunation::Angle.from_radians(-0.00000312, normalize: false)
-    end
-    it {
-      expect(calculate_sun_ecliptical_latitude.radians.round(8)).to eq(0.00000312)
-    } # rads
-  end
-
-  describe "calculate_earth_abberation" do
-    subject(:calculate_earth_abberation) do
-      calculation.calculate_earth_abberation(
-        earth_sun_distance: earth_sun_distance
-      )
-    end
-
-    # example 25.b A.A. p. 169
-    let(:earth_sun_distance) { 0.99760775 } # R (AU)
-
-    it {
-      expect(calculate_earth_abberation.decimal_arcseconds.round(3)).to eq(-20.539)
-    } # seconds
-  end
-
   describe "calculate_nutation_in_obliquity" do
     subject(:calculate_nutation_in_obliquity) do
       calculation.calculate_nutation_in_obliquity(
@@ -1089,51 +1057,6 @@ RSpec.describe Lunation::Calculation do
     it {
       expect(calculate_moon_geocentric_declination.decimal_degrees.round(6)).to eq(13.768368)
     }
-  end
-
-  describe "calculate_earth_ecliptical_longitude" do
-    subject(:calculate_earth_ecliptical_longitude) do
-      calculation.calculate_earth_ecliptical_longitude
-    end
-
-    before do
-      allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
-    end
-
-    let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
-
-    # example 25.b A.A. p. 169
-    it {
-      expect(calculate_earth_ecliptical_longitude.decimal_degrees.round(6)).to eq(19.907372)
-    }
-  end
-
-  # describe "earth_radius_vector" do
-  #   subject(:earth_radius_vector) { calculation.earth_radius_vector }
-
-  #   before do
-  #     allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
-  #   end
-
-  #   let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
-
-  #   # example 25.b A.A. p. 169
-  #   it { expect(earth_radius_vector.round(8)).to eq(0.99760775) }
-  # end
-
-  describe "calculate_earth_ecliptical_latitude" do
-    subject(:calculate_earth_ecliptical_latitude) do
-      calculation.calculate_earth_ecliptical_latitude
-    end
-
-    before do
-      allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
-    end
-
-    let(:julian_ephemeris_day) { 2_448_908.5 } # 1992-10-13 0h TD
-
-    # example 25.b A.A. p. 169
-    it { expect(calculate_earth_ecliptical_latitude.radians.round(8)).to eq(-0.00000312) }
   end
 
   describe "calculate_moon_mean_elongation_from_the_sun" do

@@ -5,6 +5,7 @@ require_relative "calculation/position_of_the_sun"
 require_relative "calculation/position_of_the_moon"
 require_relative "calculation/timekeeping"
 require_relative "calculation/moon_illuminated_fraction"
+require_relative "calculation/earth_position_vsop87"
 
 module Lunation
   class Calculation
@@ -13,6 +14,7 @@ module Lunation
     include PositionOfTheMoon
     include Timekeeping
     include MoonIlluminatedFraction
+    include EarthPositionVSOP87
 
     PERIODIC_TERMS_EARTH_NUTATION = YAML.load_file("config/periodic_terms_earth_nutation.yml").freeze
 

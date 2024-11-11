@@ -52,6 +52,11 @@ module Lunation
         result.round(7)
       end
 
+      # (R) earth_sun_distance in km (25.5, A.A. p. 164)
+      def calculate_earth_sun_distance_in_km(earth_sun_distance: calculate_earth_sun_distance)
+        (earth_sun_distance * 149_597_870).floor
+      end
+
       # (Omega) Longitude of the ascending node of the Moon's mean orbit on the ecliptic (low precision)
       #   A.A. p. 164
       def calculate_moon_orbital_longitude_mean_ascending_node2

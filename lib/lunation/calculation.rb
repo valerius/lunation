@@ -36,26 +36,6 @@ module Lunation
       @decimal_year = datetime.year + (datetime.month - 0.5) / 12.0
     end
 
-    # (R) earth_sun_distance in km (25.5, A.A. p. 164)
-    def calculate_earth_sun_distance_in_km(earth_sun_distance: calculate_earth_sun_distance)
-      (earth_sun_distance * 149_597_870).floor
-    end
-
-    # (psi) geocentric elongation of the moon (48.2, A.A. p. 345)
-    def calculate_moon_geocentric_elongation(
-      sun_geocentric_declination: calculate_sun_geocentric_declination,
-      moon_geocentric_declination: calculate_moon_geocentric_declination,
-      sun_geocentric_right_ascension: calculate_sun_geocentric_right_ascension,
-      moon_geocentric_right_ascension: calculate_moon_geocentric_right_ascension
-    )
-      result = Math.sin(sun_geocentric_declination.radians) *
-               Math.sin(moon_geocentric_declination.radians) +
-               Math.cos(sun_geocentric_declination.radians) *
-               Math.cos(moon_geocentric_declination.radians) *
-               Math.cos((sun_geocentric_right_ascension - moon_geocentric_right_ascension).radians)
-      Angle.from_radians(Math.acos(result))
-    end
-
     # (apparent beta0) Sun apparent latitude (A.A. p. 169)
     def calculate_sun_ecliptical_latitude(
       earth_ecliptical_latitude: calculate_earth_ecliptical_latitude

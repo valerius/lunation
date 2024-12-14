@@ -1,7 +1,7 @@
-RSpec.describe Lunation::Calculation do
+RSpec.describe "Position of the earth calculated using the abridged VSOP87 theory" do
   before { allow(calculation).to receive(:time).and_return(time) }
 
-  let(:calculation) { described_class.new(datetime) }
+  let(:calculation) { Lunation::Calculation.new(datetime) }
   let(:datetime) { DateTime.new(1992, 10, 13, 0, 0, 0, "+00:00") }
   let(:time) { -0.072183436 } # 1992-10-13 0h TD
 

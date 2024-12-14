@@ -120,10 +120,10 @@ module Lunation
         @time_julian_millennia ||= (time / 10.0).round(12)
       end
 
-    # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
-    def julian_myriads_since_j2000
-      time / 100.0
-    end
+      # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
+      def julian_myriads_since_j2000
+        time / 100.0
+      end
     end
   end
 end

@@ -32,5 +32,5 @@ root_mean_squared_error = Math.sqrt(mean_squared_error).round(5)
 
 puts "COMPLETED"
 puts "MEAN ABSOLUTE ERROR (MAE): #{"%f" % mean_absolute_error}"
-puts "MEAN SQUARED ERROR (MAE): #{"%f" % mean_squared_error}"
+puts "MEAN SQUARED ERROR (MSE): #{"%f" % mean_squared_error}"
 puts "ROOT MEAN SQUARED ERROR (RMSE): #{"%f" % root_mean_squared_error}"

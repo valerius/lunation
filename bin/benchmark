@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require "bundler/setup"
+require "lunation"
+require "benchmark"
+
+total_time = 0
+dates = DateTime.parse("1991-01-01")..DateTime.parse("1991-05-01")
+iterations = dates.count
+
+dates.each do |date|
+  total_time += Benchmark.measure do
+    Lunation::Calculation.new(date).calculate_moon_illuminated_fraction
+  end.real
+end
+
+puts "AVERAGE TIME: #{format("%f", (total_time / iterations).round(6))} seconds"

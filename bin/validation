@@ -1,0 +1,36 @@
+#!/usr/bin/env ruby
+# frozen_string_literal: true
+
+require "bundler/setup"
+require "lunation"
+require "csv"
+
+# The true values were taken from the JPL Horizons system (# https://ssd.jpl.nasa.gov/horizons/app.html#/)
+#   - Date of access: 2024-12-14;
+#   - Target Body: Moon [Luna];
+#   - Observer Location: Geocentric [code: 500];
+#   - Time Specification: Start=1950-12-14 UT , Stop=2050-12-24, Step=10 (days);
+#   - Date and time are given in a mixed (non-proleptic Gregorian) calendar;
+#   - Value is the fraction of the lunar disk illuminated by the Sun (divided by 100).
+true_values = CSV.read("config/jpl_horizons_lunar_ephemeris_1950_2050.csv")
+collection_size = true_values.size
+sum_of_absolute_errors = 0.0
+sum_of_squared_errors = 0.0
+
+true_values.each do |date, true_value|
+  predicted_value =
+    Lunation::Calculation.new(DateTime.parse(date)).calculate_moon_illuminated_fraction
+  absolute_error = (predicted_value - true_value.to_f).abs
+
+  sum_of_absolute_errors += absolute_error
+  sum_of_squared_errors += absolute_error**2
+end
+
+mean_absolute_error = (sum_of_absolute_errors / collection_size).round(12)
+mean_squared_error = (sum_of_squared_errors / collection_size).round(12)
+root_mean_squared_error = Math.sqrt(mean_squared_error).round(5)
+
+puts "COMPLETED"
+puts "MEAN ABSOLUTE ERROR (MAE): #{"%f" % mean_absolute_error}"
+puts "MEAN SQUARED ERROR (MAE): #{"%f" % mean_squared_error}"
+puts "ROOT MEAN SQUARED ERROR (RMSE): #{"%f" % root_mean_squared_error}"

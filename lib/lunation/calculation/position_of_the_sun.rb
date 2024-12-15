@@ -5,23 +5,25 @@ module Lunation
     module PositionOfTheSun
       # (L0) Geocentric mean longitude of the sun (25.2, A.A. p. 163)
       def calculate_sun_geocentric_mean_longitude
-        Angle.from_decimal_degrees(280.46646 + 36_000.76983 * time + 0.0003032 * time**2)
+        result = Horner.compute(time, [280.46646, 36_000.76983, 0.0003032])
+        Angle.from_decimal_degrees(result)
       end
 
       # (M) Sun mean_anomaly (25.3, A.A. p. 163)
       def calculate_sun_mean_anomaly
-        Angle.from_decimal_degrees(357.52911 + 35_999.05029 * time - 0.0001537 * time**2)
+        result = Horner.compute(time, [357.52911, 35_999.05029, -0.0001537])
+        Angle.from_decimal_degrees(result)
       end
 
       # (e) eccentricity of the earth's orbit (25.4, A.A. p. 163)
       def calculate_earth_eccentricity
-        result = 0.016708634 - 0.000042037 * time - 0.0000001267 * time**2
-        result.round(9)
+        Horner.compute(time, [0.016708634, -0.000042037, -0.0000001267]).round(9)
       end
 
       # (C) Sun's equation of the center (A.A. p. 164)
       def calculate_sun_equation_center(sun_mean_anomaly: calculate_sun_mean_anomaly)
-        result = (1.914602 - 0.004817 * time - 0.000014 * time**2) * Math.sin(sun_mean_anomaly.radians) +
+        result = Horner.compute(time, [1.914602, -0.004817, -0.000014]) *
+                 Math.sin(sun_mean_anomaly.radians) +
                  (0.019993 - 0.000101 * time) * Math.sin(2 * sun_mean_anomaly.radians) +
                  0.000289 * Math.sin(3 * sun_mean_anomaly.radians)
         Angle.from_decimal_degrees(result, normalize: false)

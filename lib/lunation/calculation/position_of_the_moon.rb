@@ -3,55 +3,58 @@ require_relative "nutation_and_obliquity"
 module Lunation
   class Calculation
     module PositionOfTheMoon
+      # rubocop:disable Layout/LineLength
       PERIODIC_TERMS_MOON_LONGITUDE_DISTANCE = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
       PERIODIC_TERMS_MOON_LATITUDE = YAML.load_file("config/periodic_terms_moon_latitude.yml").freeze
+      CALCULATE_MOON_MEAN_LONGITUDE_CONSTANTS = [218.3164477, 481_267.88123421, -0.0015786, 1 / 538_841.0, -1 / 65_194_000.0].freeze
+      CALCULATE_MOON_MEAN_ELONGATION_CONSTANTS = [297.8501921, 445_267.1114034, -0.0018819, 1 / 545_868.0, -1 / 113_065_000.0].freeze
+      CALCULATE_MOON_MEAN_ANOMALY_CONSTANTS = [134.9633964, 477_198.8675055, 0.0087414, 1 / 69_699.0, -1 / 14_712_000.0].freeze
+      CALCULATE_MOON_ARGUMENT_OF_LATITUDE_CONSTANTS = [93.2720950, 483_202.0175233, -0.0036539, -1 / 3_526_000.0, 1 / 863_310_000.0].freeze
+      CALCULATE_EARTH_ECCENTRICITY_CORRECTION_CONSTANTS = [1, -0.002516, -0.0000074].freeze
+      # rubocop:enable Layout/LineLength
 
       # (L') Moon mean_longitude (47.1, A.A. p. 338)
       def calculate_moon_mean_longitude
-        result = 218.3164477 + (481_267.88123421 * time) - (0.0015786 * (time**2)) + ((time**3) / 538_841.0) - ((time**4) / 65_194_000.0)
+        result = Horner.compute(time, CALCULATE_MOON_MEAN_LONGITUDE_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (D) Moon mean_elongation (47.2, A.A. p. 338)
       def calculate_moon_mean_elongation
-        result = 297.8501921 + 445_267.1114034 * time - 0.0018819 * time**2 + time**3 / 545_868.0 - time**4 / 113_065_000.0
+        result = Horner.compute(time, CALCULATE_MOON_MEAN_ELONGATION_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (M') Moon mean_anomaly (47.4, A.A. p. 338)
       def calculate_moon_mean_anomaly
-        result = 134.9633964 + 477_198.8675055 * time + 0.0087414 * time**2 + time**3 / 69_699 - time**4 / 14_712_000
+        result = Horner.compute(time, CALCULATE_MOON_MEAN_ANOMALY_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (F) Moon argument_of_latitude (47.5, A.A. p. 338)
       def calculate_moon_argument_of_latitude
-        result = 93.2720950 + 483_202.0175233 * time - 0.0036539 * time**2 - time**3 / 3_526_000 + time**4 / 863_310_000.0
+        result = Horner.compute(time, CALCULATE_MOON_ARGUMENT_OF_LATITUDE_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (A1) Venus correction (A.A. p. 338)
       def calculate_correction_venus
-        result = 119.75 + 131.849 * time
-        Angle.from_decimal_degrees(result)
+        Angle.from_decimal_degrees(119.75 + 131.849 * time)
       end
 
       # (A2) Jupiter correction (A.A. p. 338)
       def calculate_correction_jupiter
-        result = 53.09 + 4_792_64.29 * time
-        Angle.from_decimal_degrees(result)
+        Angle.from_decimal_degrees(53.09 + 4_792_64.29 * time)
       end
 
       # (A3) latitude correction (A.A. p. 338)
       def calculate_correction_latitude
-        result = 313.45 + 481_266.484 * time
-        Angle.from_decimal_degrees(result)
+        Angle.from_decimal_degrees(313.45 + 481_266.484 * time)
       end
 
       # (E) Earth eccentricity (47.6 A.A. p. 338)
       def calculate_earth_eccentricity_correction
-        result = 1 - 0.002516 * time - 0.0000074 * time**2
-        result.round(6)
+        Horner.compute(time, CALCULATE_EARTH_ECCENTRICITY_CORRECTION_CONSTANTS).round(6)
       end
 
       # (Sigma l) Moon longitude (A.A. p. 338)

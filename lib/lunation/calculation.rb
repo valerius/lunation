@@ -16,8 +16,6 @@ module Lunation
     include MoonIlluminatedFraction
     include EarthPositionVSOP87
 
-    PERIODIC_TERMS_EARTH_NUTATION = YAML.load_file("config/periodic_terms_earth_nutation.yml").freeze
-
     attr_reader :datetime
 
     def initialize(datetime)

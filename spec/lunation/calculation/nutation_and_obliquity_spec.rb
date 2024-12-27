@@ -16,39 +16,39 @@ RSpec.describe "Nutation and obliquity" do
   end
 
   specify "it calculates the moon's mean elongation from the sun correctly" do
-    expect(calculation.calculate_moon_mean_elongation_from_the_sun.decimal_degrees.round(4)).to eq(136.9623)
+    expect(calculation.calculate_moon_mean_elongation_from_sun.decimal_degrees.round(4)).to eq(136.9623)
   end
 
   specify "it calculates the Sun's mean anomaly (M) correctly" do
-    expect(calculation.calculate_sun_mean_anomaly2.decimal_degrees.round(4)).to eq(94.9792)
+    expect(calculation.calculate_sun_mean_anomaly.decimal_degrees.round(4)).to eq(94.9792)
   end
 
   specify "it calculates the moon's mean anomaly (M') correctly" do
-    expect(calculation.calculate_moon_mean_anomaly2.decimal_degrees.round(4)).to eq(229.2784)
+    expect(calculation.calculate_moon_mean_anomaly.decimal_degrees.round(4)).to eq(229.2784)
   end
 
   specify "it calculates the moon's argument of latitude (F)" do
-    expect(calculation.calculate_moon_argument_of_latitude2.decimal_degrees.round(4)).to eq(143.4079)
+    expect(calculation.calculate_moon_argument_of_latitude.decimal_degrees.round(4)).to eq(143.4079)
   end
 
   specify "it calculates the longitude of the ascending node of the moon's orbit \"
       (omega) correctly" do
-    expect(calculation.calculate_moon_orbital_longitude_mean_ascending_node.decimal_degrees.round(4)).to eq(11.2531)
+    expect(calculation.calculate_longitude_of_ascending_node.decimal_degrees.round(4)).to eq(11.2531)
   end
 
-  specify "it calculates the earth's nutation in longitude (Delta psi) correctly" do
-    expect(calculation.calculate_earth_nutation_in_longitude.decimal_arcseconds.round(3)).to eq(-3.788)
+  specify "it calculates the earth's nutation in longitude (Δψ) correctly" do
+    expect(calculation.calculate_nutation_in_longitude.decimal_arcseconds.round(3)).to eq(-3.788)
   end
 
-  specify "it calculates the earth's nutation in obliquity (Delta epsilon) correctly" do
+  specify "it calculates the earth's nutation in obliquity (Δε) correctly" do
     expect(calculation.calculate_nutation_in_obliquity.decimal_arcseconds.round(3)).to eq(9.443)
   end
 
   specify "it calculates the mean obliquity of the ecliptic (ε0) correctly" do
-    expect(calculation.calculate_ecliptic_mean_obliquity.decimal_degrees.round(6)).to eq(23.440946)
+    expect(calculation.calculate_mean_obliquity_of_ecliptic.decimal_degrees.round(6)).to eq(23.440946)
   end
 
   specify "it calculates the true obliquity of the ecliptic (ε) correctly" do
-    expect(calculation.calculate_ecliptic_true_obliquity.decimal_degrees.round(6)).to eq(23.443569)
+    expect(calculation.calculate_obliquity_of_ecliptic.decimal_degrees.round(6)).to eq(23.443569)
   end
 end

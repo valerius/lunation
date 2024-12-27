@@ -24,3 +24,10 @@ Style/AccessModifierDeclarations:
 Metrics/BlockLength:
   Exclude:
     - "spec/**/*_spec.rb"
+
+Layout/MultilineOperationIndentation:
+  EnforcedStyle: indented
+
+# Disabled cops
+Style/FrozenStringLiteralComment:
+  Enabled: false

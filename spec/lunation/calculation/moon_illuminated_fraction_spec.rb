@@ -4,9 +4,9 @@ RSpec.describe "Illuminated fraction of the moon" do
   before do
     allow(calculation).to receive_messages(
       dynamical_time: dynamical_time,
-      calculate_sun_geocentric_right_ascension: sun_geocentric_right_ascension,
-      calculate_sun_geocentric_declination: sun_geocentric_declination,
-      calculate_earth_sun_distance_in_km: earth_sun_distance_in_km
+      calculate_sun_right_ascension: sun_right_ascension,
+      calculate_sun_declination: sun_declination,
+      calculate_distance_between_earth_and_sun_in_kilometers: distance_between_earth_and_sun_in_kilometers
     )
   end
 
@@ -18,24 +18,24 @@ RSpec.describe "Illuminated fraction of the moon" do
   #   theory, that is not given in the book (A.A. 347). The abridged VSOP 87 yields a
   #   slightly different result. In this test the given values for the sun's position are
   #   used.
-  let(:sun_geocentric_right_ascension) { Lunation::Angle.from_decimal_degrees(20.6579) }
-  let(:sun_geocentric_declination) { Lunation::Angle.from_decimal_degrees(8.6964) }
-  let(:earth_sun_distance_in_km) { 149_971_520 }
+  let(:sun_right_ascension) { Lunation::Angle.from_decimal_degrees(20.6579) }
+  let(:sun_declination) { Lunation::Angle.from_decimal_degrees(8.6964) }
+  let(:distance_between_earth_and_sun_in_kilometers) { 149_971_520 }
 
   specify "it calculates the moon's apparent right ascension (α) correctly" do
-    expect(calculation.calculate_moon_geocentric_right_ascension.decimal_degrees.round(4)).to eq(134.6885)
+    expect(calculation.calculate_moon_right_ascension.decimal_degrees.round(4)).to eq(134.6885)
   end
 
-  specify "it calculates the moon's apparent declination (delta) correctly" do
-    expect(calculation.calculate_moon_geocentric_declination.decimal_degrees.round(4)).to eq(13.7684)
+  specify "it calculates the moon's apparent declination (δ) correctly" do
+    expect(calculation.calculate_moon_declination.decimal_degrees.round(4)).to eq(13.7684)
   end
 
   specify "it calculates the distance between the earth and the moon (Delta) correctly" do
-    expect(calculation.calculate_earth_moon_distance.round).to eq(368_410)
+    expect(calculation.calculate_distance_between_earth_and_moon.round).to eq(368_410)
   end
 
-  specify "it calculates the geocentric elongation of the moon (psi) correctly" do
-    expect(calculation.calculate_moon_geocentric_elongation.decimal_degrees.round(4)).to eq(110.7929)
+  specify "it calculates the geocentric elongation of the moon (ψ) correctly" do
+    expect(calculation.calculate_moon_elongation_from_sun.decimal_degrees.round(4)).to eq(110.7929)
   end
 
   specify "it calculates the moon's phase angle (i) correctly" do

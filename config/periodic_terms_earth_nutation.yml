@@ -2,7 +2,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -171996
   sine_coefficient_second_term: -174.2
   cosine_coefficient_first_term: 92025
@@ -11,7 +11,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -13187
   sine_coefficient_second_term: -1.6
   cosine_coefficient_first_term: 5736
@@ -20,7 +20,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -2274
   sine_coefficient_second_term: -0.2
   cosine_coefficient_first_term: 977
@@ -29,7 +29,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: 2062
   sine_coefficient_second_term: 0.2
   cosine_coefficient_first_term: -895
@@ -38,7 +38,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 1426
   sine_coefficient_second_term: -3.4
   cosine_coefficient_first_term: 54
@@ -47,7 +47,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 712
   sine_coefficient_second_term: 0.1
   cosine_coefficient_first_term: -7
@@ -56,7 +56,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -517
   sine_coefficient_second_term: 1.2
   cosine_coefficient_first_term: 224
@@ -65,7 +65,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -386
   sine_coefficient_second_term: -0.4
   cosine_coefficient_first_term: 200
@@ -74,7 +74,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -301
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 129
@@ -83,7 +83,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: 217
   sine_coefficient_second_term: -0.5
   cosine_coefficient_first_term: -95
@@ -92,7 +92,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -158
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -101,7 +101,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 129
   sine_coefficient_second_term: 0.1
   cosine_coefficient_first_term: -70
@@ -110,7 +110,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: 123
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -53
@@ -119,7 +119,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 63
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -128,7 +128,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 63
   sine_coefficient_second_term: 0.1
   cosine_coefficient_first_term: -33
@@ -137,7 +137,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -59
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 26
@@ -146,7 +146,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -58
   sine_coefficient_second_term: -0.1
   cosine_coefficient_first_term: 32
@@ -155,7 +155,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -51
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 27
@@ -164,7 +164,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 48
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -173,7 +173,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -2
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 46
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -24
@@ -182,7 +182,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -38
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 16
@@ -191,7 +191,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -31
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 13
@@ -200,7 +200,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 29
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -209,7 +209,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: 29
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -12
@@ -218,7 +218,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 26
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -227,7 +227,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -22
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -236,7 +236,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 21
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -10
@@ -245,7 +245,7 @@
   sun_mean_anomaly: 2
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 17
   sine_coefficient_second_term: -0.1
   cosine_coefficient_first_term: 0
@@ -254,7 +254,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 16
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -8
@@ -263,7 +263,7 @@
   sun_mean_anomaly: 2
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -16
   sine_coefficient_second_term: 0.1
   cosine_coefficient_first_term: 7
@@ -272,7 +272,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -15
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 9
@@ -281,7 +281,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -13
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 7
@@ -290,7 +290,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -12
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 6
@@ -299,7 +299,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: -2
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 11
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -308,7 +308,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -10
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 5
@@ -317,7 +317,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -8
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -326,7 +326,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: 7
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -3
@@ -335,7 +335,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -7
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -344,7 +344,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -7
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -353,7 +353,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -7
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -362,7 +362,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 6
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -371,7 +371,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: 6
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -3
@@ -380,7 +380,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 6
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: -3
@@ -389,7 +389,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -2
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -6
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -398,7 +398,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -6
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -407,7 +407,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 5
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -416,7 +416,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -5
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -425,7 +425,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -5
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -434,7 +434,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: -5
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 3
@@ -443,7 +443,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 2
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 4
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -452,7 +452,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 1
+  longitude_of_ascending_node: 1
   sine_coefficient_first_term: 4
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -461,7 +461,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: -2
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 4
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -470,7 +470,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -4
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -479,7 +479,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -4
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -488,7 +488,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -4
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -497,7 +497,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: 3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -506,7 +506,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: -2
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -515,7 +515,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -524,7 +524,7 @@
   sun_mean_anomaly: 1
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 0
-  moon_orbital_longitude_mean_ascending_node: 0
+  longitude_of_ascending_node: 0
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -533,7 +533,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -542,7 +542,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: -1
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -551,7 +551,7 @@
   sun_mean_anomaly: 0
   moon_mean_anomaly: 3
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0
@@ -560,7 +560,7 @@
   sun_mean_anomaly: -1
   moon_mean_anomaly: 0
   moon_argument_of_latitude: 2
-  moon_orbital_longitude_mean_ascending_node: 2
+  longitude_of_ascending_node: 2
   sine_coefficient_first_term: -3
   sine_coefficient_second_term: 0
   cosine_coefficient_first_term: 0

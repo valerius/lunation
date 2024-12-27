@@ -45,7 +45,7 @@ RSpec.describe Lunation::Angle do
       expect(angle.radians).to eq(0.000145252) # it does not round the radians
     end
 
-    # A.A. p. 156 (delta)
+    # A.A. p. 156 (δ)
     it "converts small values to decimal degrees" do
       angle = described_class.from_radians(0.000032723)
       expect(angle.decimal_degrees.round(7)).to eq(0.0018749)
@@ -126,7 +126,7 @@ RSpec.describe Lunation::Angle do
       expect(angle.decimal_degrees.round(7)).to eq(0.0044011)
     end
 
-    # A.A. p. 157 (Delta delta)
+    # A.A. p. 157 (Delta δ)
     it "converts decimal_arcseconds into decimal_degrees" do
       angle = described_class.from_decimal_arcseconds(6.217)
       expect(angle.decimal_degrees.round(7)).to eq(0.0017269) # value in A.A. is 0.0017270

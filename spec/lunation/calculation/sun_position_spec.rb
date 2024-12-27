@@ -16,19 +16,19 @@ RSpec.describe "Position of the sun" do
   end
 
   specify "it calculates the sun's geometric mean longitude (L0) correctly" do
-    expect(calculation.calculate_sun_geocentric_mean_longitude.decimal_degrees.round(5)).to eq(201.80720)
+    expect(calculation.calculate_sun_mean_longitude.decimal_degrees.round(5)).to eq(201.80720)
   end
 
   specify "it calculates the Sun's mean anomaly (M) correctly" do
-    expect(calculation.calculate_sun_mean_anomaly.decimal_degrees.round(5)).to eq(278.99397)
+    expect(calculation.calculate_sun_mean_anomaly2.decimal_degrees.round(5)).to eq(278.99397)
   end
 
   specify "it calculates the eccentricity of earth's orbit (e) correctly" do
-    expect(calculation.calculate_earth_eccentricity.round(9)).to eq(0.016711668)
+    expect(calculation.calculate_earth_orbit_eccentricity.round(9)).to eq(0.016711668)
   end
 
   specify "it calculates the sun's equation of the center (C) correctly" do
-    expect(calculation.calculate_sun_equation_center.decimal_degrees.round(5)).to eq(-1.89732)
+    expect(calculation.calculate_sun_equation_of_center.decimal_degrees.round(5)).to eq(-1.89732)
   end
 
   # value in example is 199.90988
@@ -37,32 +37,32 @@ RSpec.describe "Position of the sun" do
   end
 
   specify "it calculates the distance between the earth and the sun (R) correctly" do
-    expect(calculation.calculate_earth_sun_distance.round(5)).to eq(0.99766)
+    expect(calculation.calculate_distance_between_earth_and_sun_in_astronomical_units.round(5)).to eq(0.99766)
   end
 
   specify "it calculates the longitude of the ascending node of the moon's orbit \"
       (omega) correctly" do
-    expect(calculation.calculate_moon_orbital_longitude_mean_ascending_node2.decimal_degrees.round(2)).to eq(264.65)
+    expect(calculation.calculate_longitude_of_ascending_node_low_precision.decimal_degrees.round(2)).to eq(264.65)
   end
 
   # value in example is 199.90895
-  specify "it calculates sun's apparent longitude (lambda) correctly" do
-    expect(calculation.calculate_sun_ecliptical_longitude.decimal_degrees.round(5)).to eq(199.90894)
+  specify "it calculates sun's apparent longitude (λ) correctly" do
+    expect(calculation.calculate_sun_ecliptic_longitude.decimal_degrees.round(5)).to eq(199.90894)
   end
 
   specify "it calculates the ecliptic's mean obliquity (ε0) correctly" do
-    expect(calculation.calculate_ecliptic_mean_obliquity.decimal_degrees.round(5)).to eq(23.44023)
+    expect(calculation.calculate_mean_obliquity_of_ecliptic.decimal_degrees.round(5)).to eq(23.44023)
   end
 
   specify "it calculates the ecliptic's true obliquity (ε) correctly" do
-    expect(calculation.calculate_corrected_ecliptic_true_obliquity.decimal_degrees.round(5)).to eq(23.43999)
+    expect(calculation.calculate_corrected_obliquity_of_ecliptic.decimal_degrees.round(5)).to eq(23.43999)
   end
 
   specify "it calculates sun's geocentric (apparent) right ascension (α) correctly" do
-    expect(calculation.calculate_sun_geocentric_right_ascension.decimal_degrees.round(5)).to eq(198.38083)
+    expect(calculation.calculate_sun_right_ascension.decimal_degrees.round(5)).to eq(198.38083)
   end
 
-  specify "it calculates sun's geocentric (apparent) declination (delta0) correctly" do
-    expect(calculation.calculate_sun_geocentric_declination.decimal_degrees.round(5)).to eq(-7.78507)
+  specify "it calculates sun's geocentric (apparent) declination (δ0) correctly" do
+    expect(calculation.calculate_sun_declination.decimal_degrees.round(5)).to eq(-7.78507)
   end
 end

@@ -9,17 +9,17 @@ RSpec.describe "Position of the earth calculated using the abridged VSOP87 theor
     expect(calculation.julian_ephemeris_day.to_f.round(1)).to eq(2_448_908.5)
   end
 
-  specify "calculate_earth_ecliptical_longitude_vsop87" do
-    expect(calculation.calculate_earth_ecliptical_longitude_vsop87.decimal_degrees.round(6))
+  specify "calculate_ecliptic_longitude_of_earth_using_vsop87" do
+    expect(calculation.calculate_ecliptic_longitude_of_earth_using_vsop87.decimal_degrees.round(6))
       .to eq(19.907372)
   end
 
-  specify "calculate_earth_ecliptical_latitude_vsop87" do
-    expect(calculation.calculate_earth_ecliptical_latitude_vsop87.decimal_degrees.round(6))
+  specify "calculate_ecliptic_latitude_of_earth_using_vsop87" do
+    expect(calculation.calculate_ecliptic_latitude_of_earth_using_vsop87.decimal_degrees.round(6))
       .to eq(-0.000179)
   end
 
-  specify "calculate_radius_vector_vsop87" do
-    expect(calculation.calculate_radius_vector_vsop87.round(8)).to eq(0.99760775)
+  specify "calculate_radius_vector_of_earth_using_vsop87" do
+    expect(calculation.calculate_radius_vector_of_earth_using_vsop87.round(8)).to eq(0.99760775)
   end
 end

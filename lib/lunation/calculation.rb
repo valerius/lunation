@@ -43,7 +43,7 @@ module Lunation
         ecliptic_true_obliquity: calculate_ecliptic_true_obliquity,
         equitorial_horizontal_parallax: calculate_equitorial_horizontal_parallax,
         julian_ephemeris_day: julian_ephemeris_day,
-        julian_myriads_since_j2000: julian_myriads_since_j2000,
+        time_myriads: time_myriads,
         moon_argument_of_latitude: calculate_moon_argument_of_latitude,
         moon_argument_of_latitude2: calculate_moon_argument_of_latitude2,
         moon_ecliptic_latitude: calculate_moon_ecliptic_latitude,
@@ -75,7 +75,7 @@ module Lunation
         sun_mean_anomaly2: calculate_sun_mean_anomaly2,
         sun_true_anomaly: calculate_sun_true_anomaly,
         sun_true_longitude: calculate_sun_true_longitude,
-        time_julian_millennia: time_julian_millennia,
+        time_millennia: time_millennia,
         time: time
       }
     end
@@ -88,9 +88,9 @@ module Lunation
         DELTA T:                                      #{to_h[:delta_t]}
         DYNAMICAL TIME:                               #{to_h[:dynamical_time]}
         JULIAN EPHEMERIS DAY:                         #{to_h[:julian_ephemeris_day]}
-        JULIAN MYRIADS SINCE J2000:                   #{to_h[:julian_myriads_since_j2000]}
+        JULIAN MYRIADS SINCE J2000:                   #{to_h[:time_myriads]}
         TIME (JULIAN CENTURIES):                      #{to_h[:time]}
-        TIME (JULIAN MILLENNIA):                      #{to_h[:time_julian_millennia]}
+        TIME (JULIAN MILLENNIA):                      #{to_h[:time_millennia]}
 
         **********************************************************************************
         NUTATION AND OBLIQUITY

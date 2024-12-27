@@ -15,8 +15,8 @@ RSpec.describe "Timekeeping" do
     it { expect(time).to eq(-0.127296372348) }
   end
 
-  describe "time_julian_millennia" do
-    subject(:time_julian_millennia) { calculation.time_julian_millennia }
+  describe "time_millennia" do
+    subject(:time_millennia) { calculation.time_millennia }
 
     before do
       allow(calculation).to receive_messages(julian_ephemeris_day: julian_ephemeris_day)
@@ -25,7 +25,7 @@ RSpec.describe "Timekeeping" do
     let(:julian_ephemeris_day) { 2_448_976.5 } # example 32.a A.A. p. 219
 
     # 1992-12-20 0h TD
-    it { expect(time_julian_millennia).to eq(-0.007032169747) }
+    it { expect(time_millennia).to eq(-0.007032169747) }
   end
 
   # Reference values for these tests have been taken from: https://eclipse.gsfc.nasa.gov/SEcat5/deltat.html
@@ -299,13 +299,13 @@ RSpec.describe "Timekeeping" do
     it { expect(julian_ephemeris_day).to eq(2_448_972.50068) }
   end
 
-  describe "julian_myriads_since_j2000" do
-    subject(:julian_myriads_since_j2000) { calculation.julian_myriads_since_j2000 }
+  describe "time_myriads" do
+    subject(:time_myriads) { calculation.time_myriads }
 
     before { allow(calculation).to receive(:time).and_return(time) }
 
     let(:time) { -0.127296372348 } # 1987-04-10 0h TD, example 22.a A.A. p. 148
 
-    it { expect(julian_myriads_since_j2000).to eq(-0.00127296372348) } # (U)
+    it { expect(time_myriads).to eq(-0.00127296372348) } # (U)
   end
 end

@@ -607,12 +607,12 @@ RSpec.describe Lunation::Calculation do
 
     before do
       allow(calculation).to receive_messages(
-        julian_myriads_since_j2000: julian_myriads_since_j2000
+        time_myriads: time_myriads
       )
     end
 
     # example 22.a A.A. p. 148
-    let(:julian_myriads_since_j2000) { -0.00127296372348 } # (U)
+    let(:time_myriads) { -0.00127296372348 } # (U)
 
     it { expect(calculate_ecliptic_mean_obliquity.degrees).to eq(23) }
     it { expect(calculate_ecliptic_mean_obliquity.arcminutes).to eq(26) }

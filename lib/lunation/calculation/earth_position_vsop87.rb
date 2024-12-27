@@ -19,7 +19,7 @@ module Lunation
 
       def calculate_earth_ecliptical_longitude_vsop87
         result = Horner.compute(
-          time_julian_millennia,
+          time_millennia,
           [
             reduce_periodic_terms(PERIODIC_TERMS_EARTH_POSITION_VSOP87_L0),
             reduce_periodic_terms(PERIODIC_TERMS_EARTH_POSITION_VSOP87_L1),
@@ -38,14 +38,14 @@ module Lunation
         second_series = reduce_periodic_terms(PERIODIC_TERMS_EARTH_POSITION_VSOP87_B1)
 
         Angle.from_radians(
-          (first_series + second_series * time_julian_millennia) / 100_000_000.0,
+          (first_series + second_series * time_millennia) / 100_000_000.0,
           normalize: false
         )
       end
 
       def calculate_radius_vector_vsop87
         result = Horner.compute(
-          time_julian_millennia,
+          time_millennia,
           [
             reduce_periodic_terms(PERIODIC_TERMS_EARTH_POSITION_VSOP87_R0),
             reduce_periodic_terms(PERIODIC_TERMS_EARTH_POSITION_VSOP87_R1),
@@ -60,7 +60,7 @@ module Lunation
 
       private def reduce_periodic_terms(periodic_terms)
         periodic_terms.inject(0.0) do |sum, terms|
-          sum + terms[0] * Math.cos(terms[1] + terms[2] * time_julian_millennia)
+          sum + terms[0] * Math.cos(terms[1] + terms[2] * time_millennia)
         end
       end
     end

@@ -2,6 +2,8 @@ module Lunation
   class Calculation
     module Timekeeping
       SECONDS_PER_DAY = 86_400
+      EPOCH_J2000_JDE = 2_451_545 # expressed in terms of Julian Ephemeris Day
+      JULIAN_CENTURY_IN_DAYS = 36_525.0
       # rubocop:disable Layout/LineLength
       DELTA_T_500BC_500AD = [10_583.6, -1_014.41, 33.78311, -5.952053, -0.1798452, 0.022174192, 0.0090316521].freeze
       DELTA_T_500AD_1600AD = [1_574.2, -556.01, 71.23472, 0.319781, -0.8503463, -0.005050998, 0.0083572073].freeze
@@ -18,11 +20,17 @@ module Lunation
       # rubocop:enable Layout/LineLength
 
       # (T) time, measured in Julian centuries from the Epoch J2000.0 (22.1, A.A. p. 143)
+      # UNIT: centuries from the Epoch J2000.0
       def time
-        @time ||= ((julian_ephemeris_day - 2_451_545) / 36_525.0).round(12)
+        @time ||= ((julian_ephemeris_day - EPOCH_J2000_JDE) / JULIAN_CENTURY_IN_DAYS).round(12)
       end
 
-      # ΔT https://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html
+      # ΔT Difference between Dynamical Time (TD) and Universal Time (UT, more commonly
+      #   known as Greenwhich Time).
+      # The formula for ΔT was taken from a later paper written by Espenak and Meeus
+      #   (https://eclipse.gsfc.nasa.gov/SEcat5/deltatpoly.html). ΔT is described less
+      #   precisely in the book (A.A. p. 78-79, formulae 10.0 and 10.2).
+      # UNIT: seconds
       def delta_t
         case datetime.year
         when -1_999...-500
@@ -60,22 +68,26 @@ module Lunation
       end
 
       # (TD) Dynamical time (A.A. p. 77)
+      # UNIT: ISO 8601 Date and time with offset
       def dynamical_time
         @dynamical_time ||= datetime + delta_t.round.to_f / SECONDS_PER_DAY
       end
 
       # (JDE) Julian ephemeris day (A.A. p. 59)
+      # UNIT: days, expressed as a floating point number
       def julian_ephemeris_day
-        dynamical_time.ajd.round(5)
+        dynamical_time.ajd.to_f.round(5)
       end
 
-      # (t) tim, measured in Julian millennia from the epock J2000.0 (32.1, A.A. p. 218)
-      def time_julian_millennia
-        @time_julian_millennia ||= (time / 10.0).round(12)
+      # (t) time, measured in Julian millennia from the epoch J2000.0 (32.1, A.A. p. 218)
+      # UNIT: millennia from the Epoch J2000.0
+      def time_millennia
+        @time_millennia ||= (time / 10.0).round(12)
       end
 
       # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
-      def julian_myriads_since_j2000
+      # UNIT: 10_000 years (myriads) from the Epoch J2000.0
+      def time_myriads
         time / 100.0
       end
     end

@@ -95,7 +95,7 @@ module Lunation
       # (epsilon 0) mean obliquity of the ecliptic (22.3, A.A. p. 147)
       def calculate_ecliptic_mean_obliquity
         decimal_arcseconds = Horner.compute(
-          julian_myriads_since_j2000,
+          time_myriads,
           CALCULATE_ECLIPTIC_MEAN_OBLIQUITY_CONSTANTS
         )
         Angle.from_degrees(

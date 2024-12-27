@@ -818,4 +818,20 @@ RSpec.describe Lunation::Calculation do
       expect(calculate_moon_mean_elongation_from_sun.decimal_degrees.round(4)).to eq(136.9623)
     }
   end
+
+  describe "calculate_moon_position_angle_of_bright_limb" do
+    subject(:calculate_moon_position_angle_of_bright_limb) do
+      calculation.calculate_moon_position_angle_of_bright_limb(
+        moon_declination: Lunation::Angle.from_decimal_degrees(13.7684),
+        moon_right_ascension: Lunation::Angle.from_decimal_degrees(134.6885),
+        sun_declination: Lunation::Angle.from_decimal_degrees(8.6964),
+        sun_right_ascension: Lunation::Angle.from_decimal_degrees(20.6579)
+      )
+    end
+
+    it "calculates the result correctly" do
+      expect(calculate_moon_position_angle_of_bright_limb.decimal_degrees.round(1))
+        .to eq(285.0)
+    end
+  end
 end

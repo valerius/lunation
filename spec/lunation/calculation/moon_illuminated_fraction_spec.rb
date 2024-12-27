@@ -46,4 +46,8 @@ RSpec.describe "Illuminated fraction of the moon" do
   specify "it calculates the moon's illuminated fraction (k) correctly" do
     expect(calculation.calculate_moon_illuminated_fraction).to eq(0.6786)
   end
+
+  specify "it calculates the moon's bright limb position angle (χ) correctly" do
+    expect(calculation.calculate_moon_position_angle_of_bright_limb.decimal_degrees.round(1)).to eq(285.0)
+  end
 end

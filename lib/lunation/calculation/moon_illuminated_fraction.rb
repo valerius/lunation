@@ -36,6 +36,24 @@ module Lunation
             Math.cos((sun_right_ascension - moon_right_ascension).radians)
         Angle.from_radians(Math.acos(result))
       end
+
+      # (χ) Position angle of the moon's bright limb (48.5, A.A. p. 346)
+      # UNIT: Angle
+      def calculate_moon_position_angle_of_bright_limb(
+        moon_declination: calculate_moon_declination,
+        moon_right_ascension: calculate_moon_right_ascension,
+        sun_declination: calculate_sun_declination,
+        sun_right_ascension: calculate_sun_right_ascension
+      )
+        numerator = Math.cos(sun_declination.radians) *
+          Math.sin((sun_right_ascension - moon_right_ascension).radians)
+        denominator = Math.sin(sun_declination.radians) *
+          Math.cos(moon_declination.radians) -
+          Math.cos(sun_declination.radians) *
+            Math.sin(moon_declination.radians) *
+            Math.cos((sun_right_ascension - moon_right_ascension).radians)
+        Angle.from_radians(Math.atan2(numerator, denominator))
+      end
     end
   end
 end

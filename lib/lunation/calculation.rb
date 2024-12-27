@@ -18,7 +18,7 @@ module Lunation
 
     attr_reader :datetime
 
-    def initialize(datetime)
+    def initialize(datetime = DateTime.now)
       @datetime = datetime
       @decimal_year = datetime.year + (datetime.month - 0.5) / 12.0
     end

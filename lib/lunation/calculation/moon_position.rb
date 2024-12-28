@@ -173,7 +173,7 @@ module Lunation
         )
       end
 
-      # (Delta) Earth-moon distance (in kilometers) (A.A. p. 342)
+      # (Δ) Earth-moon distance (in kilometers) (A.A. p. 342)
       # UNIT: kilometers (km)
       def distance_between_earth_and_moon
         @distance_between_earth_and_moon ||= begin

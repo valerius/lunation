@@ -57,7 +57,7 @@ module Lunation
         moon_mean_anomaly_high_precision: moon_mean_anomaly_high_precision,
         moon_mean_anomaly: moon_mean_anomaly,
         moon_mean_elongation_from_sun: moon_mean_elongation_from_sun,
-        moon_mean_elongation: moon_mean_elongation,
+        moon_mean_elongation_from_sun_high_precision: moon_mean_elongation_from_sun_high_precision,
         moon_mean_longitude: moon_mean_longitude,
         moon_phase_angle: moon_phase_angle,
         moon_position_angle_of_bright_limb: moon_position_angle_of_bright_limb,
@@ -145,7 +145,7 @@ module Lunation
         MOON HELIOCENTRIC LATITUDE:                   #{moon_heliocentric_latitude}
         MOON HELIOCENTRIC LONGITUDE:                  #{moon_heliocentric_longitude}
         MOON MEAN ANOMALY:                            #{moon_mean_anomaly_high_precision.decimal_degrees}°
-        MOON MEAN ELONGATION:                         #{moon_mean_elongation.decimal_degrees}°
+        MOON MEAN ELONGATION:                         #{moon_mean_elongation_from_sun_high_precision.decimal_degrees}°
         MOON MEAN LONGITUDE:                          #{moon_mean_longitude.decimal_degrees}°
 
         **********************************************************************************

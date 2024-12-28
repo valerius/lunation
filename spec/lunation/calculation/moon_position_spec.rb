@@ -20,7 +20,7 @@ RSpec.describe "Position of the moon" do
   end
 
   specify "it calculates the mean elongation of the moon (D) correctly" do
-    expect(calculation.moon_mean_elongation.decimal_degrees.round(6)).to eq(113.842304)
+    expect(calculation.moon_mean_elongation_from_sun_high_precision.decimal_degrees.round(6)).to eq(113.842304)
   end
 
   specify "it calculates the Sun's mean anomaly (M) correctly" do

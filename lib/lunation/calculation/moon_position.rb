@@ -24,8 +24,8 @@ module Lunation
 
       # (D) Moon mean_elongation (47.2, A.A. p. 338)
       # UNIT: Angle
-      def moon_mean_elongation
-        @moon_mean_elongation ||=
+      def moon_mean_elongation_from_sun_high_precision
+        @moon_mean_elongation_from_sun_high_precision ||=
           Angle.from_decimal_degrees(Horner.compute(time, MOON_MEAN_ELONGATION_CONSTANTS))
       end
 
@@ -77,7 +77,7 @@ module Lunation
         @moon_heliocentric_longitude ||= begin
           result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             sine_argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
+              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
               elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
               elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
               elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
@@ -105,7 +105,7 @@ module Lunation
         @moon_heliocentric_latitude ||= begin
           result = LATITUDE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             sine_argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
+              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
               elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
               elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
               elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
@@ -136,7 +136,7 @@ module Lunation
         @moon_heliocentric_distance ||= begin
           result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             cosine_argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
+              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
               elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
               elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
               elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees

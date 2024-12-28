@@ -134,10 +134,10 @@ RSpec.describe Lunation::Calculation do
     expect(calculation.moon_mean_longitude.decimal_degrees.round(6)).to eq(134.290182)
   end
 
-  specify "it calculates moon_mean_elongation correctly" do
+  specify "it calculates moon_mean_elongation_from_sun_high_precision correctly" do
     allow(calculation).to receive(:time).and_return(-0.077221081451) # 1992-04-12 0h TD
 
-    expect(calculation.moon_mean_elongation.decimal_degrees.round(6)).to eq(113.842304)
+    expect(calculation.moon_mean_elongation_from_sun_high_precision.decimal_degrees.round(6)).to eq(113.842304)
   end
 
   specify "it calculates moon_mean_anomaly_high_precision correctly" do
@@ -194,7 +194,7 @@ RSpec.describe Lunation::Calculation do
       correction_eccentricity_of_earth: 1.000194, # (E)
       moon_argument_of_latitude_high_precision: described_class::Angle.from_decimal_degrees(219.889721), # (F)
       moon_mean_anomaly_high_precision: described_class::Angle.from_decimal_degrees(5.150833), # (M')
-      moon_mean_elongation: described_class::Angle.from_decimal_degrees(113.842304), # (D)
+      moon_mean_elongation_from_sun_high_precision: described_class::Angle.from_decimal_degrees(113.842304), # (D)
       moon_mean_longitude: described_class::Angle.from_decimal_degrees(134.290182), # (L')
       sun_mean_anomaly2: described_class::Angle.from_decimal_degrees(97.643514) # (M)
     )
@@ -208,7 +208,7 @@ RSpec.describe Lunation::Calculation do
       correction_eccentricity_of_earth: 1.000194, # (E)
       moon_argument_of_latitude_high_precision: described_class::Angle.from_decimal_degrees(219.889721), # (F)
       moon_mean_anomaly_high_precision: described_class::Angle.from_decimal_degrees(5.15083), # (M')
-      moon_mean_elongation: described_class::Angle.from_decimal_degrees(113.842304), # (D)
+      moon_mean_elongation_from_sun_high_precision: described_class::Angle.from_decimal_degrees(113.842304), # (D)
       sun_mean_anomaly2: described_class::Angle.from_decimal_degrees(97.643514) # (M)
     )
 
@@ -222,7 +222,7 @@ RSpec.describe Lunation::Calculation do
       correction_eccentricity_of_earth: 1.000194, # (E)
       moon_argument_of_latitude_high_precision: described_class::Angle.from_decimal_degrees(219.889721), # (F)
       moon_mean_anomaly_high_precision: described_class::Angle.from_decimal_degrees(5.150833), # (M')
-      moon_mean_elongation: described_class::Angle.from_decimal_degrees(113.842304), # (D)
+      moon_mean_elongation_from_sun_high_precision: described_class::Angle.from_decimal_degrees(113.842304), # (D)
       moon_mean_longitude: described_class::Angle.from_decimal_degrees(134.290182), # (L')
       sun_mean_anomaly2: described_class::Angle.from_decimal_degrees(97.643514) # (M)
     )
@@ -257,7 +257,7 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates nutation_in_longitude correctly" do
     allow(calculation).to receive_messages(
       time: -0.127296372348, # T, 1987-04-10
-      moon_mean_elongation: described_class::Angle.from_decimal_degrees(136.9623), # D
+      moon_mean_elongation_from_sun_high_precision: described_class::Angle.from_decimal_degrees(136.9623), # D
       sun_mean_anomaly: described_class::Angle.from_decimal_degrees(94.9792), # M
       moon_mean_anomaly: described_class::Angle.from_decimal_degrees(229.2784), # M'
       moon_argument_of_latitude: described_class::Angle.from_decimal_degrees(143.4079), # F
@@ -308,7 +308,7 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates nutation_in_obliquity correctly" do
     allow(calculation).to receive_messages(
       time: -0.127296372348, # 1987-04-10 0h TD
-      moon_mean_elongation: described_class::Angle.from_decimal_degrees(136.9623), # (D) A.A. p. 148
+      moon_mean_elongation_from_sun_high_precision: described_class::Angle.from_decimal_degrees(136.9623), # (D) A.A. p. 148
       sun_mean_anomaly: described_class::Angle.from_decimal_degrees(94.9792), # (M) A.A. p. 148
       moon_mean_anomaly: described_class::Angle.from_decimal_degrees(229.2784), # (M') A.A. p. 148
       moon_argument_of_latitude: described_class::Angle.from_decimal_degrees(143.4079), # (F) A.A. p. 148

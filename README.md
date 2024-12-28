@@ -87,6 +87,14 @@ calculation.to_s # DATE AND TIME (UT)... Full report as String
 | `time`                                                 | `T`           | Time, from the Epoch J2000.0                              | Centuries                          | A.A. p. 143 (22.1)                                   |
 A.A.: J. Meeus, Astronomical Algorithms, 2nd ed. Richmond, VA: Willmann-Bell, 1998
 
+## Accuracy
+
+A simple validation script was written for the `moon_illuminated_fraction` method (see `bin/validation`). The true values for the period of 1950 to 2050 were taken from the [JPL Horizons system](https://ssd.jpl.nasa.gov/horizons/app.html) (date of access: 2024-12-14). At the moment of the initial release of this Gem, the results are as follows:
+
+- Mean Absolute Error (MAE): `0.000022`
+- Mean Squared Error (MSE): `0.000000`
+- Root Mean Squared Error (RMSE): `0.000050`
+
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `bundle exec rspec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.

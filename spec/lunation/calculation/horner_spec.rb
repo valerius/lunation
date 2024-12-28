@@ -1,4 +1,4 @@
-RSpec.describe Lunation::Horner do
+RSpec.describe Lunation::Calculation::Horner do
   # Method to calculate Moon mean_elongation (D) (47.2, A.A. p. 338)
   #
   specify "it implements Horner's method correctly" do

@@ -1,4 +1,4 @@
-RSpec.describe Lunation::Angle do
+RSpec.describe Lunation::Calculation::Angle do
   let(:angle) { described_class.from_radians(Math::PI) }
 
   it { expect(angle).to respond_to(:radians) }

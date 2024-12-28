@@ -18,8 +18,8 @@ RSpec.describe "Illuminated fraction of the moon" do
   #   theory, that is not given in the book (A.A. 347). The abridged VSOP 87 yields a
   #   slightly different result. In this test the given values for the sun's position are
   #   used.
-  let(:sun_right_ascension) { Lunation::Angle.from_decimal_degrees(20.6579) }
-  let(:sun_declination) { Lunation::Angle.from_decimal_degrees(8.6964) }
+  let(:sun_right_ascension) { Lunation::Calculation::Angle.from_decimal_degrees(20.6579) }
+  let(:sun_declination) { Lunation::Calculation::Angle.from_decimal_degrees(8.6964) }
   let(:distance_between_earth_and_sun_in_kilometers) { 149_971_520 }
 
   specify "it calculates the moon's apparent right ascension (α) correctly" do

@@ -6,7 +6,7 @@ RSpec.describe Lunation::Calculation do
     # example 48.a (A.A. p. 347)
     allow(calculation)
       .to receive(:moon_phase_angle)
-      .and_return(Lunation::Angle.from_decimal_degrees(69.0756))
+      .and_return(described_class::Angle.from_decimal_degrees(69.0756))
 
     expect(calculation.moon_illuminated_fraction).to eq(0.6786)
   end
@@ -16,7 +16,7 @@ RSpec.describe Lunation::Calculation do
     allow(calculation).to receive_messages(
       distance_between_earth_and_sun_in_kilometers: 149_971_520, # R
       distance_between_earth_and_moon: 368_410, # Delta
-      moon_elongation_from_sun: Lunation::Angle.from_decimal_degrees(110.7929) # ψ
+      moon_elongation_from_sun: described_class::Angle.from_decimal_degrees(110.7929) # ψ
     )
 
     expect(calculation.moon_phase_angle.decimal_degrees.round(4)).to eq(69.0756)
@@ -25,7 +25,7 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates distance_between_earth_and_sun_in_astronomical_units correctly" do
     allow(calculation).to receive_messages(
       earth_orbit_eccentricity: 0.016711668, # (e) A.A. p. 165
-      sun_anomaly: Lunation::Angle.from_decimal_degrees(278.99397 - 1.89732) # (v = M + C) A.A. p. 165
+      sun_anomaly: described_class::Angle.from_decimal_degrees(278.99397 - 1.89732) # (v = M + C) A.A. p. 165
     )
 
     # 1992-10-13 at 0 TD
@@ -82,7 +82,7 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates sun_equation_of_center correctly" do
     allow(calculation).to receive_messages(
-      sun_mean_anomaly: Lunation::Angle.from_decimal_degrees(278.99397), # (M)
+      sun_mean_anomaly: described_class::Angle.from_decimal_degrees(278.99397), # (M)
       time: -0.072183436 # (T) 1992-10-13 0h TD
     )
 
@@ -92,10 +92,10 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates moon_elongation_from_sun correctly" do
     allow(calculation).to receive_messages(
-      sun_right_ascension: Lunation::Angle.from_decimal_degrees(20.6579), # (alpha zero)
-      sun_declination: Lunation::Angle.from_decimal_degrees(8.6964), # (δ zero)
-      moon_right_ascension: Lunation::Angle.from_decimal_degrees(134.6885), # (alpha)
-      moon_declination: Lunation::Angle.from_decimal_degrees(13.7684) # δ
+      sun_right_ascension: described_class::Angle.from_decimal_degrees(20.6579), # (alpha zero)
+      sun_declination: described_class::Angle.from_decimal_degrees(8.6964), # (δ zero)
+      moon_right_ascension: described_class::Angle.from_decimal_degrees(134.6885), # (alpha)
+      moon_declination: described_class::Angle.from_decimal_degrees(13.7684) # δ
     )
 
     # example 48.a A.A. p. 347 (ψ)
@@ -104,8 +104,8 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates sun_declination correctly" do
     allow(calculation).to receive_messages(
-      corrected_obliquity_of_ecliptic: Lunation::Angle.from_decimal_degrees(23.43999), # true epsilon
-      sun_ecliptic_longitude: Lunation::Angle.from_decimal_degrees(199.90895) # λ
+      corrected_obliquity_of_ecliptic: described_class::Angle.from_decimal_degrees(23.43999), # true epsilon
+      sun_ecliptic_longitude: described_class::Angle.from_decimal_degrees(199.90895) # λ
     )
 
     # example 25.b A.A. p. 169
@@ -181,14 +181,14 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates moon_heliocentric_longitude correctly" do
     # example 47.a A.A. p. 342
     allow(calculation).to receive_messages(
-      correction_jupiter: Lunation::Angle.from_decimal_degrees(123.78), # (A2)
-      correction_venus: Lunation::Angle.from_decimal_degrees(109.57), # (A1)
+      correction_jupiter: described_class::Angle.from_decimal_degrees(123.78), # (A2)
+      correction_venus: described_class::Angle.from_decimal_degrees(109.57), # (A1)
       correction_eccentricity_of_earth: 1.000194, # (E)
-      moon_argument_of_latitude_high_precision: Lunation::Angle.from_decimal_degrees(219.889721), # (F)
-      moon_mean_anomaly_high_precision: Lunation::Angle.from_decimal_degrees(5.150833), # (M')
-      moon_mean_elongation: Lunation::Angle.from_decimal_degrees(113.842304), # (D)
-      moon_mean_longitude: Lunation::Angle.from_decimal_degrees(134.290182), # (L')
-      sun_mean_anomaly2: Lunation::Angle.from_decimal_degrees(97.643514) # (M)
+      moon_argument_of_latitude_high_precision: described_class::Angle.from_decimal_degrees(219.889721), # (F)
+      moon_mean_anomaly_high_precision: described_class::Angle.from_decimal_degrees(5.150833), # (M')
+      moon_mean_elongation: described_class::Angle.from_decimal_degrees(113.842304), # (D)
+      moon_mean_longitude: described_class::Angle.from_decimal_degrees(134.290182), # (L')
+      sun_mean_anomaly2: described_class::Angle.from_decimal_degrees(97.643514) # (M)
     )
 
     expect(calculation.moon_heliocentric_longitude).to eq(-1_127_527)
@@ -198,10 +198,10 @@ RSpec.describe Lunation::Calculation do
     # example 47.a A.A. p. 342
     allow(calculation).to receive_messages(
       correction_eccentricity_of_earth: 1.000194, # (E)
-      moon_argument_of_latitude_high_precision: Lunation::Angle.from_decimal_degrees(219.889721), # (F)
-      moon_mean_anomaly_high_precision: Lunation::Angle.from_decimal_degrees(5.15083), # (M')
-      moon_mean_elongation: Lunation::Angle.from_decimal_degrees(113.842304), # (D)
-      sun_mean_anomaly2: Lunation::Angle.from_decimal_degrees(97.643514) # (M)
+      moon_argument_of_latitude_high_precision: described_class::Angle.from_decimal_degrees(219.889721), # (F)
+      moon_mean_anomaly_high_precision: described_class::Angle.from_decimal_degrees(5.15083), # (M')
+      moon_mean_elongation: described_class::Angle.from_decimal_degrees(113.842304), # (D)
+      sun_mean_anomaly2: described_class::Angle.from_decimal_degrees(97.643514) # (M)
     )
 
     expect(calculation.moon_heliocentric_distance).to eq(-16_590_875)
@@ -209,14 +209,14 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates moon_heliocentric_latitude correctly" do
     allow(calculation).to receive_messages(
-      correction_latitude: Lunation::Angle.from_decimal_degrees(229.53), # (A3)
-      correction_venus: Lunation::Angle.from_decimal_degrees(109.57), # (A1)
+      correction_latitude: described_class::Angle.from_decimal_degrees(229.53), # (A3)
+      correction_venus: described_class::Angle.from_decimal_degrees(109.57), # (A1)
       correction_eccentricity_of_earth: 1.000194, # (E)
-      moon_argument_of_latitude_high_precision: Lunation::Angle.from_decimal_degrees(219.889721), # (F)
-      moon_mean_anomaly_high_precision: Lunation::Angle.from_decimal_degrees(5.150833), # (M')
-      moon_mean_elongation: Lunation::Angle.from_decimal_degrees(113.842304), # (D)
-      moon_mean_longitude: Lunation::Angle.from_decimal_degrees(134.290182), # (L')
-      sun_mean_anomaly2: Lunation::Angle.from_decimal_degrees(97.643514) # (M)
+      moon_argument_of_latitude_high_precision: described_class::Angle.from_decimal_degrees(219.889721), # (F)
+      moon_mean_anomaly_high_precision: described_class::Angle.from_decimal_degrees(5.150833), # (M')
+      moon_mean_elongation: described_class::Angle.from_decimal_degrees(113.842304), # (D)
+      moon_mean_longitude: described_class::Angle.from_decimal_degrees(134.290182), # (L')
+      sun_mean_anomaly2: described_class::Angle.from_decimal_degrees(97.643514) # (M)
     )
 
     expect(calculation.moon_heliocentric_latitude).to eq(-3_229_126)
@@ -225,7 +225,7 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates moon_ecliptic_longitude correctly" do
     allow(calculation).to receive_messages(
       moon_heliocentric_longitude: -1_127_527, # (Σl)
-      moon_mean_longitude: Lunation::Angle.from_decimal_degrees(134.290182) # (L')
+      moon_mean_longitude: described_class::Angle.from_decimal_degrees(134.290182) # (L')
     )
 
     expect(calculation.moon_ecliptic_longitude.decimal_degrees).to eq(133.162655)
@@ -249,11 +249,11 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates nutation_in_longitude correctly" do
     allow(calculation).to receive_messages(
       time: -0.127296372348, # T, 1987-04-10
-      moon_mean_elongation: Lunation::Angle.from_decimal_degrees(136.9623), # D
-      sun_mean_anomaly: Lunation::Angle.from_decimal_degrees(94.9792), # M
-      moon_mean_anomaly: Lunation::Angle.from_decimal_degrees(229.2784), # M'
-      moon_argument_of_latitude: Lunation::Angle.from_decimal_degrees(143.4079), # F
-      longitude_of_ascending_node: Lunation::Angle.from_decimal_degrees(11.2531) # Omega
+      moon_mean_elongation: described_class::Angle.from_decimal_degrees(136.9623), # D
+      sun_mean_anomaly: described_class::Angle.from_decimal_degrees(94.9792), # M
+      moon_mean_anomaly: described_class::Angle.from_decimal_degrees(229.2784), # M'
+      moon_argument_of_latitude: described_class::Angle.from_decimal_degrees(143.4079), # F
+      longitude_of_ascending_node: described_class::Angle.from_decimal_degrees(11.2531) # Omega
     )
 
     expect(calculation.nutation_in_longitude.decimal_arcseconds.round(3)).to eq(-3.788)
@@ -261,8 +261,8 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates moon_apparent_ecliptic_longitude correctly" do
     allow(calculation).to receive_messages(
-      moon_ecliptic_longitude: Lunation::Angle.from_decimal_degrees(133.162655), # (λ)
-      nutation_in_longitude: Lunation::Angle.from_decimal_arcseconds(16.595) # (Δψ)
+      moon_ecliptic_longitude: described_class::Angle.from_decimal_degrees(133.162655), # (λ)
+      nutation_in_longitude: described_class::Angle.from_decimal_arcseconds(16.595) # (Δψ)
     )
 
     # example 47.a A.A. p. 343
@@ -272,8 +272,8 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates sun_ecliptic_longitude correctly" do
     allow(calculation).to receive_messages(
-      sun_true_longitude: Lunation::Angle.from_decimal_degrees(199.90988), # ☉
-      longitude_of_ascending_node_low_precision: Lunation::Angle.from_decimal_degrees(264.65) # Omega
+      sun_true_longitude: described_class::Angle.from_decimal_degrees(199.90988), # ☉
+      longitude_of_ascending_node_low_precision: described_class::Angle.from_decimal_degrees(264.65) # Omega
     )
 
     # example 25.a A.A. p. 165
@@ -289,8 +289,8 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates sun_true_longitude correctly" do
     allow(calculation).to receive_messages(
-      sun_mean_longitude: Lunation::Angle.from_decimal_degrees(201.80720), # L0
-      sun_equation_of_center: Lunation::Angle.from_decimal_degrees(-1.89732, normalize: false) # C
+      sun_mean_longitude: described_class::Angle.from_decimal_degrees(201.80720), # L0
+      sun_equation_of_center: described_class::Angle.from_decimal_degrees(-1.89732, normalize: false) # C
     )
 
     # example 25.a A.A. p. 165
@@ -300,11 +300,11 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates nutation_in_obliquity correctly" do
     allow(calculation).to receive_messages(
       time: -0.127296372348, # 1987-04-10 0h TD
-      moon_mean_elongation: Lunation::Angle.from_decimal_degrees(136.9623), # (D) A.A. p. 148
-      sun_mean_anomaly: Lunation::Angle.from_decimal_degrees(94.9792), # (M) A.A. p. 148
-      moon_mean_anomaly: Lunation::Angle.from_decimal_degrees(229.2784), # (M') A.A. p. 148
-      moon_argument_of_latitude: Lunation::Angle.from_decimal_degrees(143.4079), # (F) A.A. p. 148
-      longitude_of_ascending_node: Lunation::Angle.from_decimal_degrees(11.2531) # (Ω) A.A. p. 148
+      moon_mean_elongation: described_class::Angle.from_decimal_degrees(136.9623), # (D) A.A. p. 148
+      sun_mean_anomaly: described_class::Angle.from_decimal_degrees(94.9792), # (M) A.A. p. 148
+      moon_mean_anomaly: described_class::Angle.from_decimal_degrees(229.2784), # (M') A.A. p. 148
+      moon_argument_of_latitude: described_class::Angle.from_decimal_degrees(143.4079), # (F) A.A. p. 148
+      longitude_of_ascending_node: described_class::Angle.from_decimal_degrees(11.2531) # (Ω) A.A. p. 148
     )
 
     # example 22.a A.A. p. 148
@@ -339,8 +339,8 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates obliquity_of_ecliptic correctly" do
     allow(calculation).to receive_messages(
-      mean_obliquity_of_ecliptic: Lunation::Angle.from_decimal_degrees(23.440946), # (ε0)
-      nutation_in_obliquity: Lunation::Angle.from_decimal_arcseconds(9.443) # (Δε)
+      mean_obliquity_of_ecliptic: described_class::Angle.from_decimal_degrees(23.440946), # (ε0)
+      nutation_in_obliquity: described_class::Angle.from_decimal_arcseconds(9.443) # (Δε)
     )
 
     # converted from 23deg26'36".850 (example 22.a A.A. p. 148)
@@ -352,12 +352,12 @@ RSpec.describe Lunation::Calculation do
   specify "it calculates corrected_obliquity_of_ecliptic correctly" do
     allow(calculation).to receive_messages(
       # (ε0)
-      mean_obliquity_of_ecliptic: Lunation::Angle.from_degrees(
+      mean_obliquity_of_ecliptic: described_class::Angle.from_degrees(
         degrees: 23,
         arcminutes: 26,
         decimal_arcseconds: 24.83
       ),
-      longitude_of_ascending_node: Lunation::Angle.from_decimal_degrees(264.65) # (omega)
+      longitude_of_ascending_node: described_class::Angle.from_decimal_degrees(264.65) # (omega)
     )
 
     # example 25.a, A.A. p. 165
@@ -378,15 +378,15 @@ RSpec.describe Lunation::Calculation do
     context "when example 13.a (A.A. p. 95)" do
       # λ
       let(:moon_apparent_ecliptic_longitude) do
-        Lunation::Angle.from_decimal_degrees(113.215630)
+        described_class::Angle.from_decimal_degrees(113.215630)
       end
       # ε
       let(:obliquity_of_ecliptic) do
-        Lunation::Angle.from_decimal_degrees(23.4392911)
+        described_class::Angle.from_decimal_degrees(23.4392911)
       end
       # β
       let(:moon_ecliptic_latitude) do
-        Lunation::Angle.from_decimal_degrees(6.684170)
+        described_class::Angle.from_decimal_degrees(6.684170)
       end
 
       it { expect(moon_right_ascension.decimal_degrees.round(6)).to eq(116.328942) }
@@ -395,15 +395,15 @@ RSpec.describe Lunation::Calculation do
     context "when example 47.a (A.A. p. 343)" do
       # apparent λ
       let(:moon_apparent_ecliptic_longitude) do
-        Lunation::Angle.from_decimal_degrees(133.167265)
+        described_class::Angle.from_decimal_degrees(133.167265)
       end
       # ε
       let(:obliquity_of_ecliptic) do
-        Lunation::Angle.from_decimal_degrees(23.440636)
+        described_class::Angle.from_decimal_degrees(23.440636)
       end
       # β
       let(:moon_ecliptic_latitude) do
-        Lunation::Angle.from_decimal_degrees(-3.229126)
+        described_class::Angle.from_decimal_degrees(-3.229126)
       end
 
       it { expect(moon_right_ascension.decimal_degrees.round(6)).to eq(134.688470) }
@@ -412,8 +412,8 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates sun_right_ascension correctly" do
     allow(calculation).to receive_messages(
-      corrected_obliquity_of_ecliptic: Lunation::Angle.from_decimal_degrees(23.43999), # ε
-      sun_ecliptic_longitude: Lunation::Angle.from_decimal_degrees(199.90895) # λ
+      corrected_obliquity_of_ecliptic: described_class::Angle.from_decimal_degrees(23.43999), # ε
+      sun_ecliptic_longitude: described_class::Angle.from_decimal_degrees(199.90895) # λ
     )
 
     # example 25.a, A.A. p. 165
@@ -422,9 +422,9 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates moon_declination correctly" do
     allow(calculation).to receive_messages(
-      moon_apparent_ecliptic_longitude: Lunation::Angle.from_decimal_degrees(133.167265), # apparent λ
-      obliquity_of_ecliptic: Lunation::Angle.from_decimal_degrees(23.440636), # ε
-      moon_ecliptic_latitude: Lunation::Angle.from_decimal_degrees(-3.229126) # β
+      moon_apparent_ecliptic_longitude: described_class::Angle.from_decimal_degrees(133.167265), # apparent λ
+      obliquity_of_ecliptic: described_class::Angle.from_decimal_degrees(23.440636), # ε
+      moon_ecliptic_latitude: described_class::Angle.from_decimal_degrees(-3.229126) # β
     )
 
     expect(calculation.moon_declination.decimal_degrees.round(6)).to eq(13.768368)
@@ -438,10 +438,10 @@ RSpec.describe Lunation::Calculation do
 
   specify "it calculates moon_position_angle_of_bright_limb correctly" do
     allow(calculation).to receive_messages(
-      moon_declination: Lunation::Angle.from_decimal_degrees(13.7684),
-      moon_right_ascension: Lunation::Angle.from_decimal_degrees(134.6885),
-      sun_declination: Lunation::Angle.from_decimal_degrees(8.6964),
-      sun_right_ascension: Lunation::Angle.from_decimal_degrees(20.6579)
+      moon_declination: described_class::Angle.from_decimal_degrees(13.7684),
+      moon_right_ascension: described_class::Angle.from_decimal_degrees(134.6885),
+      sun_declination: described_class::Angle.from_decimal_degrees(8.6964),
+      sun_right_ascension: described_class::Angle.from_decimal_degrees(20.6579)
     )
 
     expect(calculation.moon_position_angle_of_bright_limb.decimal_degrees.round(1)).to eq(285.0)

@@ -19,7 +19,7 @@ module Lunation
 
       # (L) Ecliptical longitude of the earth (A.A. p. 219, 32.2)
       # UNIT: Angle
-      def calculate_ecliptic_longitude_of_earth_using_vsop87
+      def ecliptic_longitude_of_earth_using_vsop87
         result = Horner.compute(
           time_millennia,
           [
@@ -37,7 +37,7 @@ module Lunation
 
       # (B) Ecliptical latitude of the earth (A.A. p. 219, 32.2)
       # UNIT: Angle
-      def calculate_ecliptic_latitude_of_earth_using_vsop87
+      def ecliptic_latitude_of_earth_using_vsop87
         first_series = reduce_periodic_terms(PERIODIC_TERMS_B0)
         second_series = reduce_periodic_terms(PERIODIC_TERMS_B1)
 
@@ -49,7 +49,7 @@ module Lunation
 
       # (R) Radius vector (distance to sun) of the earth (A.A. p. 219, 32.2)
       # UNIT: Astronomical Units (AU)
-      def calculate_radius_vector_of_earth_using_vsop87
+      def radius_vector_of_earth_using_vsop87
         result = Horner.compute(
           time_millennia,
           [

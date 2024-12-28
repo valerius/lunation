@@ -4,9 +4,9 @@ RSpec.describe "Illuminated fraction of the moon" do
   before do
     allow(calculation).to receive_messages(
       dynamical_time: dynamical_time,
-      calculate_sun_right_ascension: sun_right_ascension,
-      calculate_sun_declination: sun_declination,
-      calculate_distance_between_earth_and_sun_in_kilometers: distance_between_earth_and_sun_in_kilometers
+      sun_right_ascension: sun_right_ascension,
+      sun_declination: sun_declination,
+      distance_between_earth_and_sun_in_kilometers: distance_between_earth_and_sun_in_kilometers
     )
   end
 
@@ -23,31 +23,31 @@ RSpec.describe "Illuminated fraction of the moon" do
   let(:distance_between_earth_and_sun_in_kilometers) { 149_971_520 }
 
   specify "it calculates the moon's apparent right ascension (α) correctly" do
-    expect(calculation.calculate_moon_right_ascension.decimal_degrees.round(4)).to eq(134.6885)
+    expect(calculation.moon_right_ascension.decimal_degrees.round(4)).to eq(134.6885)
   end
 
   specify "it calculates the moon's apparent declination (δ) correctly" do
-    expect(calculation.calculate_moon_declination.decimal_degrees.round(4)).to eq(13.7684)
+    expect(calculation.moon_declination.decimal_degrees.round(4)).to eq(13.7684)
   end
 
   specify "it calculates the distance between the earth and the moon (Delta) correctly" do
-    expect(calculation.calculate_distance_between_earth_and_moon.round).to eq(368_410)
+    expect(calculation.distance_between_earth_and_moon.round).to eq(368_410)
   end
 
   specify "it calculates the geocentric elongation of the moon (ψ) correctly" do
-    expect(calculation.calculate_moon_elongation_from_sun.decimal_degrees.round(4)).to eq(110.7929)
+    expect(calculation.moon_elongation_from_sun.decimal_degrees.round(4)).to eq(110.7929)
   end
 
   specify "it calculates the moon's phase angle (i) correctly" do
     # The value in the test is 69.0756
-    expect(calculation.calculate_moon_phase_angle.decimal_degrees.round(4)).to eq(69.0757)
+    expect(calculation.moon_phase_angle.decimal_degrees.round(4)).to eq(69.0757)
   end
 
   specify "it calculates the moon's illuminated fraction (k) correctly" do
-    expect(calculation.calculate_moon_illuminated_fraction).to eq(0.6786)
+    expect(calculation.moon_illuminated_fraction).to eq(0.6786)
   end
 
   specify "it calculates the moon's bright limb position angle (χ) correctly" do
-    expect(calculation.calculate_moon_position_angle_of_bright_limb.decimal_degrees.round(1)).to eq(285.0)
+    expect(calculation.moon_position_angle_of_bright_limb.decimal_degrees.round(1)).to eq(285.0)
   end
 end

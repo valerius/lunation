@@ -17,73 +17,64 @@ module Lunation
 
       # (L') Moon mean_longitude (47.1, A.A. p. 338)
       # UNIT: Angle
-      def calculate_moon_mean_longitude
+      def moon_mean_longitude
         result = Horner.compute(time, MOON_MEAN_LONGITUDE_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (D) Moon mean_elongation (47.2, A.A. p. 338)
       # UNIT: Angle
-      def calculate_moon_mean_elongation
+      def moon_mean_elongation
         result = Horner.compute(time, MOON_MEAN_ELONGATION_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (M') Moon mean_anomaly (47.4, A.A. p. 338)
       # UNIT: Angle
-      def calculate_moon_mean_anomaly_high_precision
+      def moon_mean_anomaly_high_precision
         result = Horner.compute(time, MOON_MEAN_ANOMALY_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (F) Moon argument_of_latitude (47.5, A.A. p. 338)
       # UNIT: Angle
-      def calculate_moon_argument_of_latitude_high_precision
+      def moon_argument_of_latitude_high_precision
         result = Horner.compute(time, MOON_ARGUMENT_OF_LATITUDE_CONSTANTS)
         Angle.from_decimal_degrees(result)
       end
 
       # (A1) Venus correction (A.A. p. 338)
       # UNIT: Angle
-      def calculate_correction_venus
+      def correction_venus
         Angle.from_decimal_degrees(119.75 + 131.849 * time)
       end
 
       # (A2) Jupiter correction (A.A. p. 338)
       # UNIT: Angle
-      def calculate_correction_jupiter
+      def correction_jupiter
         Angle.from_decimal_degrees(53.09 + 4_792_64.29 * time)
       end
 
       # (A3) latitude correction (A.A. p. 338)
       # UNIT: Angle
-      def calculate_correction_latitude
+      def correction_latitude
         Angle.from_decimal_degrees(313.45 + 481_266.484 * time)
       end
 
       # (E) Earth eccentricity (47.6 A.A. p. 338)
-      def calculate_correction_eccentricity_of_earth
+      def correction_eccentricity_of_earth
         Horner.compute(time, CORRECTION_ECCENTRICITY_OF_EARTH_CONSTANTS).round(6)
       end
 
       # (Σl) Moon longitude (A.A. p. 338)
       # UNIT: decimal degrees
-      def calculate_moon_heliocentric_longitude(
-        moon_mean_elongation: calculate_moon_mean_elongation,
-        sun_mean_anomaly: calculate_sun_mean_anomaly2,
-        moon_mean_anomaly: calculate_moon_mean_anomaly_high_precision,
-        moon_argument_of_latitude: calculate_moon_argument_of_latitude_high_precision,
-        correction_eccentricity_of_earth: calculate_correction_eccentricity_of_earth,
-        correction_venus: calculate_correction_venus,
-        moon_mean_longitude: calculate_moon_mean_longitude,
-        correction_jupiter: calculate_correction_jupiter
-      )
+      def moon_heliocentric_longitude
         result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
           sine_argument = Angle.from_decimal_degrees(
             elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
-            elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-            elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-            elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees
+            elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
+            elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
+            elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
           )
 
           if elem["sine_coefficient"].nil?
@@ -96,29 +87,20 @@ module Lunation
             acc + elem["sine_coefficient"] * Math.sin(sine_argument.radians)
           end
         end + 3958 * Math.sin(correction_venus.radians) +
-          1962 * Math.sin((moon_mean_longitude - moon_argument_of_latitude).radians) +
+          1962 * Math.sin((moon_mean_longitude - moon_argument_of_latitude_high_precision).radians) +
           318 * Math.sin(correction_jupiter.radians)
         result.round
       end
 
       # (Σb) Moon latitude (A.A. p. 338)
       # UNIT: decimal degrees
-      def calculate_moon_heliocentric_latitude(
-        moon_mean_elongation: calculate_moon_mean_elongation,
-        sun_mean_anomaly: calculate_sun_mean_anomaly2,
-        moon_mean_anomaly: calculate_moon_mean_anomaly_high_precision,
-        moon_argument_of_latitude: calculate_moon_argument_of_latitude_high_precision,
-        correction_eccentricity_of_earth: calculate_correction_eccentricity_of_earth,
-        moon_mean_longitude: calculate_moon_mean_longitude,
-        correction_latitude: calculate_correction_latitude,
-        correction_venus: calculate_correction_venus
-      )
+      def moon_heliocentric_latitude
         result = LATITUDE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
           sine_argument = Angle.from_decimal_degrees(
             elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
-            elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-            elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-            elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees
+            elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
+            elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
+            elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
           )
 
           if elem["sine_coefficient"].nil?
@@ -132,28 +114,22 @@ module Lunation
           end
         end - 2235 * Math.sin(moon_mean_longitude.radians) +
           382 * Math.sin(correction_latitude.radians) +
-          175 * Math.sin((correction_venus - moon_argument_of_latitude).radians) +
-          175 * Math.sin((correction_venus + moon_argument_of_latitude).radians) +
-          127 * Math.sin((moon_mean_longitude - moon_mean_anomaly).radians) +
-          -115 * Math.sin((moon_mean_longitude + moon_mean_anomaly).radians)
+          175 * Math.sin((correction_venus - moon_argument_of_latitude_high_precision).radians) +
+          175 * Math.sin((correction_venus + moon_argument_of_latitude_high_precision).radians) +
+          127 * Math.sin((moon_mean_longitude - moon_mean_anomaly_high_precision).radians) +
+          -115 * Math.sin((moon_mean_longitude + moon_mean_anomaly_high_precision).radians)
         result.round
       end
 
       # (Σr) Moon distance (A.A. p. 338)
       # UNIT: 1000 km
-      def calculate_moon_heliocentric_distance(
-        moon_mean_elongation: calculate_moon_mean_elongation,
-        sun_mean_anomaly: calculate_sun_mean_anomaly2,
-        moon_mean_anomaly: calculate_moon_mean_anomaly_high_precision,
-        moon_argument_of_latitude: calculate_moon_argument_of_latitude_high_precision,
-        correction_eccentricity_of_earth: calculate_correction_eccentricity_of_earth
-      )
+      def moon_heliocentric_distance
         result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
           cosine_argument = Angle.from_decimal_degrees(
             elem["moon_mean_elongation"] * moon_mean_elongation.decimal_degrees +
-            elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-            elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-            elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees
+            elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
+            elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
+            elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
           )
 
           if elem["cosine_coefficient"].nil?
@@ -171,18 +147,13 @@ module Lunation
 
       # (λ) ecliptical longitude (A.A. p. 342)
       # UNIT: Angle
-      def calculate_moon_ecliptic_longitude(
-        moon_mean_longitude: calculate_moon_mean_longitude,
-        moon_heliocentric_longitude: calculate_moon_heliocentric_longitude
-      )
+      def moon_ecliptic_longitude
         Angle.from_decimal_degrees(moon_mean_longitude.decimal_degrees + moon_heliocentric_longitude / 1_000_000.0)
       end
 
       # (β) ecliptical latitude (A.A. p. 342)
       # UNIT: Angle
-      def calculate_moon_ecliptic_latitude(
-        moon_heliocentric_latitude: calculate_moon_heliocentric_latitude
-      )
+      def moon_ecliptic_latitude
         Angle.from_decimal_degrees(
           moon_heliocentric_latitude / 1_000_000.0,
           normalize: false
@@ -191,9 +162,7 @@ module Lunation
 
       # (Delta) Earth-moon distance (in kilometers) (A.A. p. 342)
       # UNIT: kilometers (km)
-      def calculate_distance_between_earth_and_moon(
-        moon_heliocentric_distance: calculate_moon_heliocentric_distance
-      )
+      def distance_between_earth_and_moon
         result = FIXED_DISTANCE_BETWEEN_EARTH_AND_MOON +
           (moon_heliocentric_distance / 1_000.0)
         result.round(1)
@@ -201,28 +170,19 @@ module Lunation
 
       # (π) Moon equitorial horizontal parallax (A.A. p. 337)
       # UNIT: Angle
-      def calculate_equatorial_horizontal_parallax(
-        distance_between_earth_and_moon: calculate_distance_between_earth_and_moon
-      )
+      def equatorial_horizontal_parallax
         Angle.from_radians(Math.asin(RADIUS_OF_EARTH / distance_between_earth_and_moon))
       end
 
       # (apparent λ) Moon apparent longitude (A.A. p. 343)
       # UNIT: Angle
-      def calculate_moon_apparent_ecliptic_longitude(
-        moon_ecliptic_longitude: calculate_moon_ecliptic_longitude,
-        nutation_in_longitude: calculate_nutation_in_longitude
-      )
+      def moon_apparent_ecliptic_longitude
         moon_ecliptic_longitude + nutation_in_longitude
       end
 
       # (α) geocentric (apparent) right ascension of the moon (13.3 A.A. p. 93)
       # UNIT: Angle
-      def calculate_moon_right_ascension(
-        moon_apparent_ecliptic_longitude: calculate_moon_apparent_ecliptic_longitude,
-        obliquity_of_ecliptic: calculate_obliquity_of_ecliptic,
-        moon_ecliptic_latitude: calculate_moon_ecliptic_latitude
-      )
+      def moon_right_ascension
         numerator = Math.sin(moon_apparent_ecliptic_longitude.radians) *
           Math.cos(obliquity_of_ecliptic.radians) -
           Math.tan(moon_ecliptic_latitude.radians) *
@@ -233,11 +193,7 @@ module Lunation
 
       # (δ) geocentric (apparent) declination of the moon (13.4) A.A. p. 93
       # UNIT: Angle
-      def calculate_moon_declination(
-        moon_ecliptic_latitude: calculate_moon_ecliptic_latitude,
-        obliquity_of_ecliptic: calculate_obliquity_of_ecliptic,
-        moon_apparent_ecliptic_longitude: calculate_moon_apparent_ecliptic_longitude
-      )
+      def moon_declination
         result = Math.sin(moon_ecliptic_latitude.radians) *
           Math.cos(obliquity_of_ecliptic.radians) +
           Math.cos(moon_ecliptic_latitude.radians) *

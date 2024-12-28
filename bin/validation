@@ -19,7 +19,7 @@ sum_of_squared_errors = 0.0
 
 true_values.each do |date, true_value|
   predicted_value =
-    Lunation::Calculation.new(DateTime.parse(date)).calculate_moon_illuminated_fraction
+    Lunation::Calculation.new(DateTime.parse(date)).moon_illuminated_fraction
   absolute_error = (predicted_value - true_value.to_f).abs
 
   sum_of_absolute_errors += absolute_error

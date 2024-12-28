@@ -27,6 +27,10 @@ Metrics/BlockLength:
 
 Layout/MultilineOperationIndentation:
   EnforcedStyle: indented
+Layout/CaseIndentation:
+  EnforcedStyle: end
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: comma
 
 # Disabled cops
 Style/FrozenStringLiteralComment:

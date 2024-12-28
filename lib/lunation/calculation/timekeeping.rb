@@ -22,7 +22,8 @@ module Lunation
       # (T) time, measured in Julian centuries from the Epoch J2000.0 (22.1, A.A. p. 143)
       # UNIT: centuries from the Epoch J2000.0
       def time
-        @time ||= ((julian_ephemeris_day - EPOCH_J2000_JDE) / JULIAN_CENTURY_IN_DAYS).round(12)
+        @time ||=
+          ((julian_ephemeris_day - EPOCH_J2000_JDE) / JULIAN_CENTURY_IN_DAYS).round(12)
       end
 
       # ΔT Difference between Dynamical Time (TD) and Universal Time (UT, more commonly
@@ -32,39 +33,42 @@ module Lunation
       #   precisely in the book (A.A. p. 78-79, formulae 10.0 and 10.2).
       # UNIT: seconds
       def delta_t
-        case datetime.year
-        when -1_999...-500
-          elapsed_years = (@decimal_year - 1_820) / 100
-          -20 + 32 * elapsed_years**2
-        when -500...500
-          Horner.compute(@decimal_year / 100.0, DELTA_T_500BC_500AD)
-        when 500...1_600
-          Horner.compute((@decimal_year - 1_000.0) / 100.0, DELTA_T_500AD_1600AD)
-        when 1_600...1_700
-          Horner.compute(@decimal_year - 1_600.0, DELTA_T_1600AD_1700AD)
-        when 1_700...1_800
-          Horner.compute(@decimal_year - 1_700.0, DELTA_T_1700AD_1800AD)
-        when 1_800...1_860
-          Horner.compute(@decimal_year - 1_800, DELTA_T_1800AD_1860AD)
-        when 1_860...1_900
-          Horner.compute(@decimal_year - 1_860, DELTA_T_1860AD_1900AD)
-        when 1_900...1_920
-          Horner.compute(@decimal_year - 1_900, DELTA_T_1900AD_1920AD)
-        when 1_920...1_941
-          Horner.compute(@decimal_year - 1_920, DELTA_T_1920AD_1941AD)
-        when 1_941...1_961
-          Horner.compute(@decimal_year - 1_950, DELTA_T_1941AD_1961AD)
-        when 1_961...1_986
-          Horner.compute(@decimal_year - 1_975, DELTA_T_1961AD_1986AD)
-        when 1_986...2_005
-          Horner.compute(@decimal_year - 2_000, DELTA_T_1986AD_2005AD)
-        when 2_005...2_050
-          Horner.compute(@decimal_year - 2_000, DELTA_T_2005AD_2050AD)
-        when 2_050...2_150
-          -20 + 32 * ((@decimal_year - 1_820) / 100)**2 - 0.5628 * (2_150 - @decimal_year)
-        when 2_150..3_000
-          -20 + 32 * @decimal_year**2
-        end.round(1)
+        @delta_t ||= begin
+          result = case datetime.year
+          when -1_999...-500
+            elapsed_years = (@decimal_year - 1_820) / 100
+            -20 + 32 * elapsed_years**2
+          when -500...500
+            Horner.compute(@decimal_year / 100.0, DELTA_T_500BC_500AD)
+          when 500...1_600
+            Horner.compute((@decimal_year - 1_000.0) / 100.0, DELTA_T_500AD_1600AD)
+          when 1_600...1_700
+            Horner.compute(@decimal_year - 1_600.0, DELTA_T_1600AD_1700AD)
+          when 1_700...1_800
+            Horner.compute(@decimal_year - 1_700.0, DELTA_T_1700AD_1800AD)
+          when 1_800...1_860
+            Horner.compute(@decimal_year - 1_800, DELTA_T_1800AD_1860AD)
+          when 1_860...1_900
+            Horner.compute(@decimal_year - 1_860, DELTA_T_1860AD_1900AD)
+          when 1_900...1_920
+            Horner.compute(@decimal_year - 1_900, DELTA_T_1900AD_1920AD)
+          when 1_920...1_941
+            Horner.compute(@decimal_year - 1_920, DELTA_T_1920AD_1941AD)
+          when 1_941...1_961
+            Horner.compute(@decimal_year - 1_950, DELTA_T_1941AD_1961AD)
+          when 1_961...1_986
+            Horner.compute(@decimal_year - 1_975, DELTA_T_1961AD_1986AD)
+          when 1_986...2_005
+            Horner.compute(@decimal_year - 2_000, DELTA_T_1986AD_2005AD)
+          when 2_005...2_050
+            Horner.compute(@decimal_year - 2_000, DELTA_T_2005AD_2050AD)
+          when 2_050...2_150
+            -20 + 32 * ((@decimal_year - 1_820) / 100)**2 - 0.5628 * (2_150 - @decimal_year)
+          when 2_150..3_000
+            -20 + 32 * @decimal_year**2
+          end
+          result.round(1)
+        end
       end
 
       # (TD) Dynamical time (A.A. p. 77)
@@ -76,7 +80,7 @@ module Lunation
       # (JDE) Julian ephemeris day (A.A. p. 59)
       # UNIT: days, expressed as a floating point number
       def julian_ephemeris_day
-        dynamical_time.ajd.to_f.round(5)
+        @julian_ephemeris_day ||= dynamical_time.ajd.to_f.round(5)
       end
 
       # (t) time, measured in Julian millennia from the epoch J2000.0 (32.1, A.A. p. 218)
@@ -88,7 +92,7 @@ module Lunation
       # (U) Time measured in units of 10_000 Julian years from J2000.0 (A.A. p. 147)
       # UNIT: 10_000 years (myriads) from the Epoch J2000.0
       def time_myriads
-        time / 100.0
+        @time_myriads ||= time / 100.0
       end
     end
   end

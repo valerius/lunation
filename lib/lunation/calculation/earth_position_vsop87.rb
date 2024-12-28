@@ -20,48 +20,54 @@ module Lunation
       # (L) Ecliptical longitude of the earth (A.A. p. 219, 32.2)
       # UNIT: Angle
       def ecliptic_longitude_of_earth_using_vsop87
-        result = Horner.compute(
-          time_millennia,
-          [
-            reduce_periodic_terms(PERIODIC_TERMS_L0),
-            reduce_periodic_terms(PERIODIC_TERMS_L1),
-            reduce_periodic_terms(PERIODIC_TERMS_L2),
-            reduce_periodic_terms(PERIODIC_TERMS_L3),
-            reduce_periodic_terms(PERIODIC_TERMS_L4),
-            reduce_periodic_terms(PERIODIC_TERMS_L5)
-          ]
-        )
+        @ecliptic_longitude_of_earth_using_vsop87 ||= begin
+          result = Horner.compute(
+            time_millennia,
+            [
+              reduce_periodic_terms(PERIODIC_TERMS_L0),
+              reduce_periodic_terms(PERIODIC_TERMS_L1),
+              reduce_periodic_terms(PERIODIC_TERMS_L2),
+              reduce_periodic_terms(PERIODIC_TERMS_L3),
+              reduce_periodic_terms(PERIODIC_TERMS_L4),
+              reduce_periodic_terms(PERIODIC_TERMS_L5)
+            ]
+          )
 
-        Angle.from_radians(result / 100_000_000.0)
+          Angle.from_radians(result / 100_000_000.0)
+        end
       end
 
       # (B) Ecliptical latitude of the earth (A.A. p. 219, 32.2)
       # UNIT: Angle
       def ecliptic_latitude_of_earth_using_vsop87
-        first_series = reduce_periodic_terms(PERIODIC_TERMS_B0)
-        second_series = reduce_periodic_terms(PERIODIC_TERMS_B1)
+        @ecliptic_latitude_of_earth_using_vsop87 ||= begin
+          first_series = reduce_periodic_terms(PERIODIC_TERMS_B0)
+          second_series = reduce_periodic_terms(PERIODIC_TERMS_B1)
 
-        Angle.from_radians(
-          (first_series + second_series * time_millennia) / 100_000_000.0,
-          normalize: false
-        )
+          Angle.from_radians(
+            (first_series + second_series * time_millennia) / 100_000_000.0,
+            normalize: false
+          )
+        end
       end
 
       # (R) Radius vector (distance to sun) of the earth (A.A. p. 219, 32.2)
       # UNIT: Astronomical Units (AU)
       def radius_vector_of_earth_using_vsop87
-        result = Horner.compute(
-          time_millennia,
-          [
-            reduce_periodic_terms(PERIODIC_TERMS_R0),
-            reduce_periodic_terms(PERIODIC_TERMS_R1),
-            reduce_periodic_terms(PERIODIC_TERMS_R2),
-            reduce_periodic_terms(PERIODIC_TERMS_R3),
-            reduce_periodic_terms(PERIODIC_TERMS_R4)
-          ]
-        )
+        @radius_vector_of_earth_using_vsop87 ||= begin
+          result = Horner.compute(
+            time_millennia,
+            [
+              reduce_periodic_terms(PERIODIC_TERMS_R0),
+              reduce_periodic_terms(PERIODIC_TERMS_R1),
+              reduce_periodic_terms(PERIODIC_TERMS_R2),
+              reduce_periodic_terms(PERIODIC_TERMS_R3),
+              reduce_periodic_terms(PERIODIC_TERMS_R4)
+            ]
+          )
 
-        (result / 100_000_000.0).round(9)
+          (result / 100_000_000.0).round(9)
+        end
       end
 
       private def reduce_periodic_terms(periodic_terms)

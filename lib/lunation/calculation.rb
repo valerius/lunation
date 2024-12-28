@@ -16,7 +16,7 @@ module Lunation
     include SunPosition
     include Timekeeping
 
-    attr_reader :datetime
+    attr_reader :datetime, :decimal_year
 
     def initialize(datetime = DateTime.now)
       @datetime = datetime
@@ -24,144 +24,144 @@ module Lunation
     end
 
     def to_h
-      @to_h ||= {
+      {
         corrected_obliquity_of_ecliptic: corrected_obliquity_of_ecliptic,
+        correction_eccentricity_of_earth: correction_eccentricity_of_earth,
         correction_jupiter: correction_jupiter,
         correction_latitude: correction_latitude,
         correction_venus: correction_venus,
         delta_t: delta_t,
+        distance_between_earth_and_moon: distance_between_earth_and_moon,
+        distance_between_earth_and_sun_in_astronomical_units: distance_between_earth_and_sun_in_astronomical_units,
+        distance_between_earth_and_sun_in_kilometers: distance_between_earth_and_sun_in_kilometers,
         dynamical_time: dynamical_time,
-        correction_eccentricity_of_earth: correction_eccentricity_of_earth,
         earth_orbit_eccentricity: earth_orbit_eccentricity,
         ecliptic_latitude_of_earth_using_vsop87: ecliptic_latitude_of_earth_using_vsop87,
         ecliptic_longitude_of_earth_using_vsop87: ecliptic_longitude_of_earth_using_vsop87,
-        distance_between_earth_and_moon: distance_between_earth_and_moon,
-        nutation_in_longitude: nutation_in_longitude,
-        distance_between_earth_and_sun_in_kilometers: distance_between_earth_and_sun_in_kilometers,
-        earth_sun_distance: distance_between_earth_and_sun_in_astronomical_units,
-        mean_obliquity_of_ecliptic: mean_obliquity_of_ecliptic,
-        obliquity_of_ecliptic: obliquity_of_ecliptic,
         equatorial_horizontal_parallax: equatorial_horizontal_parallax,
         julian_ephemeris_day: julian_ephemeris_day,
-        time_myriads: time_myriads,
-        moon_argument_of_latitude: moon_argument_of_latitude_high_precision,
-        moon_argument_of_latitude2: moon_argument_of_latitude,
-        moon_ecliptic_latitude: moon_ecliptic_latitude,
+        longitude_of_ascending_node_low_precision: longitude_of_ascending_node_low_precision,
+        longitude_of_ascending_node: longitude_of_ascending_node,
+        mean_obliquity_of_ecliptic: mean_obliquity_of_ecliptic,
         moon_apparent_ecliptic_longitude: moon_apparent_ecliptic_longitude,
+        moon_argument_of_latitude_high_precision: moon_argument_of_latitude_high_precision,
+        moon_argument_of_latitude: moon_argument_of_latitude,
         moon_declination: moon_declination,
-        moon_elongation_from_sun: moon_elongation_from_sun,
+        moon_ecliptic_latitude: moon_ecliptic_latitude,
         moon_ecliptic_longitude: moon_ecliptic_longitude,
-        moon_right_ascension: moon_right_ascension,
+        moon_elongation_from_sun: moon_elongation_from_sun,
         moon_heliocentric_distance: moon_heliocentric_distance,
         moon_heliocentric_latitude: moon_heliocentric_latitude,
         moon_heliocentric_longitude: moon_heliocentric_longitude,
         moon_illuminated_fraction: moon_illuminated_fraction,
-        moon_mean_anomaly: moon_mean_anomaly_high_precision,
-        moon_mean_anomaly2: moon_mean_anomaly,
+        moon_mean_anomaly_high_precision: moon_mean_anomaly_high_precision,
+        moon_mean_anomaly: moon_mean_anomaly,
         moon_mean_elongation_from_sun: moon_mean_elongation_from_sun,
         moon_mean_elongation: moon_mean_elongation,
         moon_mean_longitude: moon_mean_longitude,
-        longitude_of_ascending_node: longitude_of_ascending_node,
-        longitude_of_ascending_node: longitude_of_ascending_node_low_precision,
         moon_phase_angle: moon_phase_angle,
+        moon_right_ascension: moon_right_ascension,
+        nutation_in_longitude: nutation_in_longitude,
         nutation_in_obliquity: nutation_in_obliquity,
+        obliquity_of_ecliptic: obliquity_of_ecliptic,
         radius_vector_of_earth_using_vsop87: radius_vector_of_earth_using_vsop87,
+        sun_anomaly: sun_anomaly,
+        sun_declination: sun_declination,
         sun_ecliptic_longitude: sun_ecliptic_longitude,
         sun_equation_of_center: sun_equation_of_center,
-        sun_declination: sun_declination,
+        sun_mean_anomaly: sun_mean_anomaly,
+        sun_mean_anomaly2: sun_mean_anomaly2,
         sun_mean_longitude: sun_mean_longitude,
         sun_right_ascension: sun_right_ascension,
-        sun_mean_anomaly: sun_mean_anomaly2,
-        sun_mean_anomaly2: sun_mean_anomaly,
-        sun_anomaly: sun_anomaly,
         sun_true_longitude: sun_true_longitude,
         time_millennia: time_millennia,
-        time: time
+        time_myriads: time_myriads,
+        time: time,
       }
     end
 
     def to_s
       result = <<-HEREDOC
-        DATE AND TIME (UT):                           #{@datetime}
+        DATE AND TIME (UT):                           #{datetime}
         ----------------------------------------------------------------------------------
-        DECIMAL YEAR:                                 #{@decimal_year}
-        DELTA T:                                      #{to_h[:delta_t]}
-        DYNAMICAL TIME:                               #{to_h[:dynamical_time]}
-        JULIAN EPHEMERIS DAY:                         #{to_h[:julian_ephemeris_day]}
-        JULIAN MYRIADS SINCE J2000:                   #{to_h[:time_myriads]}
-        TIME (JULIAN CENTURIES):                      #{to_h[:time]}
-        TIME (JULIAN MILLENNIA):                      #{to_h[:time_millennia]}
+        DECIMAL YEAR:                                 #{decimal_year}
+        DELTA T:                                      #{delta_t}
+        DYNAMICAL TIME:                               #{dynamical_time}
+        JULIAN EPHEMERIS DAY:                         #{julian_ephemeris_day}
+        JULIAN MYRIADS (10K YEARS) SINCE J2000:       #{time_myriads}
+        TIME (JULIAN CENTURIES):                      #{time}
+        TIME (JULIAN MILLENNIA):                      #{time_millennia}
 
         **********************************************************************************
         NUTATION AND OBLIQUITY
         **********************************************************************************
 
-        EARTH NUTATION IN LONGITUDE:                  #{to_h[:nutation_in_longitude].decimal_degrees}
-        ECLIPTIC MEAN OBLIQUITY:                      #{to_h[:mean_obliquity_of_ecliptic].decimal_degrees}
-        ECLIPTIC TRUE OBLIQUITY:                      #{to_h[:obliquity_of_ecliptic].decimal_degrees}
-        MOON ARGUMENT OF LATITUDE2:                   #{to_h[:moon_argument_of_latitude2].decimal_degrees}
-        MOON MEAN ANOMALY2:                           #{to_h[:moon_mean_anomaly2].decimal_degrees}
-        MOON MEAN ELONGATION FROM THE SUN:            #{to_h[:moon_mean_elongation_from_sun].decimal_degrees}
-        MOON ORBITAL LONGITUDE MEAN ASCENDING NODE:   #{to_h[:longitude_of_ascending_node].decimal_degrees}
-        NUTATION IN OBLIQUITY:                        #{to_h[:nutation_in_obliquity].decimal_degrees}
-        SUN MEAN ANOMALY2:                            #{to_h[:sun_mean_anomaly2].decimal_degrees}
+        EARTH NUTATION IN LONGITUDE:                  #{nutation_in_longitude.decimal_degrees}°
+        ECLIPTIC MEAN OBLIQUITY:                      #{mean_obliquity_of_ecliptic.decimal_degrees}°
+        ECLIPTIC TRUE OBLIQUITY:                      #{obliquity_of_ecliptic.decimal_degrees}°
+        MOON ARGUMENT OF LATITUDE:                    #{moon_argument_of_latitude.decimal_degrees}°
+        MOON MEAN ANOMALY:                            #{moon_mean_anomaly.decimal_degrees}°
+        MOON MEAN ELONGATION FROM THE SUN:            #{moon_mean_elongation_from_sun.decimal_degrees}°
+        LONGITUDE OF ASCENDING NODE:                  #{longitude_of_ascending_node.decimal_degrees}°
+        NUTATION IN OBLIQUITY:                        #{nutation_in_obliquity.decimal_degrees}°
+        SUN MEAN ANOMALY:                             #{sun_mean_anomaly.decimal_degrees}°
 
         **********************************************************************************
         POSITION OF THE SUN AND EARTH
         **********************************************************************************
 
-        CORRECTED ECLIPTIC TRUE OBLIQUITY:            #{to_h[:corrected_obliquity_of_ecliptic].decimal_degrees}
-        EARTH ECCENTRICITY:                           #{to_h[:earth_orbit_eccentricity]}
-        EARTH-SUN DISTANCE (AU):                      #{to_h[:earth_sun_distance]}
-        EARTH-SUN DISTANCE IN KM:                     #{to_h[:distance_between_earth_and_sun_in_kilometers]}
-        MOON ORBITAL LONGITUDE MEAN ASCENDING NODE2:  #{to_h[:longitude_of_ascending_node].decimal_degrees}
-        SUN ECLIPTICAL LONGITUDE:                     #{to_h[:sun_ecliptic_longitude].decimal_degrees}
-        SUN EQUATION CENTER:                          #{to_h[:sun_equation_of_center].decimal_degrees}
-        SUN GEOCENTRIC DECLINATION:                   #{to_h[:sun_declination].decimal_degrees}
-        SUN GEOCENTRIC MEAN LONGITUDE:                #{to_h[:sun_mean_longitude].decimal_degrees}
-        SUN GEOCENTRIC RIGHT ASCENSION:               #{to_h[:sun_right_ascension].decimal_degrees}
-        SUN MEAN ANOMALY:                             #{to_h[:sun_mean_anomaly].decimal_degrees}
-        SUN TRUE ANOMALY:                             #{to_h[:sun_anomaly].decimal_degrees}
-        SUN TRUE LONGITUDE:                           #{to_h[:sun_true_longitude].decimal_degrees}
+        CORRECTED OBLIQUITY OF THE ECLIPTIC:          #{corrected_obliquity_of_ecliptic.decimal_degrees}°
+        ECCENTRICITY OF THE EARTH'S ORBIT:            #{earth_orbit_eccentricity}
+        EARTH-SUN DISTANCE (AU):                      #{distance_between_earth_and_sun_in_astronomical_units}
+        EARTH-SUN DISTANCE (KM):                      #{distance_between_earth_and_sun_in_kilometers}
+        LONGITUDE OF ASCENDING NODE (LOW PRECISION):  #{longitude_of_ascending_node.decimal_degrees}°
+        SUN ECLIPTICAL LONGITUDE:                     #{sun_ecliptic_longitude.decimal_degrees}°
+        SUN EQUATION CENTER:                          #{sun_equation_of_center.decimal_degrees}°
+        SUN GEOCENTRIC DECLINATION:                   #{sun_declination.decimal_degrees}°
+        SUN GEOCENTRIC MEAN LONGITUDE:                #{sun_mean_longitude.decimal_degrees}°
+        SUN GEOCENTRIC RIGHT ASCENSION:               #{sun_right_ascension.decimal_degrees}°
+        SUN MEAN ANOMALY2:                            #{sun_mean_anomaly2.decimal_degrees}°
+        SUN TRUE ANOMALY:                             #{sun_anomaly.decimal_degrees}°
+        SUN TRUE LONGITUDE:                           #{sun_true_longitude.decimal_degrees}°
 
         **********************************************************************************
         POSITION OF THE MOON
         **********************************************************************************
 
-        CORRECTION JUPITER:                           #{to_h[:correction_jupiter].decimal_degrees}
-        CORRECTION LATITUDE:                          #{to_h[:correction_latitude].decimal_degrees}
-        CORRECTION VENUS:                             #{to_h[:correction_venus].decimal_degrees}
-        EARTH ECCENTRICITY CORRECTION:                #{to_h[:correction_eccentricity_of_earth]}
-        EARTH-MOON DISTANCE:                          #{to_h[:distance_between_earth_and_moon]}
-        EQUITORIAL HORIZONTAL PARALLAX:               #{to_h[:equatorial_horizontal_parallax].decimal_degrees}
-        MOON ARGUMENT OF LATITUDE:                    #{to_h[:moon_argument_of_latitude].decimal_degrees}
-        MOON ECLIPTIC LATITUDE:                       #{to_h[:moon_ecliptic_latitude].decimal_degrees}
-        MOON ECLIPTIC LONGITUDE:                      #{to_h[:moon_apparent_ecliptic_longitude].decimal_degrees}
-        MOON GEOCENTRIC DECLINATION:                  #{to_h[:moon_declination].decimal_degrees}
-        MOON GEOCENTRIC LONGITUDE:                    #{to_h[:moon_ecliptic_longitude].decimal_degrees}
-        MOON GEOCENTRIC RIGHT ASCENSION:              #{to_h[:moon_right_ascension].decimal_degrees}
-        MOON HELIOCENTRIC DISTANCE:                   #{to_h[:moon_heliocentric_distance]}
-        MOON HELIOCENTRIC LATITUDE:                   #{to_h[:moon_heliocentric_latitude]}
-        MOON HELIOCENTRIC LONGITUDE:                  #{to_h[:moon_heliocentric_longitude]}
-        MOON MEAN ANOMALY:                            #{to_h[:moon_mean_anomaly].decimal_degrees}
-        MOON MEAN ELONGATION:                         #{to_h[:moon_mean_elongation].decimal_degrees}
-        MOON MEAN LONGITUDE:                          #{to_h[:moon_mean_longitude].decimal_degrees}
+        CORRECTION JUPITER:                           #{correction_jupiter.decimal_degrees}°
+        CORRECTION LATITUDE:                          #{correction_latitude.decimal_degrees}°
+        CORRECTION VENUS:                             #{correction_venus.decimal_degrees}°
+        CORRECTION EARTH ECCENTRICITY:                #{correction_eccentricity_of_earth}
+        EARTH-MOON DISTANCE (KM):                     #{distance_between_earth_and_moon}
+        EQUITORIAL HORIZONTAL PARALLAX:               #{equatorial_horizontal_parallax.decimal_degrees}°
+        MOON ARGUMENT OF LATITUDE:                    #{moon_argument_of_latitude_high_precision.decimal_degrees}°
+        MOON ECLIPTIC LATITUDE:                       #{moon_ecliptic_latitude.decimal_degrees}°
+        MOON ECLIPTIC LONGITUDE:                      #{moon_apparent_ecliptic_longitude.decimal_degrees}°
+        MOON GEOCENTRIC DECLINATION:                  #{moon_declination.decimal_degrees}°
+        MOON GEOCENTRIC LONGITUDE:                    #{moon_ecliptic_longitude.decimal_degrees}°
+        MOON GEOCENTRIC RIGHT ASCENSION:              #{moon_right_ascension.decimal_degrees}°
+        MOON HELIOCENTRIC DISTANCE:                   #{moon_heliocentric_distance}
+        MOON HELIOCENTRIC LATITUDE:                   #{moon_heliocentric_latitude}
+        MOON HELIOCENTRIC LONGITUDE:                  #{moon_heliocentric_longitude}
+        MOON MEAN ANOMALY:                            #{moon_mean_anomaly_high_precision.decimal_degrees}°
+        MOON MEAN ELONGATION:                         #{moon_mean_elongation.decimal_degrees}°
+        MOON MEAN LONGITUDE:                          #{moon_mean_longitude.decimal_degrees}°
 
         **********************************************************************************
         MOON ILLUMINATED FRACTION
         **********************************************************************************
 
-        MOON GEOCENTRIC ELONGATION:                   #{to_h[:moon_elongation_from_sun].decimal_degrees}
-        MOON ILLUMINATED FRACTION:                    #{to_h[:moon_illuminated_fraction]}
-        MOON PHASE ANGLE:                             #{to_h[:moon_phase_angle].decimal_degrees}
+        MOON ELONGATION FROM SUN:                     #{moon_elongation_from_sun.decimal_degrees}°
+        MOON ILLUMINATED FRACTION:                    #{moon_illuminated_fraction}
+        MOON PHASE ANGLE:                             #{moon_phase_angle.decimal_degrees}°
 
         **********************************************************************************
         EARTH POSITION VSOP87
         **********************************************************************************
 
-        EARTH ECLIPTICAL LATITUDE VSOP87:             #{to_h[:ecliptic_latitude_of_earth_using_vsop87].decimal_degrees}
-        EARTH ECLIPTICAL LONGITUDE VSOP87:            #{to_h[:ecliptic_longitude_of_earth_using_vsop87].decimal_degrees}
-        RADIUS VECTOR VSOP87:                         #{to_h[:radius_vector_of_earth_using_vsop87]}
+        EARTH ECLIPTICAL LATITUDE VSOP87:             #{ecliptic_latitude_of_earth_using_vsop87.decimal_degrees}°
+        EARTH ECLIPTICAL LONGITUDE VSOP87:            #{ecliptic_longitude_of_earth_using_vsop87.decimal_degrees}°
+        EARTH RADIUS VECTOR VSOP87:                   #{radius_vector_of_earth_using_vsop87}
       HEREDOC
 
       puts(result)

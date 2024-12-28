@@ -2,6 +2,14 @@ RSpec.describe Lunation::Calculation do
   let(:calculation) { described_class.new(datetime) }
   let(:datetime) { DateTime.new(1987, 4, 10, 0, 0, 0, "+00:00") }
 
+  specify "to_s works correctly" do
+    expect(calculation.to_s).to be_a(String)
+  end
+
+  specify "to_h works correctly" do
+    expect(calculation.to_h).to be_a(Hash)
+  end
+
   specify "it calculates moon_illuminated_fraction correctly" do
     # example 48.a (A.A. p. 347)
     allow(calculation)

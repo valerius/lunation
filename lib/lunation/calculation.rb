@@ -60,6 +60,7 @@ module Lunation
         moon_mean_elongation: moon_mean_elongation,
         moon_mean_longitude: moon_mean_longitude,
         moon_phase_angle: moon_phase_angle,
+        moon_position_angle_of_bright_limb: moon_position_angle_of_bright_limb,
         moon_right_ascension: moon_right_ascension,
         nutation_in_longitude: nutation_in_longitude,
         nutation_in_obliquity: nutation_in_obliquity,
@@ -81,7 +82,7 @@ module Lunation
     end
 
     def to_s
-      result = <<-HEREDOC
+      <<-HEREDOC
         DATE AND TIME (UT):                           #{datetime}
         ----------------------------------------------------------------------------------
         DECIMAL YEAR:                                 #{decimal_year}
@@ -154,6 +155,7 @@ module Lunation
         MOON ELONGATION FROM SUN:                     #{moon_elongation_from_sun.decimal_degrees}°
         MOON ILLUMINATED FRACTION:                    #{moon_illuminated_fraction}
         MOON PHASE ANGLE:                             #{moon_phase_angle.decimal_degrees}°
+        MOON POSITION ANGLE OF BRIGHT LIMB            #{moon_position_angle_of_bright_limb.decimal_degrees}°
 
         **********************************************************************************
         EARTH POSITION VSOP87
@@ -163,8 +165,6 @@ module Lunation
         EARTH ECLIPTICAL LONGITUDE VSOP87:            #{ecliptic_longitude_of_earth_using_vsop87.decimal_degrees}°
         EARTH RADIUS VECTOR VSOP87:                   #{radius_vector_of_earth_using_vsop87}
       HEREDOC
-
-      puts(result)
     end
   end
 end

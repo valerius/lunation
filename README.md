@@ -1,6 +1,6 @@
 # Lunation
 
-This library provides a library of algorithms for computing positions and ephemeris of
+Lunation provides a library of algorithms for computing positions and ephemeris of
 celestial objects using Jean Meeus's astronomical algorithms.
 
 ## Installation

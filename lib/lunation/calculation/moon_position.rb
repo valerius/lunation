@@ -86,15 +86,15 @@ module Lunation
             if elem["sine_coefficient"].nil?
               next acc
             elsif [1, -1].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth * Math.sin(sine_argument.radians)
+              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth * sine_argument.sin
             elsif [-2, 2].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth**2 * Math.sin(sine_argument.radians)
+              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth**2 * sine_argument.sin
             else
-              acc + elem["sine_coefficient"] * Math.sin(sine_argument.radians)
+              acc + elem["sine_coefficient"] * sine_argument.sin
             end
-          end + 3958 * Math.sin(correction_venus.radians) +
-            1962 * Math.sin((moon_mean_longitude - moon_argument_of_latitude_high_precision).radians) +
-            318 * Math.sin(correction_jupiter.radians)
+          end + 3958 * correction_venus.sin +
+            1962 * (moon_mean_longitude - moon_argument_of_latitude_high_precision).sin +
+            318 * correction_jupiter.sin
           result.round
         end
       end
@@ -114,18 +114,18 @@ module Lunation
             if elem["sine_coefficient"].nil?
               next acc
             elsif [1, -1].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth * Math.sin(sine_argument.radians)
+              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth * sine_argument.sin
             elsif [-2, 2].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth**2 * Math.sin(sine_argument.radians)
+              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth**2 * sine_argument.sin
             else
-              acc + elem["sine_coefficient"] * Math.sin(sine_argument.radians)
+              acc + elem["sine_coefficient"] * sine_argument.sin
             end
-          end - 2235 * Math.sin(moon_mean_longitude.radians) +
-            382 * Math.sin(correction_latitude.radians) +
-            175 * Math.sin((correction_venus - moon_argument_of_latitude_high_precision).radians) +
-            175 * Math.sin((correction_venus + moon_argument_of_latitude_high_precision).radians) +
-            127 * Math.sin((moon_mean_longitude - moon_mean_anomaly_high_precision).radians) +
-            -115 * Math.sin((moon_mean_longitude + moon_mean_anomaly_high_precision).radians)
+          end - 2235 * moon_mean_longitude.sin +
+            382 * correction_latitude.sin +
+            175 * (correction_venus - moon_argument_of_latitude_high_precision).sin +
+            175 * (correction_venus + moon_argument_of_latitude_high_precision).sin +
+            127 * (moon_mean_longitude - moon_mean_anomaly_high_precision).sin +
+            -115 * (moon_mean_longitude + moon_mean_anomaly_high_precision).sin
           result.round
         end
       end
@@ -145,11 +145,11 @@ module Lunation
             if elem["cosine_coefficient"].nil?
               next acc
             elsif [1, -1].include?(elem["sun_mean_anomaly"])
-              acc + elem["cosine_coefficient"] * correction_eccentricity_of_earth * Math.cos(cosine_argument.radians)
+              acc + elem["cosine_coefficient"] * correction_eccentricity_of_earth * cosine_argument.cos
             elsif [-2, 2].include?(elem["sun_mean_anomaly"])
-              acc + elem["cosine_coefficient"] * correction_eccentricity_of_earth**2 * Math.cos(cosine_argument.radians)
+              acc + elem["cosine_coefficient"] * correction_eccentricity_of_earth**2 * cosine_argument.cos
             else
-              acc + elem["cosine_coefficient"] * Math.cos(cosine_argument.radians)
+              acc + elem["cosine_coefficient"] * cosine_argument.cos
             end
           end
           result.round
@@ -201,11 +201,11 @@ module Lunation
       # UNIT: Angle
       def moon_right_ascension
         @moon_right_ascension ||= begin
-          numerator = Math.sin(moon_apparent_ecliptic_longitude.radians) *
-            Math.cos(obliquity_of_ecliptic.radians) -
-            Math.tan(moon_ecliptic_latitude.radians) *
-              Math.sin(obliquity_of_ecliptic.radians)
-          denominator = Math.cos(moon_apparent_ecliptic_longitude.radians)
+          numerator = moon_apparent_ecliptic_longitude.sin *
+            obliquity_of_ecliptic.cos -
+            moon_ecliptic_latitude.tan *
+              obliquity_of_ecliptic.sin
+          denominator = moon_apparent_ecliptic_longitude.cos
           Angle.from_radians(Math.atan2(numerator, denominator))
         end
       end
@@ -214,11 +214,11 @@ module Lunation
       # UNIT: Angle
       def moon_declination
         @moon_declination ||= begin
-          result = Math.sin(moon_ecliptic_latitude.radians) *
-            Math.cos(obliquity_of_ecliptic.radians) +
-            Math.cos(moon_ecliptic_latitude.radians) *
-              Math.sin(obliquity_of_ecliptic.radians) *
-              Math.sin(moon_apparent_ecliptic_longitude.radians)
+          result = moon_ecliptic_latitude.sin *
+            obliquity_of_ecliptic.cos +
+            moon_ecliptic_latitude.cos *
+              obliquity_of_ecliptic.sin *
+              moon_apparent_ecliptic_longitude.sin
           Angle.from_radians(Math.asin(result))
         end
       end

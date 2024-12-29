@@ -179,4 +179,19 @@ RSpec.describe Lunation::Calculation::Angle do
       expect((angle1 - angle2).decimal_degrees.round(5)).to eq(313.07686) # A.A. p. 226
     end
   end
+
+  specify "cos returns the cos of the angle" do
+    expect(described_class.from_radians(-43.63484796).cos)
+      .to eq(Math.cos(-43.63484796))
+  end
+
+  specify "sin returns the sin of the angle" do
+    expect(described_class.from_radians(-43.63484796).sin)
+      .to eq(Math.sin(-43.63484796))
+  end
+
+  specify "tan returns the tan of the angle" do
+    expect(described_class.from_radians(-43.63484796).tan)
+      .to eq(Math.tan(-43.63484796))
+  end
 end

@@ -70,7 +70,7 @@ module Lunation
               elem["longitude_of_ascending_node"] * longitude_of_ascending_node.decimal_degrees
             )
             coefficient = elem["sine_coefficient_first_term"] + elem["sine_coefficient_second_term"] * time
-            acc + coefficient * Math.sin(argument.radians)
+            acc + coefficient * argument.sin
           end / 10_000.0
           Angle.from_decimal_arcseconds(result)
         end
@@ -89,7 +89,7 @@ module Lunation
               elem["longitude_of_ascending_node"] * longitude_of_ascending_node.decimal_degrees
             )
             coefficient = elem["cosine_coefficient_first_term"] + elem["cosine_coefficient_second_term"] * time
-            acc + coefficient * Math.cos(argument.radians)
+            acc + coefficient * argument.cos
           end / 10_000.0
           Angle.from_decimal_arcseconds(result)
         end

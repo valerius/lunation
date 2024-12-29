@@ -73,6 +73,18 @@ module Lunation
         )
       end
 
+      def cos
+        Math.cos(radians)
+      end
+
+      def sin
+        Math.sin(radians)
+      end
+
+      def tan
+        Math.tan(radians)
+      end
+
       class << self
         def from_radians(radians, normalize: true)
           new(

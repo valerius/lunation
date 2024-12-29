@@ -35,7 +35,7 @@ module Lunation
       def sun_equation_of_center
         @sun_equation_of_center ||= begin
           result = Horner.compute(time, [1.914602, -0.004817, -0.000014]) *
-            Math.sin(sun_mean_anomaly2.radians) +
+            sun_mean_anomaly2.sin +
             (0.019993 - 0.000101 * time) * Math.sin(2 * sun_mean_anomaly2.radians) +
             0.000289 * Math.sin(3 * sun_mean_anomaly2.radians)
           Angle.from_decimal_degrees(result, normalize: false)
@@ -58,7 +58,7 @@ module Lunation
       # UNIT: Astronomical Units (AU)
       def distance_between_earth_and_sun_in_astronomical_units
         @distance_between_earth_and_sun_in_astronomical_units ||= begin
-          result = 1.000001018 * (1 - earth_orbit_eccentricity**2) / (1 + earth_orbit_eccentricity * Math.cos(sun_anomaly.radians))
+          result = 1.000001018 * (1 - earth_orbit_eccentricity**2) / (1 + earth_orbit_eccentricity * sun_anomaly.cos)
           result.round(7)
         end
       end
@@ -84,7 +84,7 @@ module Lunation
         @sun_ecliptic_longitude ||= begin
           result = sun_true_longitude.decimal_degrees +
             - 0.00569 +
-            - 0.00478 * Math.sin(longitude_of_ascending_node_low_precision.radians)
+            - 0.00478 * longitude_of_ascending_node_low_precision.sin
           Angle.from_decimal_degrees(result)
         end
       end
@@ -94,7 +94,7 @@ module Lunation
       def corrected_obliquity_of_ecliptic
         @corrected_obliquity_of_ecliptic ||= begin
           result = mean_obliquity_of_ecliptic.decimal_degrees +
-            0.00256 * Math.cos(longitude_of_ascending_node.radians)
+            0.00256 * longitude_of_ascending_node.cos
           Angle.from_decimal_degrees(result)
         end
       end
@@ -103,9 +103,9 @@ module Lunation
       # UNIT: Angle
       def sun_right_ascension
         @sun_right_ascension ||= begin
-          numerator = Math.cos(corrected_obliquity_of_ecliptic.radians) *
-            Math.sin(sun_ecliptic_longitude.radians)
-          denominator = Math.cos(sun_ecliptic_longitude.radians)
+          numerator = corrected_obliquity_of_ecliptic.cos *
+            sun_ecliptic_longitude.sin
+          denominator = sun_ecliptic_longitude.cos
           Angle.from_radians(Math.atan2(numerator, denominator))
         end
       end
@@ -114,8 +114,8 @@ module Lunation
       # UNIT: Angle
       def sun_declination
         @sun_declination ||= begin
-          result = Math.sin(corrected_obliquity_of_ecliptic.radians) *
-            Math.sin(sun_ecliptic_longitude.radians)
+          result = corrected_obliquity_of_ecliptic.sin *
+            sun_ecliptic_longitude.sin
           Angle.from_radians(Math.asin(result), normalize: false)
         end
       end

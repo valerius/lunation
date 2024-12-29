@@ -1,3 +1,8 @@
+## [0.1.3] - 2024-12-29
+
+- Create Angle cos, sin and tan methods;
+- Some formatting changes.
+
 ## [0.1.2] - 2024-12-28
 
 - Update README;

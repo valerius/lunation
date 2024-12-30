@@ -31,6 +31,8 @@ Layout/CaseIndentation:
   EnforcedStyle: end
 Style/TrailingCommaInHashLiteral:
   EnforcedStyleForMultiline: comma
+Style/WordArray:
+  EnforcedStyle: brackets
 
 # Disabled cops
 Style/FrozenStringLiteralComment:

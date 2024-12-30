@@ -2,7 +2,8 @@ module Lunation
   class Calculation
     module NutationAndObliquity
       # rubocop:disable Layout/LineLength
-      NUTATION_IN_OBLIQUITY_PERIODIC_TERMS = YAML.load_file("config/periodic_terms_earth_nutation.yml").freeze
+      NUTATION_IN_OBLIQUITY_PERIODIC_TERMS_PATH = File.expand_path("../../../config/periodic_terms_earth_nutation.yml", __dir__)
+      NUTATION_IN_OBLIQUITY_PERIODIC_TERMS = YAML.load_file(NUTATION_IN_OBLIQUITY_PERIODIC_TERMS_PATH).freeze
       ECLIPTIC_MEAN_OBLIQUITY_CONSTANTS = [21.448, -4680.93, -1.55, 1_999.25, -51.38, -249.67, -39.05, 7.12, 27.87, 5.79, 2.45].freeze
       MOON_MEAN_ELONGATION_FROM_SUN_CONSTANTS = [297.85036, 445_267.111480, -0.0019142, 1 / 189_474.0].freeze
       SUN_MEAN_ANOMALY_CONSTANTS = [357.52772, 35_999.050340, -0.0001603, -1 / 300_000.0].freeze

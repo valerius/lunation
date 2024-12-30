@@ -4,8 +4,10 @@ module Lunation
   class Calculation
     module MoonPosition
       # rubocop:disable Layout/LineLength
-      LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS = YAML.load_file("config/periodic_terms_moon_longitude_distance.yml").freeze
-      LATITUDE_OF_MOON_PERIODIC_TERMS = YAML.load_file("config/periodic_terms_moon_latitude.yml").freeze
+      LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_longitude_distance.yml", __dir__).freeze
+      LATITUDE_OF_MOON_PERIODIC_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_latitude.yml", __dir__).freeze
+      LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS = YAML.load_file(LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS_PATH).freeze
+      LATITUDE_OF_MOON_PERIODIC_TERMS = YAML.load_file(LATITUDE_OF_MOON_PERIODIC_TERMS_PATH).freeze
       MOON_MEAN_LONGITUDE_CONSTANTS = [218.3164477, 481_267.88123421, -0.0015786, 1 / 538_841.0, -1 / 65_194_000.0].freeze
       MOON_MEAN_ELONGATION_CONSTANTS = [297.8501921, 445_267.1114034, -0.0018819, 1 / 545_868.0, -1 / 113_065_000.0].freeze
       MOON_MEAN_ANOMALY_CONSTANTS = [134.9633964, 477_198.8675055, 0.0087414, 1 / 69_699.0, -1 / 14_712_000.0].freeze

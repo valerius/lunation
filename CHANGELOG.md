@@ -1,3 +1,7 @@
+## [0.1.5] - 2024-12-30
+
+- Config files are now properly loaded in runtime.
+
 ## [0.1.4] - 2024-12-30
 
 - Require config/ files;

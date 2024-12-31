@@ -58,7 +58,10 @@ module Lunation
       # UNIT: Astronomical Units (AU)
       def distance_between_earth_and_sun_in_astronomical_units
         @distance_between_earth_and_sun_in_astronomical_units ||= begin
-          result = 1.000001018 * (1 - earth_orbit_eccentricity**2) / (1 + earth_orbit_eccentricity * sun_anomaly.cos)
+          result = 1.000001018 *
+            (1 - earth_orbit_eccentricity**2) / (
+              (1 + earth_orbit_eccentricity * sun_anomaly.cos)
+            )
           result.round(7)
         end
       end
@@ -70,8 +73,8 @@ module Lunation
           (distance_between_earth_and_sun_in_astronomical_units * 149_597_870).floor
       end
 
-      # (Ω) Longitude of the ascending node of the Moon's mean orbit on the ecliptic (low precision)
-      #   A.A. p. 164
+      # (Ω) Longitude of the ascending node of the Moon's mean orbit on the ecliptic
+      #   (low precision) A.A. p. 164
       # UNIT: Angle
       def longitude_of_ascending_node_low_precision
         @longitude_of_ascending_node_low_precision ||=

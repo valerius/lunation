@@ -12,7 +12,8 @@ module Lunation
       # UNIT: Angle
       def moon_phase_angle
         @moon_phase_angle ||= begin
-          numerator = distance_between_earth_and_sun_in_kilometers * moon_elongation_from_sun.sin
+          numerator = distance_between_earth_and_sun_in_kilometers *
+            moon_elongation_from_sun.sin
           denominator = distance_between_earth_and_moon -
             distance_between_earth_and_sun_in_kilometers * moon_elongation_from_sun.cos
           Angle.from_radians(Math.atan2(numerator, denominator))

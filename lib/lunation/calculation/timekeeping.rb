@@ -63,7 +63,8 @@ module Lunation
           when 2_005...2_050
             Horner.compute(@decimal_year - 2_000, DELTA_T_2005AD_2050AD)
           when 2_050...2_150
-            -20 + 32 * ((@decimal_year - 1_820) / 100)**2 - 0.5628 * (2_150 - @decimal_year)
+            -20 + 32 * ((@decimal_year - 1_820) / 100)**2 - 0.5628 *
+              (2_150 - @decimal_year)
           when 2_150..3_000
             -20 + 32 * @decimal_year**2
           end

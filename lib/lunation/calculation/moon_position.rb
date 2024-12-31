@@ -162,7 +162,8 @@ module Lunation
       # UNIT: Angle
       def moon_ecliptic_longitude
         @moon_ecliptic_longitude ||= Angle.from_decimal_degrees(
-          moon_mean_longitude.decimal_degrees + moon_heliocentric_longitude.fdiv(1_000_000)
+          moon_mean_longitude.decimal_degrees +
+            moon_heliocentric_longitude.fdiv(1_000_000)
         )
       end
 

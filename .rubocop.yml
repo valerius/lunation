@@ -53,3 +53,5 @@ Metrics/ParameterLists:
   Enabled: false
 Metrics/ClassLength:
   Enabled: false
+Metrics/ModuleLength:
+  Enabled: false

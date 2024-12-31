@@ -31,6 +31,8 @@ module Lunation
         correction_jupiter: correction_jupiter,
         correction_latitude: correction_latitude,
         correction_venus: correction_venus,
+        datetime: datetime,
+        decimal_year: decimal_year,
         delta_t: delta_t,
         distance_between_earth_and_moon: distance_between_earth_and_moon,
         distance_between_earth_and_sun_in_astronomical_units: distance_between_earth_and_sun_in_astronomical_units,

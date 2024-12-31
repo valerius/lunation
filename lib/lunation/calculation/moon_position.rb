@@ -8,10 +8,10 @@ module Lunation
       MOON_LATITUDE_PERIOD_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_latitude.yml", __dir__).freeze
       MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS = YAML.load_file(MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS_PATH).freeze
       MOON_LATITUDE_PERIOD_TERMS = YAML.load_file(MOON_LATITUDE_PERIOD_TERMS_PATH).freeze
-      MOON_MEAN_LONGITUDE_CONSTANTS = [218.3164477, 481_267.88123421, -0.0015786, 1 / 538_841.0, -1 / 65_194_000.0].freeze
-      MOON_MEAN_ELONGATION_CONSTANTS = [297.8501921, 445_267.1114034, -0.0018819, 1 / 545_868.0, -1 / 113_065_000.0].freeze
-      MOON_MEAN_ANOMALY_CONSTANTS = [134.9633964, 477_198.8675055, 0.0087414, 1 / 69_699.0, -1 / 14_712_000.0].freeze
-      MOON_ARGUMENT_OF_LATITUDE_CONSTANTS = [93.2720950, 483_202.0175233, -0.0036539, -1 / 3_526_000.0, 1 / 863_310_000.0].freeze
+      MOON_MEAN_LONGITUDE_CONSTANTS = [218.3164477, 481_267.88123421, -0.0015786, 1.fdiv(538_841), -1.fdiv(65_194_000)].freeze
+      MOON_MEAN_ELONGATION_CONSTANTS = [297.8501921, 445_267.1114034, -0.0018819, 1.fdiv(545_868), -1.fdiv(113_065_000)].freeze
+      MOON_MEAN_ANOMALY_CONSTANTS = [134.9633964, 477_198.8675055, 0.0087414, 1.fdiv(69_699), -1.fdiv(14_712_000)].freeze
+      MOON_ARGUMENT_OF_LATITUDE_CONSTANTS = [93.2720950, 483_202.0175233, -0.0036539, -1.fdiv(3_526_000), 1.fdiv(863_310_000)].freeze
       CORRECTION_ECCENTRICITY_OF_EARTH_CONSTANTS = [1, -0.002516, -0.0000074].freeze
       FIXED_DISTANCE_BETWEEN_EARTH_AND_MOON = 385_000.56
       RADIUS_OF_EARTH = 6378.14
@@ -162,7 +162,7 @@ module Lunation
       # UNIT: Angle
       def moon_ecliptic_longitude
         @moon_ecliptic_longitude ||= Angle.from_decimal_degrees(
-          moon_mean_longitude.decimal_degrees + moon_heliocentric_longitude / 1_000_000.0
+          moon_mean_longitude.decimal_degrees + moon_heliocentric_longitude.fdiv(1_000_000)
         )
       end
 
@@ -170,7 +170,7 @@ module Lunation
       # UNIT: Angle
       def moon_ecliptic_latitude
         @moon_ecliptic_latitude ||= Angle.from_decimal_degrees(
-          moon_heliocentric_latitude / 1_000_000.0,
+          moon_heliocentric_latitude.fdiv(1_000_000),
           normalize: false
         )
       end
@@ -180,7 +180,7 @@ module Lunation
       def distance_between_earth_and_moon
         @distance_between_earth_and_moon ||= begin
           result = FIXED_DISTANCE_BETWEEN_EARTH_AND_MOON +
-            (moon_heliocentric_distance / 1_000.0)
+            moon_heliocentric_distance.fdiv(1_000)
           result.round(1)
         end
       end

@@ -40,7 +40,7 @@ module Lunation
       end
 
       def decimal_hours
-        @decimal_hours ||= decimal_degrees / 15.0
+        @decimal_hours ||= decimal_degrees.fdiv(15)
       end
 
       def decimal_minutes
@@ -162,7 +162,7 @@ module Lunation
           decimal_arcseconds,
           normalize: true
         )
-          result = degrees + arcminutes / 60.0 + decimal_arcseconds / 3600.0
+          result = degrees + arcminutes.fdiv(60) + decimal_arcseconds.fdiv(3600)
           (normalize ? result % 360 : result).round(9)
         end
 
@@ -172,7 +172,7 @@ module Lunation
           decimal_seconds,
           normalize: true
         )
-          result = hours * 15.0 + minutes / 4.0 + decimal_seconds / 240.0
+          result = hours * 15.0 + minutes.fdiv(4.0) + decimal_seconds.fdiv(240.0)
           (normalize ? result % 360 : result).round(9)
         end
 
@@ -180,7 +180,7 @@ module Lunation
           decimal_arcseconds,
           normalize: true
         )
-          result = decimal_arcseconds / 3600.0
+          result = decimal_arcseconds.fdiv(3600.0)
           (normalize ? result % 360 : result).round(9)
         end
       end

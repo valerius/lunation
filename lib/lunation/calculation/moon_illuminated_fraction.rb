@@ -5,7 +5,7 @@ module Lunation
       # UNIT: fraction (decimal)
       def moon_illuminated_fraction
         @moon_illuminated_fraction ||=
-          ((1 + moon_phase_angle.cos) / 2.0).round(4)
+          (1 + moon_phase_angle.cos).fdiv(2).round(4)
       end
 
       # (i) phase angle of the moon (48.3, A.A. p. 346)

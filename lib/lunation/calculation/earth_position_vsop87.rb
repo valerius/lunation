@@ -58,7 +58,7 @@ module Lunation
           second_series = reduce_periodic_terms(PERIODIC_TERMS_B1)
 
           Angle.from_radians(
-            (first_series + second_series * time_millennia) / 100_000_000.0,
+            (first_series + second_series * time_millennia).fdiv(100_000_000),
             normalize: false
           )
         end

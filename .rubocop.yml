@@ -11,6 +11,8 @@ Style/StringLiteralsInInterpolation:
 
 Layout/LineLength:
   Max: 90
+  Exclude:
+    - "spec/**/*_spec.rb"
 
 Layout/BeginEndAlignment:
   EnforcedStyleAlignWith: start_of_line
@@ -36,4 +38,18 @@ Style/WordArray:
 
 # Disabled cops
 Style/FrozenStringLiteralComment:
+  Enabled: false
+Metrics/MethodLength:
+  Enabled: false
+Metrics/AbcSize:
+  Enabled: false
+Style/Documentation:
+  Enabled: false
+Metrics/BlockLength:
+  Enabled: false
+Metrics/CyclomaticComplexity:
+  Enabled: false
+Metrics/ParameterLists:
+  Enabled: false
+Metrics/ClassLength:
   Enabled: false

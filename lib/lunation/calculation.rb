@@ -25,6 +25,7 @@ module Lunation
 
     def to_h
       {
+        # rubocop:disable Layout/LineLength
         corrected_obliquity_of_ecliptic: corrected_obliquity_of_ecliptic,
         correction_eccentricity_of_earth: correction_eccentricity_of_earth,
         correction_jupiter: correction_jupiter,
@@ -78,6 +79,7 @@ module Lunation
         time_millennia: time_millennia,
         time_myriads: time_myriads,
         time: time,
+        # rubocop:enable Layout/LineLength
       }
     end
 

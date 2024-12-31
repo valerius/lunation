@@ -4,10 +4,10 @@ module Lunation
   class Calculation
     module MoonPosition
       # rubocop:disable Layout/LineLength
-      LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_longitude_distance.yml", __dir__).freeze
-      LATITUDE_OF_MOON_PERIODIC_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_latitude.yml", __dir__).freeze
-      LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS = YAML.load_file(LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS_PATH).freeze
-      LATITUDE_OF_MOON_PERIODIC_TERMS = YAML.load_file(LATITUDE_OF_MOON_PERIODIC_TERMS_PATH).freeze
+      MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_longitude_distance.yml", __dir__).freeze
+      MOON_LATITUDE_PERIOD_TERMS_PATH = File.expand_path("../../../config/periodic_terms_moon_latitude.yml", __dir__).freeze
+      MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS = YAML.load_file(MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS_PATH).freeze
+      MOON_LATITUDE_PERIOD_TERMS = YAML.load_file(MOON_LATITUDE_PERIOD_TERMS_PATH).freeze
       MOON_MEAN_LONGITUDE_CONSTANTS = [218.3164477, 481_267.88123421, -0.0015786, 1 / 538_841.0, -1 / 65_194_000.0].freeze
       MOON_MEAN_ELONGATION_CONSTANTS = [297.8501921, 445_267.1114034, -0.0018819, 1 / 545_868.0, -1 / 113_065_000.0].freeze
       MOON_MEAN_ANOMALY_CONSTANTS = [134.9633964, 477_198.8675055, 0.0087414, 1 / 69_699.0, -1 / 14_712_000.0].freeze
@@ -77,7 +77,7 @@ module Lunation
       # UNIT: decimal degrees
       def moon_heliocentric_longitude
         @moon_heliocentric_longitude ||= begin
-          result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
+          result = MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS.inject(0.0) do |acc, elem|
             sine_argument = Angle.from_decimal_degrees(
               elem[0] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
               elem[1] * sun_mean_anomaly2.decimal_degrees +
@@ -105,7 +105,7 @@ module Lunation
       # UNIT: decimal degrees
       def moon_heliocentric_latitude
         @moon_heliocentric_latitude ||= begin
-          result = LATITUDE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
+          result = MOON_LATITUDE_PERIOD_TERMS.inject(0.0) do |acc, elem|
             sine_argument = Angle.from_decimal_degrees(
               elem[0] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
               elem[1] * sun_mean_anomaly2.decimal_degrees +
@@ -136,7 +136,7 @@ module Lunation
       # UNIT: 1000 km
       def moon_heliocentric_distance
         @moon_heliocentric_distance ||= begin
-          result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
+          result = MOON_LONGITUDE_AND_DISTANCE_PERIOD_TERMS.inject(0.0) do |acc, elem|
             cosine_argument = Angle.from_decimal_degrees(
               elem[0] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
               elem[1] * sun_mean_anomaly2.decimal_degrees +
@@ -196,7 +196,8 @@ module Lunation
       # (apparent λ) Moon apparent longitude (A.A. p. 343)
       # UNIT: Angle
       def moon_apparent_ecliptic_longitude
-        @moon_apparent_ecliptic_longitude ||= moon_ecliptic_longitude + nutation_in_longitude
+        @moon_apparent_ecliptic_longitude ||=
+          moon_ecliptic_longitude + nutation_in_longitude
       end
 
       # (α) geocentric (apparent) right ascension of the moon (13.3 A.A. p. 93)

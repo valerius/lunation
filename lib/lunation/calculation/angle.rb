@@ -95,7 +95,9 @@ module Lunation
 
         def from_decimal_degrees(decimal_degrees, normalize: true)
           new(
-            decimal_degrees: (normalize ? decimal_degrees % 360 : decimal_degrees).round(9),
+            decimal_degrees: (
+                normalize ? decimal_degrees % 360 : decimal_degrees
+              ).round(9),
             radians: decimal_degrees_to_radians(decimal_degrees, normalize: normalize)
           )
         end
@@ -149,7 +151,8 @@ module Lunation
         end
 
         private def decimal_degrees_to_radians(decimal_degrees, normalize: true)
-          result = (normalize ? decimal_degrees % 360 : decimal_degrees) * Math::PI / 180.0
+          result = (normalize ? decimal_degrees % 360 : decimal_degrees) *
+            Math::PI / 180.0
           result.round(9)
         end
 

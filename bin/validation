@@ -31,6 +31,6 @@ mean_squared_error = (sum_of_squared_errors / collection_size).round(12)
 root_mean_squared_error = Math.sqrt(mean_squared_error).round(5)
 
 puts "COMPLETED"
-puts "MEAN ABSOLUTE ERROR (MAE): #{"%f" % mean_absolute_error}"
-puts "MEAN SQUARED ERROR (MSE): #{"%f" % mean_squared_error}"
-puts "ROOT MEAN SQUARED ERROR (RMSE): #{"%f" % root_mean_squared_error}"
+puts "MEAN ABSOLUTE ERROR (MAE): #{format("%f", mean_absolute_error)}"
+puts "MEAN SQUARED ERROR (MSE): #{format("%f", mean_squared_error)}"
+puts "ROOT MEAN SQUARED ERROR (RMSE): #{format("%f", root_mean_squared_error)}"

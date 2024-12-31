@@ -86,7 +86,7 @@ module Lunation
     end
 
     def to_s
-      <<-HEREDOC
+      <<~HEREDOC
         DATE AND TIME (UT):                           #{datetime}
         ----------------------------------------------------------------------------------
         DECIMAL YEAR:                                 #{decimal_year}

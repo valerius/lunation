@@ -1,567 +1,63 @@
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -171996
-  sine_coefficient_second_term: -174.2
-  cosine_coefficient_first_term: 92025
-  cosine_coefficient_second_term: 8.9
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -13187
-  sine_coefficient_second_term: -1.6
-  cosine_coefficient_first_term: 5736
-  cosine_coefficient_second_term: -3.1
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -2274
-  sine_coefficient_second_term: -0.2
-  cosine_coefficient_first_term: 977
-  cosine_coefficient_second_term: -0.5
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: 2062
-  sine_coefficient_second_term: 0.2
-  cosine_coefficient_first_term: -895
-  cosine_coefficient_second_term: 0.5
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 1426
-  sine_coefficient_second_term: -3.4
-  cosine_coefficient_first_term: 54
-  cosine_coefficient_second_term: -0.1
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 712
-  sine_coefficient_second_term: 0.1
-  cosine_coefficient_first_term: -7
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -517
-  sine_coefficient_second_term: 1.2
-  cosine_coefficient_first_term: 224
-  cosine_coefficient_second_term: -0.6
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -386
-  sine_coefficient_second_term: -0.4
-  cosine_coefficient_first_term: 200
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -301
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 129
-  cosine_coefficient_second_term: -0.1
-- moon_mean_elongation: -2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: 217
-  sine_coefficient_second_term: -0.5
-  cosine_coefficient_first_term: -95
-  cosine_coefficient_second_term: 0.3
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -158
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 129
-  sine_coefficient_second_term: 0.1
-  cosine_coefficient_first_term: -70
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: 123
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -53
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 63
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 63
-  sine_coefficient_second_term: 0.1
-  cosine_coefficient_first_term: -33
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -59
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 26
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -58
-  sine_coefficient_second_term: -0.1
-  cosine_coefficient_first_term: 32
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -51
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 27
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 48
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 46
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -24
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -38
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 16
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -31
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 13
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 29
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: 29
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -12
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 26
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -22
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 21
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -10
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 2
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 17
-  sine_coefficient_second_term: -0.1
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 16
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -8
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 2
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -16
-  sine_coefficient_second_term: 0.1
-  cosine_coefficient_first_term: 7
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -15
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 9
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -13
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 7
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -12
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 6
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: -2
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 11
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -10
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 5
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -8
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: 7
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -7
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -7
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -7
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 6
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: 6
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 6
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: -3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -6
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -6
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 5
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -5
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -5
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: -5
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 3
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 4
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 1
-  sine_coefficient_first_term: 4
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -2
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 4
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -4
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -4
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -4
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: 3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: -1
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 0
-  longitude_of_ascending_node: 0
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 3
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 2
-  longitude_of_ascending_node: 2
-  sine_coefficient_first_term: -3
-  sine_coefficient_second_term: 0
-  cosine_coefficient_first_term: 0
-  cosine_coefficient_second_term: 0
+- [0, 0, 0, 0, 1, -171996, -174.2, 92025, 8.9]
+- [-2, 0, 0, 2, 2, -13187, -1.6, 5736, -3.1]
+- [0, 0, 0, 2, 2, -2274, -0.2, 977, -0.5]
+- [0, 0, 0, 0, 2, 2062, 0.2, -895, 0.5]
+- [0, 1, 0, 0, 0, 1426, -3.4, 54, -0.1]
+- [0, 0, 1, 0, 0, 712, 0.1, -7, 0]
+- [-2, 1, 0, 2, 2, -517, 1.2, 224, -0.6]
+- [0, 0, 0, 2, 1, -386, -0.4, 200, 0]
+- [0, 0, 1, 2, 2, -301, 0, 129, -0.1]
+- [-2, -1, 0, 2, 2, 217, -0.5, -95, 0.3]
+- [-2, 0, 1, 0, 0, -158, 0, 0, 0]
+- [-2, 0, 0, 2, 1, 129, 0.1, -70, 0]
+- [0, 0, -1, 2, 2, 123, 0, -53, 0]
+- [2, 0, 0, 0, 0, 63, 0, 0, 0]
+- [0, 0, 1, 0, 1, 63, 0.1, -33, 0]
+- [2, 0, -1, 2, 2, -59, 0, 26, 0]
+- [0, 0, -1, 0, 1, -58, -0.1, 32, 0]
+- [0, 0, 1, 2, 1, -51, 0, 27, 0]
+- [-2, 0, 2, 0, 0, 48, 0, 0, 0]
+- [0, 0, -2, 2, 1, 46, 0, -24, 0]
+- [2, 0, 0, 2, 2, -38, 0, 16, 0]
+- [0, 0, 2, 2, 2, -31, 0, 13, 0]
+- [0, 0, 2, 0, 0, 29, 0, 0, 0]
+- [-2, 0, 1, 2, 2, 29, 0, -12, 0]
+- [0, 0, 0, 2, 0, 26, 0, 0, 0]
+- [-2, 0, 0, 2, 0, -22, 0, 0, 0]
+- [0, 0, -1, 2, 1, 21, 0, -10, 0]
+- [0, 2, 0, 0, 0, 17, -0.1, 0, 0]
+- [2, 0, -1, 0, 1, 16, 0, -8, 0]
+- [-2, 2, 0, 2, 2, -16, 0.1, 7, 0]
+- [0, 1, 0, 0, 1, -15, 0, 9, 0]
+- [-2, 0, 1, 0, 1, -13, 0, 7, 0]
+- [0, -1, 0, 0, 1, -12, 0, 6, 0]
+- [0, 0, 2, -2, 0, 11, 0, 0, 0]
+- [2, 0, -1, 2, 1, -10, 0, 5, 0]
+- [2, 0, 1, 2, 2, -8, 0, 3, 0]
+- [0, 1, 0, 2, 2, 7, 0, -3, 0]
+- [-2, 1, 1, 0, 0, -7, 0, 0, 0]
+- [0, -1, 0, 2, 2, -7, 0, 3, 0]
+- [2, 0, 0, 2, 1, -7, 0, 3, 0]
+- [2, 0, 1, 0, 0, 6, 0, 0, 0]
+- [-2, 0, 2, 2, 2, 6, 0, -3, 0]
+- [-2, 0, 1, 2, 1, 6, 0, -3, 0]
+- [2, 0, -2, 0, 1, -6, 0, 3, 0]
+- [2, 0, 0, 0, 1, -6, 0, 3, 0]
+- [0, -1, 1, 0, 0, 5, 0, 0, 0]
+- [-2, -1, 0, 2, 1, -5, 0, 3, 0]
+- [-2, 0, 0, 0, 1, -5, 0, 3, 0]
+- [0, 0, 2, 2, 1, -5, 0, 3, 0]
+- [-2, 0, 2, 0, 1, 4, 0, 0, 0]
+- [-2, 1, 0, 2, 1, 4, 0, 0, 0]
+- [0, 0, 1, -2, 0, 4, 0, 0, 0]
+- [-1, 0, 1, 0, 0, -4, 0, 0, 0]
+- [-2, 1, 0, 0, 0, -4, 0, 0, 0]
+- [1, 0, 0, 0, 0, -4, 0, 0, 0]
+- [0, 0, 1, 2, 0, 3, 0, 0, 0]
+- [0, 0, -2, 2, 2, -3, 0, 0, 0]
+- [-1, -1, 1, 0, 0, -3, 0, 0, 0]
+- [0, 1, 1, 0, 0, -3, 0, 0, 0]
+- [0, -1, 1, 2, 2, -3, 0, 0, 0]
+- [2, -1, -1, 2, 2, -3, 0, 0, 0]
+- [0, 0, 3, 2, 2, -3, 0, 0, 0]
+- [2, -1, 0, 2, 2, -3, 0, 0, 0]

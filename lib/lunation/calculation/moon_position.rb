@@ -79,20 +79,20 @@ module Lunation
         @moon_heliocentric_longitude ||= begin
           result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             sine_argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
-              elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
-              elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
-              elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
+              elem[0] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
+              elem[1] * sun_mean_anomaly2.decimal_degrees +
+              elem[2] * moon_mean_anomaly_high_precision.decimal_degrees +
+              elem[3] * moon_argument_of_latitude_high_precision.decimal_degrees
             )
 
-            if elem["sine_coefficient"].nil?
+            if elem[4].nil?
               next acc
-            elsif [1, -1].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth * sine_argument.sin
-            elsif [-2, 2].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth**2 * sine_argument.sin
+            elsif [1, -1].include?(elem[1])
+              acc + elem[4] * correction_eccentricity_of_earth * sine_argument.sin
+            elsif [-2, 2].include?(elem[1])
+              acc + elem[4] * correction_eccentricity_of_earth**2 * sine_argument.sin
             else
-              acc + elem["sine_coefficient"] * sine_argument.sin
+              acc + elem[4] * sine_argument.sin
             end
           end + 3958 * correction_venus.sin +
             1962 * (moon_mean_longitude - moon_argument_of_latitude_high_precision).sin +
@@ -107,20 +107,20 @@ module Lunation
         @moon_heliocentric_latitude ||= begin
           result = LATITUDE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             sine_argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
-              elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
-              elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
-              elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
+              elem[0] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
+              elem[1] * sun_mean_anomaly2.decimal_degrees +
+              elem[2] * moon_mean_anomaly_high_precision.decimal_degrees +
+              elem[3] * moon_argument_of_latitude_high_precision.decimal_degrees
             )
 
-            if elem["sine_coefficient"].nil?
+            if elem[4].nil?
               next acc
-            elsif [1, -1].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth * sine_argument.sin
-            elsif [-2, 2].include?(elem["sun_mean_anomaly"])
-              acc + elem["sine_coefficient"] * correction_eccentricity_of_earth**2 * sine_argument.sin
+            elsif [1, -1].include?(elem[1])
+              acc + elem[4] * correction_eccentricity_of_earth * sine_argument.sin
+            elsif [-2, 2].include?(elem[1])
+              acc + elem[4] * correction_eccentricity_of_earth**2 * sine_argument.sin
             else
-              acc + elem["sine_coefficient"] * sine_argument.sin
+              acc + elem[4] * sine_argument.sin
             end
           end - 2235 * moon_mean_longitude.sin +
             382 * correction_latitude.sin +
@@ -138,20 +138,20 @@ module Lunation
         @moon_heliocentric_distance ||= begin
           result = LONGITUDE_AND_DISTANCE_OF_MOON_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             cosine_argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
-              elem["sun_mean_anomaly"] * sun_mean_anomaly2.decimal_degrees +
-              elem["moon_mean_anomaly"] * moon_mean_anomaly_high_precision.decimal_degrees +
-              elem["moon_argument_of_latitude"] * moon_argument_of_latitude_high_precision.decimal_degrees
+              elem[0] * moon_mean_elongation_from_sun_high_precision.decimal_degrees +
+              elem[1] * sun_mean_anomaly2.decimal_degrees +
+              elem[2] * moon_mean_anomaly_high_precision.decimal_degrees +
+              elem[3] * moon_argument_of_latitude_high_precision.decimal_degrees
             )
 
-            if elem["cosine_coefficient"].nil?
+            if elem[5].nil?
               next acc
-            elsif [1, -1].include?(elem["sun_mean_anomaly"])
-              acc + elem["cosine_coefficient"] * correction_eccentricity_of_earth * cosine_argument.cos
-            elsif [-2, 2].include?(elem["sun_mean_anomaly"])
-              acc + elem["cosine_coefficient"] * correction_eccentricity_of_earth**2 * cosine_argument.cos
+            elsif [1, -1].include?(elem[1])
+              acc + elem[5] * correction_eccentricity_of_earth * cosine_argument.cos
+            elsif [-2, 2].include?(elem[1])
+              acc + elem[5] * correction_eccentricity_of_earth**2 * cosine_argument.cos
             else
-              acc + elem["cosine_coefficient"] * cosine_argument.cos
+              acc + elem[5] * cosine_argument.cos
             end
           end
           result.round

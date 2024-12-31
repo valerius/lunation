@@ -64,13 +64,13 @@ module Lunation
         @nutation_in_longitude ||= begin
           result = NUTATION_IN_OBLIQUITY_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun.decimal_degrees +
-              elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-              elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-              elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees +
-              elem["longitude_of_ascending_node"] * longitude_of_ascending_node.decimal_degrees
+              elem[0] * moon_mean_elongation_from_sun.decimal_degrees +
+              elem[1] * sun_mean_anomaly.decimal_degrees +
+              elem[2] * moon_mean_anomaly.decimal_degrees +
+              elem[3] * moon_argument_of_latitude.decimal_degrees +
+              elem[4] * longitude_of_ascending_node.decimal_degrees
             )
-            coefficient = elem["sine_coefficient_first_term"] + elem["sine_coefficient_second_term"] * time
+            coefficient = elem[5] + elem[6] * time
             acc + coefficient * argument.sin
           end / 10_000.0
           Angle.from_decimal_arcseconds(result)
@@ -83,13 +83,13 @@ module Lunation
         @nutation_in_obliquity ||= begin
           result = NUTATION_IN_OBLIQUITY_PERIODIC_TERMS.inject(0.0) do |acc, elem|
             argument = Angle.from_decimal_degrees(
-              elem["moon_mean_elongation"] * moon_mean_elongation_from_sun.decimal_degrees +
-              elem["sun_mean_anomaly"] * sun_mean_anomaly.decimal_degrees +
-              elem["moon_mean_anomaly"] * moon_mean_anomaly.decimal_degrees +
-              elem["moon_argument_of_latitude"] * moon_argument_of_latitude.decimal_degrees +
-              elem["longitude_of_ascending_node"] * longitude_of_ascending_node.decimal_degrees
+              elem[0] * moon_mean_elongation_from_sun.decimal_degrees +
+              elem[1] * sun_mean_anomaly.decimal_degrees +
+              elem[2] * moon_mean_anomaly.decimal_degrees +
+              elem[3] * moon_argument_of_latitude.decimal_degrees +
+              elem[4] * longitude_of_ascending_node.decimal_degrees
             )
-            coefficient = elem["cosine_coefficient_first_term"] + elem["cosine_coefficient_second_term"] * time
+            coefficient = elem[7] + elem[8] * time
             acc + coefficient * argument.cos
           end / 10_000.0
           Angle.from_decimal_arcseconds(result)

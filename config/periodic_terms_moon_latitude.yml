@@ -1,300 +1,60 @@
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: 5128122
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 1
-  sine_coefficient: 280602
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 277693
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: 173237
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 1
-  sine_coefficient: 55413
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 46271
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: 32573
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 1
-  sine_coefficient: 17198
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 9266
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: -1
-  sine_coefficient: 8822
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: 8216
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: -1
-  sine_coefficient: 4324
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 1
-  sine_coefficient: 4200
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: -3359
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 1
-  sine_coefficient: 2463
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: 2211
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 2065
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: -1870
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 1828
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: -1794
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 3
-  sine_coefficient: -1749
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 1
-  sine_coefficient: -1565
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: -1491
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 1
-  sine_coefficient: -1475
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: -1410
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: -1344
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: -1335
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 3
-  moon_argument_of_latitude: 1
-  sine_coefficient: 1107
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: 1021
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 1
-  sine_coefficient: 833
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -3
-  sine_coefficient: 777
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: 1
-  sine_coefficient: 671
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -3
-  sine_coefficient: 607
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: -1
-  sine_coefficient: 596
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 491
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: 1
-  sine_coefficient: -451
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 3
-  moon_argument_of_latitude: -1
-  sine_coefficient: 439
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 1
-  sine_coefficient: 422
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -3
-  moon_argument_of_latitude: -1
-  sine_coefficient: 421
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: 1
-  sine_coefficient: -366
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: -351
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: 331
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 1
-  sine_coefficient: 315
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -2
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: 302
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 3
-  sine_coefficient: -283
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: -229
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: 223
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: 223
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: -1
-  sine_coefficient: -220
-- moon_mean_elongation: 2
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: -220
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: 1
-  sine_coefficient: -185
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: -1
-  sine_coefficient: 181
-- moon_mean_elongation: 0
-  sun_mean_anomaly: 1
-  moon_mean_anomaly: 2
-  moon_argument_of_latitude: 1
-  sine_coefficient: -177
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -2
-  moon_argument_of_latitude: -1
-  sine_coefficient: 176
-- moon_mean_elongation: 4
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 166
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: -164
-- moon_mean_elongation: 4
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: 1
-  moon_argument_of_latitude: -1
-  sine_coefficient: 132
-- moon_mean_elongation: 1
-  sun_mean_anomaly: 0
-  moon_mean_anomaly: -1
-  moon_argument_of_latitude: -1
-  sine_coefficient: -119
-- moon_mean_elongation: 4
-  sun_mean_anomaly: -1
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: -1
-  sine_coefficient: 115
-- moon_mean_elongation: 2
-  sun_mean_anomaly: -2
-  moon_mean_anomaly: 0
-  moon_argument_of_latitude: 1
-  sine_coefficient: 107
+- [0, 0, 0, 1, 5128122]
+- [0, 0, 1, 1, 280602]
+- [0, 0, 1, -1, 277693]
+- [2, 0, 0, -1, 173237]
+- [2, 0, -1, 1, 55413]
+- [2, 0, -1, -1, 46271]
+- [2, 0, 0, 1, 32573]
+- [0, 0, 2, 1, 17198]
+- [2, 0, 1, -1, 9266]
+- [0, 0, 2, -1, 8822]
+- [2, -1, 0, -1, 8216]
+- [2, 0, -2, -1, 4324]
+- [2, 0, 1, 1, 4200]
+- [2, 1, 0, -1, -3359]
+- [2, -1, -1, 1, 2463]
+- [2, -1, 0, 1, 2211]
+- [2, -1, -1, -1, 2065]
+- [0, 1, -1, -1, -1870]
+- [4, 0, -1, -1, 1828]
+- [0, 1, 0, 1, -1794]
+- [0, 0, 0, 3, -1749]
+- [0, 1, -1, 1, -1565]
+- [1, 0, 0, 1, -1491]
+- [0, 1, 1, 1, -1475]
+- [0, 1, 1, -1, -1410]
+- [0, 1, 0, -1, -1344]
+- [1, 0, 0, -1, -1335]
+- [0, 0, 3, 1, 1107]
+- [4, 0, 0, -1, 1021]
+- [4, 0, -1, 1, 833]
+- [0, 0, 1, -3, 777]
+- [4, 0, -2, 1, 671]
+- [2, 0, 0, -3, 607]
+- [2, 0, 2, -1, 596]
+- [2, -1, 1, -1, 491]
+- [2, 0, -2, 1, -451]
+- [0, 0, 3, -1, 439]
+- [2, 0, 2, 1, 422]
+- [2, 0, -3, -1, 421]
+- [2, 1, -1, 1, -366]
+- [2, 1, 0, 1, -351]
+- [4, 0, 0, 1, 331]
+- [2, -1, 1, 1, 315]
+- [2, -2, 0, -1, 302]
+- [0, 0, 1, 3, -283]
+- [2, 1, 1, -1, -229]
+- [1, 1, 0, -1, 223]
+- [1, 1, 0, 1, 223]
+- [0, 1, -2, -1, -220]
+- [2, 1, -1, -1, -220]
+- [1, 0, 1, 1, -185]
+- [2, -1, -2, -1, 181]
+- [0, 1, 2, 1, -177]
+- [4, 0, -2, -1, 176]
+- [4, -1, -1, -1, 166]
+- [1, 0, 1, -1, -164]
+- [4, 0, 1, -1, 132]
+- [1, 0, -1, -1, -119]
+- [4, -1, 0, -1, 115]
+- [2, -2, 0, 1, 107]
